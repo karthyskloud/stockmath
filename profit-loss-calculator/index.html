@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Profit Loss Calculator India – Free Trading Tool | StockMath</title>
+  <meta name="description" content="Free profit and loss calculator for Indian traders. Calculate profit or loss, percentage returns and investment value easily.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://stockmath.co.in/profit-loss-calculator/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon-v1.ico">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    header p {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    main {
+      max-width: 420px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .seo-text {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #f0f8ff;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      padding: 20px;
+      color: #666;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>StockMath</h2>
+  <p>Simple Trading Calculators</p>
+</header>
+
+<main>
+  <h1>Profit Loss Calculator India</h1>
+
+  <p class="seo-text">
+    This profit and loss calculator helps Indian traders calculate profit, loss and
+    percentage returns based on buy price, sell price and quantity.
+  </p>
+
+  <input type="number" id="buyPrice" placeholder="Buy Price (₹)">
+  <input type="number" id="sellPrice" placeholder="Sell Price (₹)">
+  <input type="number" id="quantity" placeholder="Quantity">
+
+  <button onclick="calculatePL()">Calculate Profit / Loss</button>
+
+  <div class="result" id="output"></div>
+</main>
+
+<footer>
+  <p>
+    <a href="/">Stock Average Calculator</a> |
+    <a href="/about">About</a> |
+    <a href="/disclaimer">Disclaimer</a> |
+    <a href="/privacy-policy">Privacy Policy</a>
+  </p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
+
+<script>
+function calculatePL() {
+  const buy = parseFloat(document.getElementById("buyPrice").value) || 0;
+  const sell = parseFloat(document.getElementById("sellPrice").value) || 0;
+  const qty = parseFloat(document.getElementById("quantity").value) || 0;
+
+  if (buy <= 0 || sell <= 0 || qty <= 0) {
+    document.getElementById("output").innerHTML = "Please enter valid values.";
+    return;
+  }
+
+  const investment = buy * qty;
+  const currentValue = sell * qty;
+  const profitLoss = currentValue - investment;
+  const percentage = ((profitLoss / investment) * 100).toFixed(2);
+
+  let resultText = profitLoss >= 0
+    ? `<strong>Profit:</strong> ₹${profitLoss.toFixed(2)}`
+    : `<strong>Loss:</strong> ₹${Math.abs(profitLoss).toFixed(2)}`;
+
+  document.getElementById("output").innerHTML = `
+    <strong>Investment:</strong> ₹${investment.toFixed(2)}<br>
+    <strong>Current Value:</strong> ₹${currentValue.toFixed(2)}<br>
+    ${resultText}<br>
+    <strong>Return:</strong> ${percentage}%
+  `;
+}
+</script>
+
+</body>
+</html>
