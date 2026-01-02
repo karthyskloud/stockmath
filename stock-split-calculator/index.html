@@ -97,6 +97,43 @@
       font-size: 15px;
     }
 
+    /* ---- Tools Section ---- */
+    .tools-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .tools-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-pill {
+      padding: 8px 14px;
+      font-size: 14px;
+      color: #007bff;
+      background: #f1f7ff;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .tool-pill:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
     footer {
       text-align: center;
       font-size: 13px;
@@ -133,6 +170,24 @@
   <button onclick="calcSplit()">Calculate</button>
 
   <div class="result" id="output"></div>
+
+  <!-- Navigation to other calculators -->
+  <div class="tools-section">
+    <div class="tools-title">Try other calculators</div>
+
+    <div class="tools-list">
+      <a href="/" class="tool-pill">
+        Stock Average
+      </a>
+      <a href="/profit-loss-calculator/" class="tool-pill">
+        Profit / Loss
+      </a>
+      <a href="/position-size-calculator/" class="tool-pill">
+        Position Size
+      </a>
+    </div>
+  </div>
+
 </main>
 
 <footer>
