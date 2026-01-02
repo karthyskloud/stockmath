@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://www.stockmath.co.in/</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <url>
+    <loc>https://www.stockmath.co.in/profit-loss-calculator/</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.stockmath.co.in/stock-split-calculator/</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.stockmath.co.in/position-size-calculator/</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://www.stockmath.co.in/trading-charges-calculator/</loc>
+    <priority>0.90</priority>
+  </url>
+
+</urlset>
