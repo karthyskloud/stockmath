@@ -97,6 +97,43 @@
       font-size: 15px;
     }
 
+    /* ---- Tools Section (Improved) ---- */
+    .tools-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .tools-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-pill {
+      padding: 8px 14px;
+      font-size: 14px;
+      color: #007bff;
+      background: #f1f7ff;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .tool-pill:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
     footer {
       text-align: center;
       font-size: 13px;
@@ -137,18 +174,21 @@
 
   <div class="result" id="output"></div>
 
-  <!-- Other calculators -->
-  <div style="margin-top:25px; padding-top:15px; border-top:1px solid #eee; text-align:center; font-size:14px;">
-    <strong>Other trading calculators:</strong><br>
-    <a href="https://www.stockmath.co.in/profit-loss-calculator/">
-      Profit / Loss Calculator
-    </a><br>
-    <a href="https://www.stockmath.co.in/stock-split-calculator/">
-      Stock Split Calculator
-    </a><br>
-    <a href="https://www.stockmath.co.in/position-size-calculator/">
-      Position Size Calculator
-    </a>
+  <!-- Improved Other Calculators Section -->
+  <div class="tools-section">
+    <div class="tools-title">Try other calculators</div>
+
+    <div class="tools-list">
+      <a href="https://www.stockmath.co.in/profit-loss-calculator/" class="tool-pill">
+        Profit / Loss
+      </a>
+      <a href="https://www.stockmath.co.in/stock-split-calculator/" class="tool-pill">
+        Stock Split
+      </a>
+      <a href="https://www.stockmath.co.in/position-size-calculator/" class="tool-pill">
+        Position Size
+      </a>
+    </div>
   </div>
 
 </main>
@@ -171,7 +211,8 @@ function calculateAverage() {
 
   const totalQty = q1 + q2;
   if (totalQty === 0) {
-    document.getElementById("output").innerHTML = "Please enter valid price and quantity.";
+    document.getElementById("output").innerHTML =
+      "Please enter valid price and quantity.";
     return;
   }
 
@@ -188,4 +229,3 @@ function calculateAverage() {
 
 </body>
 </html>
-
