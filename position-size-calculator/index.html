@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Position Size Calculator India | StockMath</title>
+<meta name="description" content="Free position size calculator for Indian traders. Calculate how many shares to buy based on risk.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.stockmath.co.in/position-size-calculator/">
+<link rel="icon" href="/favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0;}
+header{background:#111;color:#fff;padding:20px;text-align:center;}
+main{max-width:420px;margin:40px auto;background:#fff;padding:25px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+h1{text-align:center;font-size:22px;}
+input,button{width:100%;padding:10px;margin:10px 0;font-size:16px;}
+button{background:#007bff;color:#fff;border:none;}
+.result{background:#f0f8ff;padding:12px;}
+</style>
+</head>
+
+<body>
+<header><h2>StockMath</h2><p>Simple Trading Calculators</p></header>
+
+<main>
+<h1>Position Size Calculator India</h1>
+
+<input type="number" id="capital" placeholder="Total Capital (₹)">
+<input type="number" id="risk" placeholder="Risk per Trade (%)">
+<input type="number" id="entry" placeholder="Entry Price (₹)">
+<input type="number" id="stop" placeholder="Stop Loss Price (₹)">
+
+<button onclick="calcPos()">Calculate</button>
+<div class="result" id="res"></div>
+</main>
+
+<script>
+function calcPos(){
+  let cap=+capital.value, r=+risk.value, e=+entry.value, s=+stop.value;
+  if(cap<=0||r<=0||e<=0||s<=0||e<=s){res.innerHTML="Enter valid values";return;}
+  let riskAmt=cap*(r/100);
+  let qty=Math.floor(riskAmt/(e-s));
+  res.innerHTML=`<strong>Risk Amount:</strong> ₹${riskAmt.toFixed(2)}<br>
+                 <strong>Position Size:</strong> ${qty} shares`;
+}
+</script>
+</body>
+</html>
