@@ -21,6 +21,6 @@ jobs:
 
       - name: Sync files to S3 (skip .github)
         run: |
-          aws s3 sync . s3://stockmath.co.in \
+          aws s3 sync . s3://stockmath-co-in \
             --delete \
             --exclude ".github/*"
