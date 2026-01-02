@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Brokerage Calculator India | StockMath</title>
+<meta name="description" content="Simple brokerage calculator for Indian traders. Estimate charges and net profit.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.stockmath.co.in/brokerage-calculator/">
+<link rel="icon" href="/favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0;}
+header{background:#111;color:#fff;padding:20px;text-align:center;}
+main{max-width:420px;margin:40px auto;background:#fff;padding:25px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+h1{text-align:center;font-size:22px;}
+input,button{width:100%;padding:10px;margin:10px 0;font-size:16px;}
+button{background:#007bff;color:#fff;border:none;}
+.result{background:#f0f8ff;padding:12px;}
+</style>
+</head>
+
+<body>
+<header><h2>StockMath</h2><p>Simple Trading Calculators</p></header>
+
+<main>
+<h1>Brokerage Calculator India</h1>
+
+<input type="number" id="buy" placeholder="Buy Price (₹)">
+<input type="number" id="sell" placeholder="Sell Price (₹)">
+<input type="number" id="qty" placeholder="Quantity">
+
+<button onclick="calc()">Calculate</button>
+<div class="result" id="out"></div>
+</main>
+
+<script>
+function calc(){
+ let b=+buy.value,s=+sell.value,q=+qty.value;
+ if(b<=0||s<=0||q<=0){out.innerHTML="Enter valid values";return;}
+ let turnover=(b+s)*q;
+ let brokerage=Math.min(turnover*0.0003,40);
+ let pnl=(s-b)*q-brokerage;
+ out.innerHTML=`<strong>Brokerage:</strong> ₹${brokerage.toFixed(2)}<br>
+                <strong>Net P/L:</strong> ₹${pnl.toFixed(2)}`;
+}
+</script>
+</body>
+</html>
