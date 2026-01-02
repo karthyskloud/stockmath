@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stock Split Calculator India | StockMath</title>
+  <meta name="description" content="Free stock split calculator for Indian investors. Calculate new share price and quantity after stock split.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/stock-split-calculator/">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body { font-family: Arial; background:#f4f6f8; margin:0; }
+    header { background:#111; color:#fff; padding:20px; text-align:center; }
+    main { max-width:420px; margin:40px auto; background:#fff; padding:25px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+    h1 { text-align:center; font-size:22px; }
+    p { font-size:14px; color:#555; text-align:center; }
+    input, button { width:100%; padding:10px; margin:10px 0; font-size:16px; }
+    button { background:#007bff; color:#fff; border:none; cursor:pointer; }
+    .result { background:#f0f8ff; padding:12px; margin-top:15px; }
+  </style>
+</head>
+
+<body>
+<header>
+  <h2>StockMath</h2>
+  <p>Simple Trading Calculators</p>
+</header>
+
+<main>
+  <h1>Stock Split Calculator India</h1>
+  <p>Calculate new share price and quantity after a stock split.</p>
+
+  <input type="number" id="price" placeholder="Current Share Price (₹)">
+  <input type="number" id="qty" placeholder="Current Quantity">
+  <input type="number" id="ratio" placeholder="Split Ratio (e.g. 2 for 1:2)">
+
+  <button onclick="calcSplit()">Calculate</button>
+  <div class="result" id="out"></div>
+
+  <div style="margin-top:20px;text-align:center;font-size:14px;">
+    <strong>Other calculators:</strong><br>
+    <a href="https://www.stockmath.co.in/">Stock Average Calculator</a> |
+    <a href="https://www.stockmath.co.in/profit-loss-calculator/">Profit / Loss Calculator</a>
+  </div>
+</main>
+
+<script>
+function calcSplit(){
+  let p = +price.value, q = +qty.value, r = +ratio.value;
+  if(p<=0||q<=0||r<=0){ out.innerHTML="Enter valid values"; return;}
+  out.innerHTML = `
+    <strong>New Price:</strong> ₹${(p/r).toFixed(2)}<br>
+    <strong>New Quantity:</strong> ${q*r}
+  `;
+}
+</script>
+</body>
+</html>
