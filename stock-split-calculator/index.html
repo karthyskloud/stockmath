@@ -130,9 +130,8 @@
   <input type="number" id="qty" placeholder="Current Quantity">
   <input type="number" id="ratio" placeholder="Split Ratio (e.g. 2 for 1:2)">
 
-
   <button onclick="calcSplit()">Calculate</button>
-  
+
   <div class="result" id="output"></div>
 </main>
 
@@ -147,14 +146,27 @@
 </footer>
 
 <script>
-function calcSplit(){
-  let p = +price.value, q = +qty.value, r = +ratio.value;
-  if(p<=0||q<=0||r<=0){ out.innerHTML="Enter valid values"; return;}
-  out.innerHTML = `
-    <strong>New Price:</strong> ₹${(p/r).toFixed(2)}<br>
-    <strong>New Quantity:</strong> ${q*r}
+function calcSplit() {
+  const p = parseFloat(document.getElementById("price").value) || 0;
+  const q = parseFloat(document.getElementById("qty").value) || 0;
+  const r = parseFloat(document.getElementById("ratio").value) || 0;
+
+  const output = document.getElementById("output");
+
+  if (p <= 0 || q <= 0 || r <= 0) {
+    output.innerHTML = "Please enter valid values.";
+    return;
+  }
+
+  const newPrice = (p / r).toFixed(2);
+  const newQty = q * r;
+
+  output.innerHTML = `
+    <strong>New Share Price:</strong> ₹${newPrice}<br>
+    <strong>New Quantity:</strong> ${newQty}
   `;
 }
 </script>
+
 </body>
 </html>
