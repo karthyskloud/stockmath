@@ -97,6 +97,43 @@
       font-size: 15px;
     }
 
+    /* ---- Tools Section ---- */
+    .tools-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .tools-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-pill {
+      padding: 8px 14px;
+      font-size: 14px;
+      color: #007bff;
+      background: #f1f7ff;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .tool-pill:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
     footer {
       text-align: center;
       font-size: 13px;
@@ -134,6 +171,24 @@
   <button onclick="calculatePL()">Calculate Profit / Loss</button>
 
   <div class="result" id="output"></div>
+
+  <!-- Navigation to other calculators -->
+  <div class="tools-section">
+    <div class="tools-title">Try other calculators</div>
+
+    <div class="tools-list">
+      <a href="/" class="tool-pill">
+        Stock Average
+      </a>
+      <a href="/stock-split-calculator/" class="tool-pill">
+        Stock Split
+      </a>
+      <a href="/position-size-calculator/" class="tool-pill">
+        Position Size
+      </a>
+    </div>
+  </div>
+
 </main>
 
 <footer>
@@ -152,8 +207,10 @@ function calculatePL() {
   const sell = parseFloat(document.getElementById("sellPrice").value) || 0;
   const qty = parseFloat(document.getElementById("quantity").value) || 0;
 
+  const output = document.getElementById("output");
+
   if (buy <= 0 || sell <= 0 || qty <= 0) {
-    document.getElementById("output").innerHTML = "Please enter valid values.";
+    output.innerHTML = "Please enter valid values.";
     return;
   }
 
@@ -162,11 +219,11 @@ function calculatePL() {
   const profitLoss = currentValue - investment;
   const percentage = ((profitLoss / investment) * 100).toFixed(2);
 
-  let resultText = profitLoss >= 0
+  const resultText = profitLoss >= 0
     ? `<strong>Profit:</strong> ₹${profitLoss.toFixed(2)}`
     : `<strong>Loss:</strong> ₹${Math.abs(profitLoss).toFixed(2)}`;
 
-  document.getElementById("output").innerHTML = `
+  output.innerHTML = `
     <strong>Investment:</strong> ₹${investment.toFixed(2)}<br>
     <strong>Current Value:</strong> ₹${currentValue.toFixed(2)}<br>
     ${resultText}<br>
