@@ -1,27 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic -->
   <meta charset="UTF-8">
-  <title>Stock Split Calculator India | StockMath</title>
-  <meta name="description" content="Free stock split calculator for Indian investors. Calculate new share price and quantity after stock split.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.stockmath.co.in/stock-split-calculator/">
-  <link rel="icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- SEO -->
+  <title>Stock Split Calculator India – Free Trading Tool | StockMath</title>
+  <meta name="description" content="Free Stock Split Calculator for Indian traders. Calculate new share price and quantity after stock split.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://stockmath.co.in/stock-split-calculator/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- Styles -->
   <style>
-    body { font-family: Arial; background:#f4f6f8; margin:0; }
-    header { background:#111; color:#fff; padding:20px; text-align:center; }
-    main { max-width:420px; margin:40px auto; background:#fff; padding:25px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,.1); }
-    h1 { text-align:center; font-size:22px; }
-    p { font-size:14px; color:#555; text-align:center; }
-    input, button { width:100%; padding:10px; margin:10px 0; font-size:16px; }
-    button { background:#007bff; color:#fff; border:none; cursor:pointer; }
-    .result { background:#f0f8ff; padding:12px; margin-top:15px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    header p {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    main {
+      max-width: 420px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .seo-text {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #f0f8ff;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      padding: 20px;
+      color: #666;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 6px;
+    }
   </style>
 </head>
 
 <body>
+
 <header>
   <h2>StockMath</h2>
   <p>Simple Trading Calculators</p>
@@ -29,20 +121,18 @@
 
 <main>
   <h1>Stock Split Calculator India</h1>
-  <p>Calculate new share price and quantity after a stock split.</p>
 
-  <input type="number" id="price" placeholder="Current Share Price (₹)">
-  <input type="number" id="qty" placeholder="Current Quantity">
-  <input type="number" id="ratio" placeholder="Split Ratio (e.g. 2 for 1:2)">
+  <p class="seo-text">
+    Calculate new share price and quantity after a stock split.
+  </p>
+
+  <input type="number" id="buyPrice" placeholder="Buy Price (₹)">
+  <input type="number" id="sellPrice" placeholder="Sell Price (₹)">
+  <input type="number" id="quantity" placeholder="Quantity">
 
   <button onclick="calcSplit()">Calculate</button>
-  <div class="result" id="out"></div>
-
-  <div style="margin-top:20px;text-align:center;font-size:14px;">
-    <strong>Other calculators:</strong><br>
-    <a href="https://www.stockmath.co.in/">Stock Average Calculator</a> |
-    <a href="https://www.stockmath.co.in/profit-loss-calculator/">Profit / Loss Calculator</a>
-  </div>
+  
+  <div class="result" id="output"></div>
 </main>
 
 <footer>
@@ -54,7 +144,7 @@
   </p>
   <p>© 2026 StockMath.co.in</p>
 </footer>
-  
+
 <script>
 function calcSplit(){
   let p = +price.value, q = +qty.value, r = +ratio.value;
