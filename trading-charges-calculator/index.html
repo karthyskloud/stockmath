@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Trading Charges Calculator India (No Brokerage) | StockMath</title>
+  <meta name="description" content="Calculate trading charges in India including STT, stamp duty, exchange charges, SEBI charges and GST. Brokerage excluded.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://stockmath.co.in/trading-charges-calculator/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    header {
+      background: #111;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    header p {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    main {
+      max-width: 420px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .seo-text {
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 15px;
+      background: #f0f8ff;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    /* ---- Tools Section ---- */
+    .tools-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .tools-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-pill {
+      padding: 8px 14px;
+      font-size: 14px;
+      color: #007bff;
+      background: #f1f7ff;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .tool-pill:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      padding: 20px;
+      color: #666;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>StockMath</h2>
+  <p>Simple Trading Calculators</p>
+</header>
+
+<main>
+  <h1>Trading Charges Calculator India</h1>
+
+  <p class="seo-text">
+    Calculate standard Indian equity delivery charges including STT, stamp duty,
+    exchange charges, SEBI charges and GST. Brokerage is not included.
+  </p>
+
+  <input type="number" id="buyPrice" placeholder="Buy Price (₹)">
+  <input type="number" id="sellPrice" placeholder="Sell Price (₹)">
+  <input type="number" id="quantity" placeholder="Quantity">
+
+  <button onclick="calculateCharges()">Calculate Charges</button>
+
+  <div class="result" id="output"></div>
+
+  <!-- Navigation -->
+  <div class="tools-section">
+    <div class="tools-title">Try other calculators</div>
+
+    <div class="tools-list">
+      <a href="/" class="tool-pill">Stock Average</a>
+      <a href="/profit-loss-calculator/" class="tool-pill">Profit / Loss</a>
+      <a href="/stock-split-calculator/" class="tool-pill">Stock Split</a>
+      <a href="/position-size-calculator/" class="tool-pill">Position Size</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>
+    <a href="/">Stock Average Calculator</a> |
+    <a href="/about">About</a> |
+    <a href="/disclaimer">Disclaimer</a> |
+    <a href="/privacy-policy">Privacy Policy</a>
+  </p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
+
+<script>
+function calculateCharges() {
+  const buy = parseFloat(document.getElementById("buyPrice").value) || 0;
+  const sell = parseFloat(document.getElementById("sellPrice").value) || 0;
+  const qty = parseFloat(document.getElementById("quantity").value) || 0;
+  const output = document.getElementById("output");
+
+  if (buy <= 0 || sell <= 0 || qty <= 0) {
+    output.innerHTML = "Please enter valid values.";
+    return;
+  }
+
+  const buyTurnover = buy * qty;
+  const sellTurnover = sell * qty;
+  const turnover = buyTurnover + sellTurnover;
+
+  const stt = 0.001 * (buyTurnover + sellTurnover);     // 0.1%
+  const stampDuty = 0.00015 * buyTurnover;              // 0.015%
+  const exchangeCharges = 0.0000325 * turnover;         // 0.00325%
+  const sebiCharges = 0.000001 * turnover;              // 0.0001%
+  const gst = 0.18 * (exchangeCharges + sebiCharges);   // 18%
+
+  const totalCharges = stt + stampDuty + exchangeCharges + sebiCharges + gst;
+  const grossPL = sellTurnover - buyTurnover;
+  const netPL = grossPL - totalCharges;
+
+  output.innerHTML = `
+    <strong>Gross P/L:</strong> ₹${grossPL.toFixed(2)}<br>
+    <strong>STT:</strong> ₹${stt.toFixed(2)}<br>
+    <strong>Stamp Duty:</strong> ₹${stampDuty.toFixed(2)}<br>
+    <strong>Exchange Charges:</strong> ₹${exchangeCharges.toFixed(2)}<br>
+    <strong>SEBI Charges:</strong> ₹${sebiCharges.toFixed(2)}<br>
+    <strong>GST:</strong> ₹${gst.toFixed(2)}<br>
+    <strong>Total Charges:</strong> ₹${totalCharges.toFixed(2)}<br><br>
+
+    <strong>Net P/L (after charges):</strong> ₹${netPL.toFixed(2)}
+    <br><br>
+
+    <em style="font-size:12px;color:#666;">
+      Note: Brokerage charges are not included.
+      Actual brokerage may vary depending on your demat broker and plan.
+    </em>
+  `;
+}
+</script>
+
+</body>
+</html>
