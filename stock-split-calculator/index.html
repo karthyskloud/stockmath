@@ -96,18 +96,23 @@
       border-radius: 4px;
       font-size: 15px;
     }
-       .info {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #444;
-  }
-  .info h2 {
-    font-size: 16px;
-    margin-top: 18px;
-  }
-  .info ul {
-    padding-left: 18px;
-  }
+
+    .info {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .info h2 {
+      font-size: 16px;
+      margin-top: 18px;
+      border-left: 3px solid #007bff;
+      padding-left: 8px;
+    }
+
+    .info ul {
+      padding-left: 18px;
+    }
 
     /* ---- Tools Section ---- */
     .tools-section {
@@ -134,6 +139,7 @@
     .tool-pill {
       padding: 8px 14px;
       font-size: 14px;
+      font-weight: 500;
       color: #007bff;
       background: #f1f7ff;
       border-radius: 20px;
@@ -159,33 +165,33 @@
       margin: 0 6px;
     }
   </style>
- 
+
   <!-- Google Analytics GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
 
-  gtag('config', 'G-0ZXJNJQN0L');
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Stock Split Calculator",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
-  "url": "https://www.stockmath.co.in/stock-split-calculator/",
-  "description": "Free stock split calculator for Indian traders to calculate new share price and quantity after a stock split.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "INR"
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Stock Split Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/stock-split-calculator/",
+    "description": "Free stock split calculator for Indian traders to calculate new share price and quantity after a stock split.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
   }
-}
-</script>
-
+  </script>
 </head>
 
 <body>
@@ -210,41 +216,39 @@
 
   <div class="result" id="output"></div>
 
+  <p style="text-align:center;font-size:13px;color:#666;margin-top:10px;">
+    Looking for other tools? Scroll down 👇
+  </p>
+
   <section class="info">
-  <h2>What is a Stock Split?</h2>
-  <p>
-    A stock split increases the number of shares while reducing the share price.
-    Your total investment value remains the same.
-  </p>
+    <h2>What is a Stock Split?</h2>
+    <p>
+      A stock split increases the number of shares while reducing the share price.
+      Your total investment value remains the same.
+    </p>
 
-  <h2>Example</h2>
-  <p>
-    A 1:2 split converts 10 shares priced at ₹200 into 20 shares priced at ₹100.
-  </p>
+    <h2>Example</h2>
+    <p>
+      A 1:2 split converts 10 shares priced at ₹200 into 20 shares priced at ₹100.
+    </p>
 
-  <h2>FAQs</h2>
-  <p><strong>Does stock split change my investment value?</strong><br>No.</p>
-  <p><strong>Is this applicable for all Indian stocks?</strong><br>Yes.</p>
-</section>
+    <h2>FAQs</h2>
+    <p><strong>Does stock split change my investment value?</strong><br>No.</p>
+    <p><strong>Is this applicable for all Indian stocks?</strong><br>Yes.</p>
 
+    <p style="margin-top:12px;font-size:13px;color:#666;">
+      Disclaimer: This calculator is for educational purposes only and does not constitute financial advice.
+    </p>
+  </section>
 
-  <!-- Navigation to other calculators -->
   <div class="tools-section">
     <div class="tools-title">Try other calculators</div>
 
     <div class="tools-list">
-      <a href="/" class="tool-pill">
-        Stock Average
-      </a>
-      <a href="/profit-loss-calculator/" class="tool-pill">
-        Profit / Loss
-      </a>
-      <a href="/position-size-calculator/" class="tool-pill">
-        Position Size
-      </a>
-      <a href="/trading-charges-calculator/" class="tool-pill">
-        Trading Charges
-      </a>
+      <a href="/" class="tool-pill">Stock Average</a>
+      <a href="/profit-loss-calculator/" class="tool-pill">Profit / Loss</a>
+      <a href="/position-size-calculator/" class="tool-pill">Position Size</a>
+      <a href="/trading-charges-calculator/" class="tool-pill">Trading Charges</a>
     </div>
   </div>
 
@@ -265,7 +269,6 @@ function calcSplit() {
   const p = parseFloat(document.getElementById("price").value) || 0;
   const q = parseFloat(document.getElementById("qty").value) || 0;
   const r = parseFloat(document.getElementById("ratio").value) || 0;
-
   const output = document.getElementById("output");
 
   if (p <= 0 || q <= 0 || r <= 0) {
