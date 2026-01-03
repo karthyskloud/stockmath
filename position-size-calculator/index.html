@@ -97,18 +97,22 @@
       font-size: 15px;
     }
 
-   .info {
-    margin-top: 30px;
-    font-size: 14px;
-    color: #444;
-  }
-  .info h2 {
-    font-size: 16px;
-    margin-top: 18px;
-  }
-  .info ul {
-    padding-left: 18px;
-  }
+    .info {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .info h2 {
+      font-size: 16px;
+      margin-top: 18px;
+      border-left: 3px solid #007bff;
+      padding-left: 8px;
+    }
+
+    .info ul {
+      padding-left: 18px;
+    }
 
     /* ---- Tools Section ---- */
     .tools-section {
@@ -135,6 +139,7 @@
     .tool-pill {
       padding: 8px 14px;
       font-size: 14px;
+      font-weight: 500;
       color: #007bff;
       background: #f1f7ff;
       border-radius: 20px;
@@ -160,33 +165,33 @@
       margin: 0 6px;
     }
   </style>
+
   <!-- Google Analytics GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
 
-  gtag('config', 'G-0ZXJNJQN0L');
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Position Size Calculator",
-  "applicationCategory": "FinanceApplication",
-  "operatingSystem": "Web",
-  "url": "https://www.stockmath.co.in/position-size-calculator/",
-  "description": "Free position size calculator for Indian traders to calculate how many shares to buy based on risk per trade and stop loss.",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "INR"
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Position Size Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/position-size-calculator/",
+    "description": "Free position size calculator for Indian traders to calculate how many shares to buy based on risk per trade and stop loss.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
   }
-}
-</script>
-
+  </script>
 </head>
 
 <body>
@@ -213,25 +218,31 @@
 
   <div class="result" id="res"></div>
 
+  <p style="text-align:center;font-size:13px;color:#666;margin-top:10px;">
+    Looking for other tools? Scroll down 👇
+  </p>
+
   <section class="info">
-  <h2>Why Position Size Matters</h2>
-  <p>
-    Position sizing helps control risk by limiting how much capital you risk in a trade.
-    This calculator shows how many shares you should buy based on your stop loss.
-  </p>
+    <h2>Why Position Size Matters</h2>
+    <p>
+      Position sizing helps control risk by limiting how much capital you risk in a trade.
+      This calculator shows how many shares you should buy based on your stop loss.
+    </p>
 
-  <h2>Example</h2>
-  <p>
-    With ₹1,00,000 capital and 1% risk, you risk only ₹1000 per trade.
-  </p>
+    <h2>Example</h2>
+    <p>
+      With ₹1,00,000 capital and 1% risk, you risk only ₹1000 per trade.
+    </p>
 
-  <h2>FAQs</h2>
-  <p><strong>Is this for intraday?</strong><br>Yes.</p>
-  <p><strong>Can long-term investors use it?</strong><br>Yes.</p>
-</section>
+    <h2>FAQs</h2>
+    <p><strong>Is this for intraday?</strong><br>Yes.</p>
+    <p><strong>Can long-term investors use it?</strong><br>Yes.</p>
 
+    <p style="margin-top:12px;font-size:13px;color:#666;">
+      Disclaimer: This calculator is for educational purposes only and does not constitute financial advice.
+    </p>
+  </section>
 
-  <!-- Navigation -->
   <div class="tools-section">
     <div class="tools-title">Try other calculators</div>
 
