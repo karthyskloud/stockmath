@@ -69,44 +69,61 @@
 
 <main>
 
-  <h1>NIFTY 50 Investment Calculator</h1>
+  <h1 style="text-align:center;">
+    What If You Had Invested in NIFTY 50?
+  </h1>
 
-  <div class="controls">
-    <input type="date" id="investDate" />
-    <input type="date" id="targetDate" placeholder="Target date (optional)" />
-    <input type="number" id="shares" placeholder="Shares per stock" value="1" min="1" />
-    <button onclick="runCalculation()">Calculate</button>
-  </div>
-
-  <div class="summary" id="summary" style="display:none;">
-    <div><strong>Total Investment:</strong> ₹<span id="sumInvest">0</span></div>
-    <div><strong>Current Value:</strong> ₹<span id="sumCurrent">0</span></div>
-    <div><strong>Total P/L:</strong> ₹<span id="sumPL">0</span></div>
-    <div><strong>Return:</strong> <span id="sumReturn">0</span>%</div>
-  </div>
-
-  <div style="overflow-x:auto;">
-    <table id="resultTable" style="display:none;">
-      <thead>
-        <tr>
-          <th>Company</th>
-          <th>Buy Date</th>
-          <th>Buy Price</th>
-          <th>Sell Date</th>
-          <th>Sell Price</th>
-          <th>Shares</th>
-          <th>Investment</th>
-          <th>Current Value</th>
-          <th>P/L</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
-  </div>
-
-  <p class="note">
-    Note: Prices are based on available historical close prices. If a selected date is a holiday, the nearest previous trading day is used.
+  <p style="text-align:center; max-width:700px; margin:10px auto 25px; color:#555; font-size:16px;">
+    This calculator shows how much your money would be worth today if you had invested equally
+    in all NIFTY 50 companies on any past date.
   </p>
+
+  <div style="background:#f8fbff; padding:20px; border-radius:8px; margin-bottom:20px;">
+
+    <div class="controls" style="gap:15px;">
+
+      <div style="display:flex; flex-direction:column;">
+        <label style="font-size:14px; margin-bottom:4px;">
+          📅 Investment Date (When you would have invested)
+        </label>
+        <input type="date" id="investDate" />
+        <small style="color:#666;">Example: 2020-03-23</small>
+      </div>
+
+      <div style="display:flex; flex-direction:column;">
+        <label style="font-size:14px; margin-bottom:4px;">
+          📅 Target Date (Optional – leave empty for today)
+        </label>
+        <input type="date" id="targetDate" />
+        <small style="color:#666;">If empty, latest available prices will be used</small>
+      </div>
+
+      <div style="display:flex; flex-direction:column;">
+        <label style="font-size:14px; margin-bottom:4px;">
+          📊 Shares per Company
+        </label>
+        <input type="number" id="shares" value="1" min="1" />
+        <small style="color:#666;">1 = Buy 1 share of each NIFTY 50 company</small>
+      </div>
+
+      <div style="display:flex; align-items:flex-end;">
+        <button onclick="runCalculation()" style="height:42px; padding:0 20px;">
+          Show My Returns
+        </button>
+      </div>
+
+    </div>
+
+    <p style="margin-top:15px; font-size:14px; color:#444;">
+      ✨ <strong>Try this:</strong> Select <strong>2020-03-23</strong> (COVID crash day) and enter <strong>1 share</strong> to see how much you would have today.
+    </p>
+
+    <p style="margin-top:8px; font-size:13px; color:#666;">
+      Note: If the selected date is a market holiday, the nearest previous trading day is used.
+    </p>
+
+  </div>
+
 
 </main>
 
