@@ -149,7 +149,7 @@ async function runCalculation() {
   const tbody = document.getElementById("tbody");
   tbody.innerHTML = "";
 
-  for (const sym of symbols) {
+  await Promise.all(symbols.map(async (sym) => {
     try {
       const history = await loadJSON(`/data/${sym}_history.json`);
       const current = await loadJSON(`/data/${sym}_current.json`);
@@ -157,7 +157,7 @@ async function runCalculation() {
       const merged = mergePrices(history, current);
 
       const buy = findPriceOnOrBefore(investDate, merged);
-      if (!buy) continue;
+      if (!buy) return;
 
       let sell;
       if (targetDateInput) {
@@ -167,7 +167,7 @@ async function runCalculation() {
         sell = { date: latestDate, price: merged[latestDate] };
       }
 
-      if (!sell) continue;
+      if (!sell) return;
 
       const buyPrice = buy.price;
       const sellPrice = sell.price;
@@ -196,7 +196,7 @@ async function runCalculation() {
     } catch (e) {
       console.warn("Skipping", sym, e);
     }
-  }
+  }));
 
   const totalPL = totalCurrent - totalInvestment;
   const ret = totalInvestment > 0 ? (totalPL / totalInvestment) * 100 : 0;
