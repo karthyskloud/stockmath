@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>NIFTY 50 Investment Calculator | StockMath</title>
+  <title>What If You Had Invested in NIFTY 50? | StockMath</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Simulate investing in NIFTY 50 on any past date. See current value, profit/loss and per-stock breakdown." />
+  <meta name="description" content="See how much your investment in NIFTY 50 would be worth today if you invested on any past date." />
   <link rel="icon" href="/favicon.ico">
 
   <style>
@@ -14,50 +14,25 @@
 
     h1 { text-align:center; }
 
-    .controls {
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:20px;
-    }
+    .controls { display:flex; gap:15px; flex-wrap:wrap; justify-content:center; margin-bottom:10px; }
 
-    input, button {
-      padding:10px; font-size:16px;
-    }
+    input, button { padding:10px; font-size:16px; }
 
-    button {
-      background:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer;
-    }
+    button { background:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer; }
     button:hover { background:#0056b3; }
 
     .summary {
       display:flex; justify-content:space-around; flex-wrap:wrap;
-      background:#f0f8ff; padding:15px; border-radius:6px; margin-bottom:20px;
+      background:#f0f8ff; padding:15px; border-radius:6px; margin:20px 0;
     }
 
-    .summary div { font-size:16px; margin:5px 10px; }
-
-    table {
-      width:100%;
-      border-collapse:collapse;
-      font-size:14px;
-    }
-
-    th, td {
-      border:1px solid #ddd;
-      padding:8px;
-      text-align:right;
-    }
-
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { border:1px solid #ddd; padding:8px; text-align:right; }
     th { background:#f1f1f1; }
-
     th:first-child, td:first-child { text-align:left; }
 
-    .positive { color:green; }
-    .negative { color:red; }
-
-    .note {
-      margin-top:15px;
-      font-size:13px;
-      color:#666;
-    }
+    .positive { color:green; font-weight:bold; }
+    .negative { color:red; font-weight:bold; }
   </style>
 </head>
 <body>
@@ -69,61 +44,74 @@
 
 <main>
 
-  <h1 style="text-align:center;">
-    What If You Had Invested in NIFTY 50?
-  </h1>
+  <h1>What If You Had Invested in NIFTY 50?</h1>
 
   <p style="text-align:center; max-width:700px; margin:10px auto 25px; color:#555; font-size:16px;">
     This calculator shows how much your money would be worth today if you had invested equally
     in all NIFTY 50 companies on any past date.
   </p>
 
-  <div style="background:#f8fbff; padding:20px; border-radius:8px; margin-bottom:20px;">
+  <div style="background:#f8fbff; padding:20px; border-radius:8px;">
 
-    <div class="controls" style="gap:15px;">
+    <div class="controls">
 
       <div style="display:flex; flex-direction:column;">
-        <label style="font-size:14px; margin-bottom:4px;">
-          📅 Investment Date (When you would have invested)
-        </label>
+        <label>📅 Investment Date</label>
         <input type="date" id="investDate" />
-        <small style="color:#666;">Example: 2020-03-23</small>
+        <small>Example: 2020-03-23</small>
       </div>
 
       <div style="display:flex; flex-direction:column;">
-        <label style="font-size:14px; margin-bottom:4px;">
-          📅 Target Date (Optional – leave empty for today)
-        </label>
+        <label>📅 Target Date (optional)</label>
         <input type="date" id="targetDate" />
-        <small style="color:#666;">If empty, latest available prices will be used</small>
+        <small>Leave empty = latest</small>
       </div>
 
       <div style="display:flex; flex-direction:column;">
-        <label style="font-size:14px; margin-bottom:4px;">
-          📊 Shares per Company
-        </label>
+        <label>📊 Shares per company</label>
         <input type="number" id="shares" value="1" min="1" />
-        <small style="color:#666;">1 = Buy 1 share of each NIFTY 50 company</small>
+        <small>1 = Buy 1 share of each stock</small>
       </div>
 
       <div style="display:flex; align-items:flex-end;">
-        <button onclick="runCalculation()" style="height:42px; padding:0 20px;">
-          Show My Returns
-        </button>
+        <button onclick="runCalculation()">Show My Returns</button>
       </div>
 
     </div>
 
-    <p style="margin-top:15px; font-size:14px; color:#444;">
-      ✨ <strong>Try this:</strong> Select <strong>2020-03-23</strong> (COVID crash day) and enter <strong>1 share</strong> to see how much you would have today.
-    </p>
-
-    <p style="margin-top:8px; font-size:13px; color:#666;">
-      Note: If the selected date is a market holiday, the nearest previous trading day is used.
+    <p style="margin-top:10px;font-size:13px;color:#666;">
+      If selected date is a holiday, nearest previous trading day is used.
     </p>
 
   </div>
 
+  <!-- ================= RESULTS ================= -->
+
+  <div class="summary" id="summary" style="display:none;">
+    <div><strong>Total Investment:</strong> ₹<span id="sumInvest">0</span></div>
+    <div><strong>Current Value:</strong> ₹<span id="sumCurrent">0</span></div>
+    <div><strong>Total P/L:</strong> ₹<span id="sumPL">0</span></div>
+    <div><strong>Return:</strong> <span id="sumReturn">0</span>%</div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table id="resultTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Buy Date</th>
+          <th>Buy Price</th>
+          <th>Sell Date</th>
+          <th>Sell Price</th>
+          <th>Shares</th>
+          <th>Investment</th>
+          <th>Current Value</th>
+          <th>P/L</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
 
 </main>
 
@@ -166,7 +154,7 @@ async function runCalculation() {
   const tbody = document.getElementById("tbody");
   tbody.innerHTML = "";
 
-  await Promise.all(symbols.map(async (sym) => {
+  for (const sym of symbols) {
     try {
       const history = await loadJSON(`/data/${sym}_history.json`);
       const current = await loadJSON(`/data/${sym}_current.json`);
@@ -174,7 +162,7 @@ async function runCalculation() {
       const merged = mergePrices(history, current);
 
       const buy = findPriceOnOrBefore(investDate, merged);
-      if (!buy) return;
+      if (!buy) continue;
 
       let sell;
       if (targetDateInput) {
@@ -184,7 +172,7 @@ async function runCalculation() {
         sell = { date: latestDate, price: merged[latestDate] };
       }
 
-      if (!sell) return;
+      if (!sell) continue;
 
       const buyPrice = buy.price;
       const sellPrice = sell.price;
@@ -213,7 +201,7 @@ async function runCalculation() {
     } catch (e) {
       console.warn("Skipping", sym, e);
     }
-  }));
+  }
 
   const totalPL = totalCurrent - totalInvestment;
   const ret = totalInvestment > 0 ? (totalPL / totalInvestment) * 100 : 0;
