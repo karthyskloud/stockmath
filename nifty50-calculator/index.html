@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NIFTY 50 Investment Calculator | StockMath</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Simulate investing in NIFTY 50 on any past date. See current value, profit/loss and per-stock breakdown." />
+  <link rel="icon" href="/favicon.ico">
+
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; color:#222; }
+    header { background:#111; color:#fff; padding:20px; text-align:center; }
+    main { max-width:1100px; margin:30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+
+    h1 { text-align:center; }
+
+    .controls {
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom:20px;
+    }
+
+    input, button {
+      padding:10px; font-size:16px;
+    }
+
+    button {
+      background:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer;
+    }
+    button:hover { background:#0056b3; }
+
+    .summary {
+      display:flex; justify-content:space-around; flex-wrap:wrap;
+      background:#f0f8ff; padding:15px; border-radius:6px; margin-bottom:20px;
+    }
+
+    .summary div { font-size:16px; margin:5px 10px; }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+
+    th, td {
+      border:1px solid #ddd;
+      padding:8px;
+      text-align:right;
+    }
+
+    th { background:#f1f1f1; }
+
+    th:first-child, td:first-child { text-align:left; }
+
+    .positive { color:green; }
+    .negative { color:red; }
+
+    .note {
+      margin-top:15px;
+      font-size:13px;
+      color:#666;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2>StockMath</h2>
+  <p>NIFTY 50 Investment Simulator</p>
+</header>
+
+<main>
+
+  <h1>NIFTY 50 Investment Calculator</h1>
+
+  <div class="controls">
+    <input type="date" id="investDate" />
+    <input type="date" id="targetDate" placeholder="Target date (optional)" />
+    <input type="number" id="shares" placeholder="Shares per stock" value="1" min="1" />
+    <button onclick="runCalculation()">Calculate</button>
+  </div>
+
+  <div class="summary" id="summary" style="display:none;">
+    <div><strong>Total Investment:</strong> ₹<span id="sumInvest">0</span></div>
+    <div><strong>Current Value:</strong> ₹<span id="sumCurrent">0</span></div>
+    <div><strong>Total P/L:</strong> ₹<span id="sumPL">0</span></div>
+    <div><strong>Return:</strong> <span id="sumReturn">0</span>%</div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table id="resultTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Buy Date</th>
+          <th>Buy Price</th>
+          <th>Sell Date</th>
+          <th>Sell Price</th>
+          <th>Shares</th>
+          <th>Investment</th>
+          <th>Current Value</th>
+          <th>P/L</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <p class="note">
+    Note: Prices are based on available historical close prices. If a selected date is a holiday, the nearest previous trading day is used.
+  </p>
+
+</main>
+
+<script>
+async function loadJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to load " + url);
+  return res.json();
+}
+
+function findPriceOnOrBefore(targetDate, pricesObj) {
+  const dates = Object.keys(pricesObj).sort();
+  for (let i = dates.length - 1; i >= 0; i--) {
+    if (dates[i] <= targetDate) {
+      return { date: dates[i], price: pricesObj[dates[i]] };
+    }
+  }
+  return null;
+}
+
+function mergePrices(history, current) {
+  return { ...history.prices, ...current.prices };
+}
+
+async function runCalculation() {
+  const investDate = document.getElementById("investDate").value;
+  const targetDateInput = document.getElementById("targetDate").value;
+  const shares = parseInt(document.getElementById("shares").value || "1", 10);
+
+  if (!investDate) {
+    alert("Please select investment date");
+    return;
+  }
+
+  const symbols = await loadJSON("/data/nifty50.json");
+
+  let totalInvestment = 0;
+  let totalCurrent = 0;
+
+  const tbody = document.getElementById("tbody");
+  tbody.innerHTML = "";
+
+  for (const sym of symbols) {
+    try {
+      const history = await loadJSON(`/data/${sym}_history.json`);
+      const current = await loadJSON(`/data/${sym}_current.json`);
+
+      const merged = mergePrices(history, current);
+
+      const buy = findPriceOnOrBefore(investDate, merged);
+      if (!buy) continue;
+
+      let sell;
+      if (targetDateInput) {
+        sell = findPriceOnOrBefore(targetDateInput, merged);
+      } else {
+        const latestDate = Object.keys(merged).sort().pop();
+        sell = { date: latestDate, price: merged[latestDate] };
+      }
+
+      if (!sell) continue;
+
+      const buyPrice = buy.price;
+      const sellPrice = sell.price;
+
+      const investment = buyPrice * shares;
+      const currentValue = sellPrice * shares;
+      const pl = currentValue - investment;
+
+      totalInvestment += investment;
+      totalCurrent += currentValue;
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${sym}</td>
+        <td>${buy.date}</td>
+        <td>${buyPrice.toFixed(2)}</td>
+        <td>${sell.date}</td>
+        <td>${sellPrice.toFixed(2)}</td>
+        <td>${shares}</td>
+        <td>${investment.toFixed(2)}</td>
+        <td>${currentValue.toFixed(2)}</td>
+        <td class="${pl >= 0 ? "positive" : "negative"}">${pl.toFixed(2)}</td>
+      `;
+      tbody.appendChild(tr);
+
+    } catch (e) {
+      console.warn("Skipping", sym, e);
+    }
+  }
+
+  const totalPL = totalCurrent - totalInvestment;
+  const ret = totalInvestment > 0 ? (totalPL / totalInvestment) * 100 : 0;
+
+  document.getElementById("sumInvest").innerText = totalInvestment.toFixed(2);
+  document.getElementById("sumCurrent").innerText = totalCurrent.toFixed(2);
+  document.getElementById("sumPL").innerText = totalPL.toFixed(2);
+  document.getElementById("sumReturn").innerText = ret.toFixed(2);
+
+  document.getElementById("summary").style.display = "flex";
+  document.getElementById("resultTable").style.display = "table";
+}
+</script>
+
+</body>
+</html>
