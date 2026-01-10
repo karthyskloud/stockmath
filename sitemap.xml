@@ -26,4 +26,9 @@
     <priority>0.90</priority>
   </url>
 
+  <url>
+    <loc>https://www.stockmath.co.in/nifty50-calculator/</loc>
+    <priority>0.90</priority>
+  </url>
+
 </urlset>
