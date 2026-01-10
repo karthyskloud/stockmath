@@ -11,19 +11,29 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.stockmath.co.in/nifty50-calculator/">
 
+  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico">
 
+  <!-- Styles -->
   <style>
     body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; color:#222; }
     header { background:#111; color:#fff; padding:20px; text-align:center; }
     main { max-width:1100px; margin:30px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,.1); }
+
     h1 { text-align:center; }
+
     .controls { display:flex; gap:15px; flex-wrap:wrap; justify-content:center; margin-bottom:10px; }
+
     input, button { padding:10px; font-size:16px; }
+
     button { background:#007bff; color:#fff; border:none; border-radius:4px; cursor:pointer; }
     button:disabled { background:#999; cursor:not-allowed; }
 
-    .summary { display:flex; justify-content:space-around; flex-wrap:wrap; background:#f0f8ff; padding:15px; border-radius:6px; margin:20px 0; }
+    .summary {
+      display:flex; justify-content:space-around; flex-wrap:wrap;
+      background:#f0f8ff; padding:15px; border-radius:6px; margin:20px 0;
+    }
+
     table { width:100%; border-collapse:collapse; font-size:14px; }
     th, td { border:1px solid #ddd; padding:8px; text-align:right; }
     th { background:#f1f1f1; }
@@ -32,36 +42,107 @@
     .positive { color:green; font-weight:bold; }
     .negative { color:red; font-weight:bold; }
 
-    /* LOADER */
-    #loader {
+    .loader {
+      text-align:center;
+      font-size:16px;
+      padding:15px;
       display:none;
-      position:fixed;
-      top:0; left:0; right:0; bottom:0;
-      background:rgba(255,255,255,0.85);
-      z-index:9999;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      font-size:18px;
+      color:#007bff;
+      font-weight:bold;
     }
-    .spinner {
-      width:50px; height:50px;
-      border:5px solid #ddd;
-      border-top:5px solid #007bff;
-      border-radius:50%;
-      animation: spin 1s linear infinite;
-      margin-bottom:15px;
+
+    .info {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #444;
     }
-    @keyframes spin { from {transform:rotate(0)} to {transform:rotate(360deg)} }
+
+    .info h2 {
+      font-size: 16px;
+      margin-top: 18px;
+      border-left: 3px solid #007bff;
+      padding-left: 8px;
+    }
+
+    .tools-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .tools-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-pill {
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #007bff;
+      background: #f1f7ff;
+      border-radius: 20px;
+      text-decoration: none;
+    }
+
+    .tool-pill:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      padding: 20px;
+      color: #666;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 6px;
+    }
   </style>
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NIFTY 50 Investment Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/nifty50-calculator/",
+    "description": "Simulate how much your investment in NIFTY 50 would be worth today if you invested on any past date.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
+  }
+  </script>
 </head>
 
 <body>
-
-<div id="loader">
-  <div class="spinner"></div>
-  <div>Calculating NIFTY 50 returns... Please wait</div>
-</div>
 
 <header>
   <h2>StockMath</h2>
@@ -70,35 +151,114 @@
 
 <main>
 
-<h1>What If You Had Invested in NIFTY 50?</h1>
+  <h1>What If You Had Invested in NIFTY 50?</h1>
 
-<div class="controls">
-  <input type="date" id="investDate">
-  <input type="date" id="targetDate">
-  <input type="number" id="shares" value="1" min="1">
-  <button id="calcBtn" onclick="runCalculation()">Show My Returns</button>
-</div>
+  <p style="text-align:center; max-width:800px; margin:10px auto 25px; color:#555; font-size:16px;">
+    This NIFTY 50 calculator shows how much your money would be worth today if you had invested
+    equally in all NIFTY 50 companies on any past date.
+  </p>
 
-<div class="summary" id="summary" style="display:none;">
-  <div><strong>Total Investment:</strong> ₹<span id="sumInvest">0</span></div>
-  <div><strong>Current Value:</strong> ₹<span id="sumCurrent">0</span></div>
-  <div><strong>Total P/L:</strong> ₹<span id="sumPL">0</span></div>
-  <div><strong>Return:</strong> <span id="sumReturn">0</span>%</div>
-</div>
+  <!-- INPUT -->
+  <div style="background:#f8fbff; padding:20px; border-radius:8px;">
 
-<div style="overflow-x:auto;">
-  <table id="resultTable" style="display:none;">
-    <thead>
-      <tr>
-        <th>Company</th><th>Buy Date</th><th>Buy Price</th><th>Sell Date</th><th>Sell Price</th>
-        <th>Shares</th><th>Investment</th><th>Current Value</th><th>P/L</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-</div>
+    <div class="controls">
+      <div style="display:flex; flex-direction:column;">
+        <label>📅 Investment Date</label>
+        <input type="date" id="investDate" />
+      </div>
+
+      <div style="display:flex; flex-direction:column;">
+        <label>📅 Target Date (optional)</label>
+        <input type="date" id="targetDate" />
+      </div>
+
+      <div style="display:flex; flex-direction:column;">
+        <label>📊 Shares per company</label>
+        <input type="number" id="shares" value="1" min="1" />
+      </div>
+
+      <div style="display:flex; align-items:flex-end;">
+        <button id="calcBtn" onclick="runCalculation()">Show My Returns</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="loader" id="loader">⏳ Calculating portfolio, please wait...</div>
+
+  <!-- RESULTS -->
+  <div class="summary" id="summary" style="display:none;">
+    <div><strong>Total Investment:</strong> ₹<span id="sumInvest">0</span></div>
+    <div><strong>Current Value:</strong> ₹<span id="sumCurrent">0</span></div>
+    <div><strong>Total P/L:</strong> ₹<span id="sumPL">0</span></div>
+    <div><strong>Return:</strong> <span id="sumReturn">0</span>%</div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table id="resultTable" style="display:none;">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Buy Date</th>
+          <th>Buy Price</th>
+          <th>Sell Date</th>
+          <th>Sell Price</th>
+          <th>Shares</th>
+          <th>Investment</th>
+          <th>Current Value</th>
+          <th>P/L</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- SEO CONTENT -->
+  <section class="info">
+    <h2>How This NIFTY 50 Calculator Works</h2>
+    <p>This tool simulates investing equally in all NIFTY 50 companies on a selected date.</p>
+
+    <h2>Example</h2>
+    <p>If you invested 1 share in each NIFTY 50 company during the COVID crash in March 2020, this shows the value today.</p>
+
+    <h2>Who should use this?</h2>
+    <ul>
+      <li>Long-term investors</li>
+      <li>Index investors</li>
+      <li>Curious investors testing scenarios</li>
+    </ul>
+
+    <h2>FAQs</h2>
+    <p><strong>Does this include dividends?</strong><br>No.</p>
+    <p><strong>Does this include taxes or charges?</strong><br>No.</p>
+
+    <p style="margin-top:12px;font-size:13px;color:#666;">
+      Disclaimer: This calculator is for educational purposes only and does not constitute financial advice.
+    </p>
+  </section>
+
+  <!-- INTERNAL LINKS -->
+  <div class="tools-section">
+    <div class="tools-title">Try other calculators</div>
+    <div class="tools-list">
+      <a href="/" class="tool-pill">Stock Average</a>
+      <a href="/profit-loss-calculator/" class="tool-pill">Profit / Loss</a>
+      <a href="/position-size-calculator/" class="tool-pill">Position Size</a>
+      <a href="/trading-charges-calculator/" class="tool-pill">Trading Charges</a>
+      <a href="/stock-split-calculator/" class="tool-pill">Stock Split</a>
+    </div>
+  </div>
 
 </main>
+
+<footer>
+  <p>
+    <a href="/about">About</a> |
+    <a href="/disclaimer">Disclaimer</a> |
+    <a href="/privacy-policy">Privacy Policy</a>
+  </p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
 
 <script>
 async function loadJSON(url) {
@@ -122,17 +282,22 @@ function mergePrices(history, current) {
 }
 
 async function runCalculation() {
+  const btn = document.getElementById("calcBtn");
+  const loader = document.getElementById("loader");
+
+  btn.disabled = true;
+  loader.style.display = "block";
+
   const investDate = document.getElementById("investDate").value;
   const targetDateInput = document.getElementById("targetDate").value;
   const shares = parseInt(document.getElementById("shares").value || "1", 10);
 
   if (!investDate) {
     alert("Please select investment date");
+    btn.disabled = false;
+    loader.style.display = "none";
     return;
   }
-
-  document.getElementById("loader").style.display = "flex";
-  document.getElementById("calcBtn").disabled = true;
 
   const symbols = await loadJSON("/data/nifty50.json");
 
@@ -160,8 +325,6 @@ async function runCalculation() {
         sell = { date: latestDate, price: merged[latestDate] };
       }
 
-      if (!sell) continue;
-
       const investment = buy.price * shares;
       const currentValue = sell.price * shares;
       const pl = currentValue - investment;
@@ -182,7 +345,8 @@ async function runCalculation() {
         <td class="${pl >= 0 ? "positive" : "negative"}">${pl.toFixed(2)}</td>
       `;
       tbody.appendChild(tr);
-    } catch(e) {
+
+    } catch (e) {
       console.warn("Skipping", sym, e);
     }
   }
@@ -198,8 +362,8 @@ async function runCalculation() {
   document.getElementById("summary").style.display = "flex";
   document.getElementById("resultTable").style.display = "table";
 
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("calcBtn").disabled = false;
+  loader.style.display = "none";
+  btn.disabled = false;
 }
 </script>
 
