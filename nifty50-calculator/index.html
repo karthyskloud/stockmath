@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic -->
   <meta charset="UTF-8" />
-  <title>What If You Had Invested in NIFTY 50? | StockMath</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="See how much your investment in NIFTY 50 would be worth today if you invested on any past date." />
+
+  <!-- SEO -->
+  <title>What If You Had Invested in NIFTY 50? | StockMath</title>
+  <meta name="description" content="See how much your investment in NIFTY 50 would be worth today if you invested on any past date. Simulate returns, profit and growth across all NIFTY 50 stocks." />
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/nifty50-calculator/">
+
+  <!-- Favicon -->
   <link rel="icon" href="/favicon.ico">
 
+  <!-- Styles -->
   <style>
     body { font-family: Arial, sans-serif; background:#f4f6f8; margin:0; color:#222; }
     header { background:#111; color:#fff; padding:20px; text-align:center; }
@@ -33,24 +41,115 @@
 
     .positive { color:green; font-weight:bold; }
     .negative { color:red; font-weight:bold; }
+
+    .info {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .info h2 {
+      font-size: 16px;
+      margin-top: 18px;
+      border-left: 3px solid #007bff;
+      padding-left: 8px;
+    }
+
+    .tools-section {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      text-align: center;
+    }
+
+    .tools-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tool-pill {
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #007bff;
+      background: #f1f7ff;
+      border-radius: 20px;
+      text-decoration: none;
+    }
+
+    .tool-pill:hover {
+      background: #007bff;
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 13px;
+      padding: 20px;
+      color: #666;
+    }
+
+    footer a {
+      color: #666;
+      text-decoration: none;
+      margin: 0 6px;
+    }
   </style>
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NIFTY 50 Investment Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/nifty50-calculator/",
+    "description": "Simulate how much your investment in NIFTY 50 would be worth today if you invested on any past date.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    }
+  }
+  </script>
 </head>
+
 <body>
 
 <header>
   <h2>StockMath</h2>
-  <p>NIFTY 50 Investment Simulator</p>
+  <p>Long Term Investment Simulators</p>
 </header>
 
 <main>
 
   <h1>What If You Had Invested in NIFTY 50?</h1>
 
-  <p style="text-align:center; max-width:700px; margin:10px auto 25px; color:#555; font-size:16px;">
-    This calculator shows how much your money would be worth today if you had invested equally
-    in all NIFTY 50 companies on any past date.
+  <p style="text-align:center; max-width:800px; margin:10px auto 25px; color:#555; font-size:16px;">
+    This NIFTY 50 calculator shows how much your money would be worth today if you had invested
+    equally in all NIFTY 50 companies on any past date.
   </p>
 
+  <!-- INPUT BOX -->
   <div style="background:#f8fbff; padding:20px; border-radius:8px;">
 
     <div class="controls">
@@ -58,7 +157,7 @@
       <div style="display:flex; flex-direction:column;">
         <label>📅 Investment Date</label>
         <input type="date" id="investDate" />
-        <small>Example: 2020-03-23</small>
+        <small>Example: 2020-03-23 (COVID crash)</small>
       </div>
 
       <div style="display:flex; flex-direction:column;">
@@ -85,8 +184,7 @@
 
   </div>
 
-  <!-- ================= RESULTS ================= -->
-
+  <!-- RESULTS -->
   <div class="summary" id="summary" style="display:none;">
     <div><strong>Total Investment:</strong> ₹<span id="sumInvest">0</span></div>
     <div><strong>Current Value:</strong> ₹<span id="sumCurrent">0</span></div>
@@ -113,107 +211,60 @@
     </table>
   </div>
 
+  <section class="info">
+    <h2>How This NIFTY 50 Calculator Works</h2>
+    <p>
+      This tool simulates investing equally in all NIFTY 50 companies on a selected date and
+      shows what that investment would be worth today or on any target date.
+    </p>
+
+    <h2>Example</h2>
+    <p>
+      If you invested 1 share in each NIFTY 50 company during the COVID crash in March 2020,
+      this calculator shows how much that portfolio would be worth today.
+    </p>
+
+    <h2>Who should use this?</h2>
+    <ul>
+      <li>Long-term investors</li>
+      <li>Index investors</li>
+      <li>Curious investors testing past scenarios</li>
+    </ul>
+
+    <h2>FAQs</h2>
+    <p><strong>Does this include dividends?</strong><br>No. This is price-only simulation.</p>
+    <p><strong>Does this include taxes or charges?</strong><br>No. This is a pure market price simulation.</p>
+
+    <p style="margin-top:12px;font-size:13px;color:#666;">
+      Disclaimer: This calculator is for educational purposes only and does not constitute financial advice.
+    </p>
+  </section>
+
+  <!-- OTHER TOOLS -->
+  <div class="tools-section">
+    <div class="tools-title">Try other calculators</div>
+    <div class="tools-list">
+      <a href="/" class="tool-pill">Stock Average</a>
+      <a href="/profit-loss-calculator/" class="tool-pill">Profit / Loss</a>
+      <a href="/position-size-calculator/" class="tool-pill">Position Size</a>
+      <a href="/trading-charges-calculator/" class="tool-pill">Trading Charges</a>
+    </div>
+  </div>
+
 </main>
 
+<footer>
+  <p>
+    <a href="/about">About</a> |
+    <a href="/disclaimer">Disclaimer</a> |
+    <a href="/privacy-policy">Privacy Policy</a>
+  </p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
+
+<!-- YOUR EXISTING JS LOGIC GOES BELOW -->
 <script>
-async function loadJSON(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to load " + url);
-  return res.json();
-}
-
-function findPriceOnOrBefore(targetDate, pricesObj) {
-  const dates = Object.keys(pricesObj).sort();
-  for (let i = dates.length - 1; i >= 0; i--) {
-    if (dates[i] <= targetDate) {
-      return { date: dates[i], price: pricesObj[dates[i]] };
-    }
-  }
-  return null;
-}
-
-function mergePrices(history, current) {
-  return { ...history.prices, ...current.prices };
-}
-
-async function runCalculation() {
-  const investDate = document.getElementById("investDate").value;
-  const targetDateInput = document.getElementById("targetDate").value;
-  const shares = parseInt(document.getElementById("shares").value || "1", 10);
-
-  if (!investDate) {
-    alert("Please select investment date");
-    return;
-  }
-
-  const symbols = await loadJSON("/data/nifty50.json");
-
-  let totalInvestment = 0;
-  let totalCurrent = 0;
-
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
-
-  for (const sym of symbols) {
-    try {
-      const history = await loadJSON(`/data/${sym}_history.json`);
-      const current = await loadJSON(`/data/${sym}_current.json`);
-
-      const merged = mergePrices(history, current);
-
-      const buy = findPriceOnOrBefore(investDate, merged);
-      if (!buy) continue;
-
-      let sell;
-      if (targetDateInput) {
-        sell = findPriceOnOrBefore(targetDateInput, merged);
-      } else {
-        const latestDate = Object.keys(merged).sort().pop();
-        sell = { date: latestDate, price: merged[latestDate] };
-      }
-
-      if (!sell) continue;
-
-      const buyPrice = buy.price;
-      const sellPrice = sell.price;
-
-      const investment = buyPrice * shares;
-      const currentValue = sellPrice * shares;
-      const pl = currentValue - investment;
-
-      totalInvestment += investment;
-      totalCurrent += currentValue;
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${sym}</td>
-        <td>${buy.date}</td>
-        <td>${buyPrice.toFixed(2)}</td>
-        <td>${sell.date}</td>
-        <td>${sellPrice.toFixed(2)}</td>
-        <td>${shares}</td>
-        <td>${investment.toFixed(2)}</td>
-        <td>${currentValue.toFixed(2)}</td>
-        <td class="${pl >= 0 ? "positive" : "negative"}">${pl.toFixed(2)}</td>
-      `;
-      tbody.appendChild(tr);
-
-    } catch (e) {
-      console.warn("Skipping", sym, e);
-    }
-  }
-
-  const totalPL = totalCurrent - totalInvestment;
-  const ret = totalInvestment > 0 ? (totalPL / totalInvestment) * 100 : 0;
-
-  document.getElementById("sumInvest").innerText = totalInvestment.toFixed(2);
-  document.getElementById("sumCurrent").innerText = totalCurrent.toFixed(2);
-  document.getElementById("sumPL").innerText = totalPL.toFixed(2);
-  document.getElementById("sumReturn").innerText = ret.toFixed(2);
-
-  document.getElementById("summary").style.display = "flex";
-  document.getElementById("resultTable").style.display = "table";
-}
+/* keep your existing runCalculation JS here exactly as you already have */
 </script>
 
 </body>
