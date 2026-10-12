@@ -282,68 +282,95 @@ function mergePrices(history, current) {
   return { ...history.prices, ...current };
 }
 
+function getTodayInIndia() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Kolkata",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+  const dateParts = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
+  return `${dateParts.year}-${dateParts.month}-${dateParts.day}`;
+}
+
 async function runCalculation() {
   const btn = document.getElementById("calcBtn");
   const loader = document.getElementById("loader");
   const dataWarning = document.getElementById("dataWarning");
+  const summary = document.getElementById("summary");
+  const resultTable = document.getElementById("resultTable");
+  const tbody = document.getElementById("tbody");
 
   btn.disabled = true;
   loader.style.display = "block";
   dataWarning.style.display = "none";
   dataWarning.innerText = "";
+  summary.style.display = "none";
+  resultTable.style.display = "none";
+  tbody.innerHTML = "";
 
   const investDate = document.getElementById("investDate").value;
   const targetDateInput = document.getElementById("targetDate").value;
-  const shares = parseInt(document.getElementById("shares").value || "1", 10);
+  const shares = Number(document.getElementById("shares").value || "1");
 
-  if (!investDate) {
-    alert("Please select investment date");
-    btn.disabled = false;
-    loader.style.display = "none";
-    return;
-  }
+  try {
+    if (!investDate) throw new Error("Please select an investment date.");
+    if (!Number.isSafeInteger(shares) || shares < 1) {
+      throw new Error("Shares per company must be a positive whole number.");
+    }
+    if (targetDateInput && targetDateInput < investDate) {
+      throw new Error("Target date must be on or after the investment date.");
+    }
 
-  const symbols = await loadJSON("/data/nifty50.json");
+    const symbols = await loadJSON("/data/nifty50.json");
+    if (!Array.isArray(symbols) || symbols.length !== 50 || new Set(symbols).size !== 50) {
+      throw new Error("The NIFTY 50 roster is incomplete. Please refresh the site data.");
+    }
 
-  let totalInvestment = 0;
-  let totalCurrent = 0;
-  const missingSymbols = [];
-  const currentSellDates = [];
+    let totalInvestment = 0;
+    let totalCurrent = 0;
+    const incompleteSymbols = [];
+    const currentSellDates = [];
 
-  const tbody = document.getElementById("tbody");
-  tbody.innerHTML = "";
+    for (const sym of symbols) {
+      try {
+        const history = await loadJSON(`/data/${sym}_history.json`);
+        const current = await loadJSON(`/data/${sym}_current.json`);
 
-  for (const sym of symbols) {
-    try {
-      const history = await loadJSON(`/data/${sym}_history.json`);
-      const current = await loadJSON(`/data/${sym}_current.json`);
+        const merged = mergePrices(history, current);
 
-      const merged = mergePrices(history, current);
+        const buy = findPriceOnOrBefore(investDate, merged);
+        if (!buy) {
+          incompleteSymbols.push(sym);
+          continue;
+        }
 
-      const buy = findPriceOnOrBefore(investDate, merged);
-      if (!buy) {
-        if (!targetDateInput) missingSymbols.push(sym);
-        continue;
-      }
+        let sell;
+        if (targetDateInput) {
+          sell = findPriceOnOrBefore(targetDateInput, merged);
+        } else {
+          const latestDate = Object.keys(merged).sort().pop();
+          if (!latestDate) {
+            incompleteSymbols.push(sym);
+            continue;
+          }
+          sell = { date: latestDate, price: merged[latestDate] };
+          currentSellDates.push({ symbol: sym, date: sell.date });
+        }
+        if (!sell) {
+          incompleteSymbols.push(sym);
+          continue;
+        }
 
-      let sell;
-      if (targetDateInput) {
-        sell = findPriceOnOrBefore(targetDateInput, merged);
-      } else {
-        const latestDate = Object.keys(merged).sort().pop();
-        sell = { date: latestDate, price: merged[latestDate] };
-        currentSellDates.push({ symbol: sym, date: sell.date });
-      }
+        const investment = buy.price * shares;
+        const currentValue = sell.price * shares;
+        const pl = currentValue - investment;
 
-      const investment = buy.price * shares;
-      const currentValue = sell.price * shares;
-      const pl = currentValue - investment;
+        totalInvestment += investment;
+        totalCurrent += currentValue;
 
-      totalInvestment += investment;
-      totalCurrent += currentValue;
-
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
         <td>${sym}</td>
         <td>${buy.date}</td>
         <td>${buy.price.toFixed(2)}</td>
@@ -354,50 +381,57 @@ async function runCalculation() {
         <td>${currentValue.toFixed(2)}</td>
         <td class="${pl >= 0 ? "positive" : "negative"}">${pl.toFixed(2)}</td>
       `;
-      tbody.appendChild(tr);
+        tbody.appendChild(tr);
 
-    } catch (e) {
-      console.warn("Skipping", sym, e);
-      if (!targetDateInput) missingSymbols.push(sym);
+      } catch (error) {
+        console.warn("Unable to load prices for", sym, error);
+        incompleteSymbols.push(sym);
+      }
     }
-  }
 
-  if (!targetDateInput) {
-    const today = new Date().toISOString().slice(0, 10);
-    const todayTime = Date.parse(`${today}T00:00:00Z`);
-    const staleSymbols = currentSellDates
-      .filter(({ date }) => (todayTime - Date.parse(`${date}T00:00:00Z`)) / 86400000 > 7)
-      .map(({ symbol }) => symbol);
-    const incompleteSymbols = [...new Set([...missingSymbols, ...staleSymbols])];
+    if (!targetDateInput) {
+      const todayTime = Date.parse(`${getTodayInIndia()}T00:00:00Z`);
+      const staleSymbols = currentSellDates
+        .filter(({ date }) => (todayTime - Date.parse(`${date}T00:00:00Z`)) / 86400000 > 7)
+        .map(({ symbol }) => symbol);
+      incompleteSymbols.push(...staleSymbols);
+    }
 
-    if (incompleteSymbols.length) {
-      const shownSymbols = incompleteSymbols.slice(0, 8).join(", ");
-      const remainingCount = incompleteSymbols.length - 8;
+    const uniqueIncompleteSymbols = [...new Set(incompleteSymbols)];
+    if (uniqueIncompleteSymbols.length) {
+      const shownSymbols = uniqueIncompleteSymbols.slice(0, 8).join(", ");
+      const remainingCount = uniqueIncompleteSymbols.length - 8;
       const remainingText = remainingCount > 0 ? ` and ${remainingCount} more` : "";
       tbody.innerHTML = "";
-      document.getElementById("summary").style.display = "none";
-      document.getElementById("resultTable").style.display = "none";
-      dataWarning.innerText = `Current values are incomplete or over 7 days old for: ${shownSymbols}${remainingText}. Refresh the data files and try again.`;
+      const reason = targetDateInput
+        ? "Prices are unavailable for the selected date"
+        : "Current prices are missing or over 7 days old";
+      dataWarning.innerText = `${reason} for: ${shownSymbols}${remainingText}. No partial portfolio was calculated.`;
       dataWarning.style.display = "block";
-      loader.style.display = "none";
-      btn.disabled = false;
       return;
     }
+
+    if (totalInvestment <= 0) throw new Error("No prices were available for this calculation.");
+
+    const totalPL = totalCurrent - totalInvestment;
+    const ret = (totalPL / totalInvestment) * 100;
+
+    document.getElementById("sumInvest").innerText = totalInvestment.toFixed(2);
+    document.getElementById("sumCurrent").innerText = totalCurrent.toFixed(2);
+    document.getElementById("sumPL").innerText = totalPL.toFixed(2);
+    document.getElementById("sumReturn").innerText = ret.toFixed(2);
+
+    summary.style.display = "flex";
+    resultTable.style.display = "table";
+  } catch (error) {
+    console.error("NIFTY 50 calculation failed", error);
+    dataWarning.innerText = error.message || "Unable to load the NIFTY 50 data. Please try again.";
+    dataWarning.style.display = "block";
+  } finally {
+    loader.style.display = "none";
+    btn.disabled = false;
   }
 
-  const totalPL = totalCurrent - totalInvestment;
-  const ret = (totalPL / totalInvestment) * 100;
-
-  document.getElementById("sumInvest").innerText = totalInvestment.toFixed(2);
-  document.getElementById("sumCurrent").innerText = totalCurrent.toFixed(2);
-  document.getElementById("sumPL").innerText = totalPL.toFixed(2);
-  document.getElementById("sumReturn").innerText = ret.toFixed(2);
-
-  document.getElementById("summary").style.display = "flex";
-  document.getElementById("resultTable").style.display = "table";
-
-  loader.style.display = "none";
-  btn.disabled = false;
 }
 </script>
 
