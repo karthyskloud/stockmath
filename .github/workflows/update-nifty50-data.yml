@@ -1,0 +1,58 @@
+name: Update NIFTY 50 company histories
+
+on:
+  workflow_dispatch:
+    inputs:
+      full_backfill:
+        description: Fetch maximum available history for all 50 symbols
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 13 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-nifty50-data
+  cancel-in-progress: false
+
+jobs:
+  update-data:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Yahoo Finance client
+        run: python -m pip install yfinance==1.7.0
+
+      - name: Update roster and company price histories
+        if: github.event_name == 'schedule' || !inputs.full_backfill
+        run: python scripts/update_nifty50_data.py
+
+      - name: Force full history backfill
+        if: github.event_name == 'workflow_dispatch' && inputs.full_backfill
+        run: python scripts/update_nifty50_data.py --full-backfill
+
+      - name: Commit updated data
+        shell: bash
+        run: |
+          git add data
+          if git diff --cached --quiet; then
+            echo "No market data changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update NIFTY 50 company histories"
+          git push origin HEAD:main
