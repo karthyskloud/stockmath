@@ -2,10 +2,26 @@ name: Deploy Static Site to S3
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.html"
+      - "data/**"
+      - ".github/workflows/deploy.yml"
+      - ".github/workflows/update-nifty50-data.yml"
+  workflow_run:
+    workflows:
+      - Update NIFTY 50 company histories
+    types:
+      - completed
+    branches:
+      - main
 
 jobs:
   deploy:
     name: Deploy to S3
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     steps:
@@ -19,9 +35,27 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
+      - name: Remove private updater scripts from public bucket
+        run: aws s3 rm s3://stockmath-co-in/scripts/ --recursive
+
       - name: Sync files to S3 (skip .github)
         run: |
           aws s3 sync . s3://stockmath-co-in \
             --delete \
             --exclude ".github/*" \
+            --exclude "scripts/*" \
             --exclude ".git/*"
+
+      - name: Invalidate CloudFront cache
+        shell: bash
+        run: |
+          distribution_id="$(aws cloudfront list-distributions --output json \
+            | jq -r '.DistributionList.Items[] | select(((.Aliases.Items // []) | index("www.stockmath.co.in")) != null) | .Id' \
+            | head -n 1)"
+          if [[ -z "$distribution_id" ]]; then
+            echo "No CloudFront distribution found for www.stockmath.co.in" >&2
+            exit 1
+          fi
+          aws cloudfront create-invalidation \
+            --distribution-id "$distribution_id" \
+            --paths "/*"
