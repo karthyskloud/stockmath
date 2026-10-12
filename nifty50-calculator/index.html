@@ -185,6 +185,7 @@
   </div>
 
   <div class="loader" id="loader">⏳ Calculating portfolio, please wait...</div>
+  <p id="dataWarning" role="alert" style="display:none; color:#b42318; margin:12px 0; text-align:center;"></p>
 
   <!-- RESULTS -->
   <div class="summary" id="summary" style="display:none;">
@@ -284,9 +285,12 @@ function mergePrices(history, current) {
 async function runCalculation() {
   const btn = document.getElementById("calcBtn");
   const loader = document.getElementById("loader");
+  const dataWarning = document.getElementById("dataWarning");
 
   btn.disabled = true;
   loader.style.display = "block";
+  dataWarning.style.display = "none";
+  dataWarning.innerText = "";
 
   const investDate = document.getElementById("investDate").value;
   const targetDateInput = document.getElementById("targetDate").value;
@@ -303,6 +307,8 @@ async function runCalculation() {
 
   let totalInvestment = 0;
   let totalCurrent = 0;
+  const missingSymbols = [];
+  const currentSellDates = [];
 
   const tbody = document.getElementById("tbody");
   tbody.innerHTML = "";
@@ -315,7 +321,10 @@ async function runCalculation() {
       const merged = mergePrices(history, current);
 
       const buy = findPriceOnOrBefore(investDate, merged);
-      if (!buy) continue;
+      if (!buy) {
+        if (!targetDateInput) missingSymbols.push(sym);
+        continue;
+      }
 
       let sell;
       if (targetDateInput) {
@@ -323,6 +332,7 @@ async function runCalculation() {
       } else {
         const latestDate = Object.keys(merged).sort().pop();
         sell = { date: latestDate, price: merged[latestDate] };
+        currentSellDates.push({ symbol: sym, date: sell.date });
       }
 
       const investment = buy.price * shares;
@@ -348,6 +358,30 @@ async function runCalculation() {
 
     } catch (e) {
       console.warn("Skipping", sym, e);
+      if (!targetDateInput) missingSymbols.push(sym);
+    }
+  }
+
+  if (!targetDateInput) {
+    const today = new Date().toISOString().slice(0, 10);
+    const todayTime = Date.parse(`${today}T00:00:00Z`);
+    const staleSymbols = currentSellDates
+      .filter(({ date }) => (todayTime - Date.parse(`${date}T00:00:00Z`)) / 86400000 > 7)
+      .map(({ symbol }) => symbol);
+    const incompleteSymbols = [...new Set([...missingSymbols, ...staleSymbols])];
+
+    if (incompleteSymbols.length) {
+      const shownSymbols = incompleteSymbols.slice(0, 8).join(", ");
+      const remainingCount = incompleteSymbols.length - 8;
+      const remainingText = remainingCount > 0 ? ` and ${remainingCount} more` : "";
+      tbody.innerHTML = "";
+      document.getElementById("summary").style.display = "none";
+      document.getElementById("resultTable").style.display = "none";
+      dataWarning.innerText = `Current values are incomplete or over 7 days old for: ${shownSymbols}${remainingText}. Refresh the data files and try again.`;
+      dataWarning.style.display = "block";
+      loader.style.display = "none";
+      btn.disabled = false;
+      return;
     }
   }
 
