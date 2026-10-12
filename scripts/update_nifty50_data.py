@@ -21,6 +21,7 @@ ROSTER_PATH = DATA_DIR / "nifty50.json"
 CONSTITUENTS_URL = "https://www.niftyindices.com/IndexConstituent/ind_nifty50list.csv"
 OVERLAP_DAYS = 7
 CURRENT_DAYS = 10
+MAX_STALENESS_DAYS = 7
 MAX_ATTEMPTS = 3
 STATE_PATH = DATA_DIR / "nifty50_update_state.json"
 
@@ -170,6 +171,20 @@ def update_data(force_backfill: bool = False) -> None:
     if len(histories) != 50:
         raise RuntimeError(f"Refusing to write incomplete roster: got {len(histories)} histories")
 
+    latest_overall = date.fromisoformat(max(latest_dates.values()))
+    today = datetime.now(timezone.utc).date()
+    stale_symbols = [
+        symbol
+        for symbol, latest_date in latest_dates.items()
+        if (today - date.fromisoformat(latest_date)).days > MAX_STALENESS_DAYS
+        or (latest_overall - date.fromisoformat(latest_date)).days > MAX_STALENESS_DAYS
+    ]
+    if stale_symbols:
+        raise RuntimeError(
+            "Refusing to publish stale or incomplete prices for: "
+            + ", ".join(stale_symbols)
+        )
+
     for symbol in symbols:
         write_json_atomic(
             DATA_DIR / f"{symbol}_history.json",
@@ -186,8 +201,10 @@ def update_data(force_backfill: bool = False) -> None:
             "updated_at": datetime.now(timezone.utc).isoformat(),
         },
     )
-    latest_overall = max(latest_dates.values())
-    print(f"Updated all 50 current constituents. Latest available close: {latest_overall}")
+    print(
+        "Updated all 50 current constituents. Latest available close: "
+        f"{latest_overall.isoformat()}"
+    )
 
 
 if __name__ == "__main__":
