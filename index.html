@@ -72,6 +72,26 @@
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .purchase-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .add-purchase {
+      margin-bottom: 12px;
+      padding: 9px 12px;
+      border: 1px solid #007bff;
+      background: #fff;
+      color: #0056b3;
+    }
+
+    .add-purchase:hover {
+      background: #f1f7ff;
+      color: #0056b3;
     }
 
     button {
@@ -209,19 +229,34 @@
     when purchasing shares at different prices and quantities.
   </p>
 
-  <input type="number" id="price1" placeholder="Buy Price 1 (₹)">
-  <input type="number" id="qty1" placeholder="Quantity 1">
+  <div id="purchaseRows">
+    <div class="purchase-row">
+      <div>
+        <label class="input-label" for="price1">Buy Price 1 (₹)</label>
+        <input class="buy-price" type="number" id="price1" min="0" step="any">
+      </div>
+      <div>
+        <label class="input-label" for="qty1">Quantity 1</label>
+        <input class="buy-quantity" type="number" id="qty1" min="1" step="1">
+      </div>
+    </div>
+    <div class="purchase-row">
+      <div>
+        <label class="input-label" for="price2">Buy Price 2 (₹)</label>
+        <input class="buy-price" type="number" id="price2" min="0" step="any">
+      </div>
+      <div>
+        <label class="input-label" for="qty2">Quantity 2</label>
+        <input class="buy-quantity" type="number" id="qty2" min="1" step="1">
+      </div>
+    </div>
+  </div>
 
-  <input type="number" id="price2" placeholder="Buy Price 2 (₹)">
-  <input type="number" id="qty2" placeholder="Quantity 2">
+  <button class="add-purchase" type="button" onclick="addPurchaseRow()">Add purchase</button>
 
   <button onclick="calculateAverage()">Calculate Average</button>
 
-  <div class="result" id="output"></div>
-
-  <p style="text-align:center;font-size:13px;color:#666;margin-top:10px;">
-    Looking for other tools? Scroll down 👇
-  </p>
+  <div class="result" id="output" hidden></div>
 
   <section class="info">
     <h2>How the Stock Average Calculator Works</h2>
@@ -261,6 +296,7 @@
       <a href="https://www.stockmath.co.in/stock-split-calculator/" class="tool-pill">Stock Split</a>
       <a href="https://www.stockmath.co.in/position-size-calculator/" class="tool-pill">Position Size</a>
       <a href="https://www.stockmath.co.in/trading-charges-calculator/" class="tool-pill">Trading Charges</a>
+      <a href="https://www.stockmath.co.in/brokerage-calculator/" class="tool-pill">Brokerage</a>
       <a href="https://www.stockmath.co.in/nifty50-calculator/" class="tool-pill">What If NIFTY 50?</a>
 
     </div>
@@ -279,29 +315,71 @@
 
 <script>
 function calculateAverage() {
-  const p1 = parseFloat(document.getElementById("price1").value) || 0;
-  const q1 = parseFloat(document.getElementById("qty1").value) || 0;
-  const p2 = parseFloat(document.getElementById("price2").value) || 0;
-  const q2 = parseFloat(document.getElementById("qty2").value) || 0;
+  const output = document.getElementById("output");
+  const rows = [...document.querySelectorAll(".purchase-row")];
+  let totalQty = 0;
+  let totalCost = 0;
+  output.hidden = false;
 
-  const totalQty = q1 + q2;
+  for (const row of rows) {
+    const priceInput = row.querySelector(".buy-price");
+    const quantityInput = row.querySelector(".buy-quantity");
+    if (!priceInput.value && !quantityInput.value) continue;
+
+    const price = Number(priceInput.value);
+    const quantity = Number(quantityInput.value);
+    if (!Number.isFinite(price) || price <= 0 || !Number.isSafeInteger(quantity) || quantity < 1) {
+      output.innerHTML = "Enter a valid price and whole-share quantity for each purchase.";
+      return;
+    }
+
+    totalCost += price * quantity;
+    totalQty += quantity;
+  }
+
   if (totalQty === 0) {
-    document.getElementById("output").innerHTML =
-      "Please enter valid price and quantity.";
+    output.innerHTML = "Enter at least one purchase with a valid price and quantity.";
     return;
   }
 
-  const totalCost = (p1 * q1) + (p2 * q2);
   const avgPrice = (totalCost / totalQty).toFixed(2);
 
-  document.getElementById("output").innerHTML = `
+  output.innerHTML = `
     <strong>Total Quantity:</strong> ${totalQty}<br>
     <strong>Total Investment:</strong> ₹${totalCost.toFixed(2)}<br>
     <strong>Average Price:</strong> ₹${avgPrice}
   `;
 }
+
+function addPurchaseRow() {
+  const container = document.getElementById("purchaseRows");
+  const purchaseCount = container.querySelectorAll(".purchase-row").length;
+  if (purchaseCount >= 10) return;
+
+  const nextNumber = purchaseCount + 1;
+  const row = document.createElement("div");
+  row.className = "purchase-row";
+  row.innerHTML = `
+    <div>
+      <label class="input-label" for="price${nextNumber}">Buy Price ${nextNumber} (₹)</label>
+      <input class="buy-price" type="number" id="price${nextNumber}" min="0" step="any">
+    </div>
+    <div>
+      <label class="input-label" for="qty${nextNumber}">Quantity ${nextNumber}</label>
+      <input class="buy-quantity" type="number" id="qty${nextNumber}" min="1" step="1">
+    </div>
+  `;
+  container.appendChild(row);
+
+  if (nextNumber === 10) {
+    const addButton = document.querySelector(".add-purchase");
+    addButton.disabled = true;
+    addButton.innerText = "Maximum 10 purchases";
+  }
+}
 </script>
 
+<script src="/site-nav.js" defer></script>
 </body>
 </html>
 

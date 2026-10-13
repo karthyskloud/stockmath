@@ -209,18 +209,18 @@
     risk per trade, entry price and stop-loss.
   </p>
 
-  <input type="number" id="capital" placeholder="Total Capital (₹)">
-  <input type="number" id="risk" placeholder="Risk per Trade (%)">
-  <input type="number" id="entry" placeholder="Entry Price (₹)">
-  <input type="number" id="stop" placeholder="Stop Loss Price (₹)">
+  <label class="input-label" for="capital">Total Capital (₹)</label>
+  <input type="number" id="capital" placeholder="e.g. 100000">
+  <label class="input-label" for="risk">Risk per Trade (%)</label>
+  <input type="number" id="risk" placeholder="e.g. 1">
+  <label class="input-label" for="entry">Entry Price (₹)</label>
+  <input type="number" id="entry" placeholder="e.g. 250">
+  <label class="input-label" for="stop">Stop Loss Price (₹)</label>
+  <input type="number" id="stop" placeholder="e.g. 240">
 
   <button onclick="calcPos()">Calculate Position Size</button>
 
   <div class="result" id="res"></div>
-
-  <p style="text-align:center;font-size:13px;color:#666;margin-top:10px;">
-    Looking for other tools? Scroll down 👇
-  </p>
 
   <section class="info">
     <h2>Why Position Size Matters</h2>
@@ -294,5 +294,6 @@ function calcPos() {
 }
 </script>
 
+<script src="/site-nav.js" defer></script>
 </body>
 </html>

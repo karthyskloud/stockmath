@@ -26,9 +26,12 @@ button{background:#007bff;color:#fff;border:none;}
 <main>
 <h1>Brokerage Calculator India</h1>
 
-<input type="number" id="buy" placeholder="Buy Price (₹)">
-<input type="number" id="sell" placeholder="Sell Price (₹)">
-<input type="number" id="qty" placeholder="Quantity">
+<label class="input-label" for="buy">Buy Price (₹)</label>
+<input type="number" id="buy" placeholder="e.g. 100">
+<label class="input-label" for="sell">Sell Price (₹)</label>
+<input type="number" id="sell" placeholder="e.g. 110">
+<label class="input-label" for="qty">Quantity (shares)</label>
+<input type="number" id="qty" placeholder="e.g. 50">
 
 <button onclick="calc()">Calculate</button>
 <div class="result" id="out"></div>
@@ -45,5 +48,6 @@ function calc(){
                 <strong>Net P/L:</strong> ₹${pnl.toFixed(2)}`;
 }
 </script>
+<script src="/site-nav.js" defer></script>
 </body>
 </html>

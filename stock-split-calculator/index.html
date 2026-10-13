@@ -208,17 +208,16 @@
     Calculate new share price and quantity after a stock split.
   </p>
 
-  <input type="number" id="price" placeholder="Current Share Price (₹)">
-  <input type="number" id="qty" placeholder="Current Quantity">
-  <input type="number" id="ratio" placeholder="Split Ratio (e.g. 2 for 1:2)">
+  <label class="input-label" for="price">Current Share Price (₹)</label>
+  <input type="number" id="price" placeholder="e.g. 200">
+  <label class="input-label" for="qty">Current Quantity (shares)</label>
+  <input type="number" id="qty" placeholder="e.g. 10">
+  <label class="input-label" for="ratio">New Shares per Existing Share</label>
+  <input type="number" id="ratio" placeholder="e.g. 2 for a 1:2 split">
 
   <button onclick="calcSplit()">Calculate</button>
 
   <div class="result" id="output"></div>
-
-  <p style="text-align:center;font-size:13px;color:#666;margin-top:10px;">
-    Looking for other tools? Scroll down 👇
-  </p>
 
   <section class="info">
     <h2>What is a Stock Split?</h2>
@@ -287,5 +286,6 @@ function calcSplit() {
 }
 </script>
 
+<script src="/site-nav.js" defer></script>
 </body>
 </html>

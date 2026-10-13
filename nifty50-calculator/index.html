@@ -30,11 +30,14 @@
     button:disabled { background:#999; cursor:not-allowed; }
 
     .summary {
-      display:flex; justify-content:space-around; flex-wrap:wrap;
+      display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px;
       background:#f0f8ff; padding:15px; border-radius:6px; margin:20px 0;
     }
 
+    .summary > div { min-width:0; text-align:center; overflow-wrap:anywhere; }
+
     table { width:100%; border-collapse:collapse; font-size:14px; }
+    #resultTable { min-width:880px; }
     th, td { border:1px solid #ddd; padding:8px; text-align:right; }
     th { background:#f1f1f1; }
     th:first-child, td:first-child { text-align:left; }
@@ -112,6 +115,11 @@
       text-decoration: none;
       margin: 0 6px;
     }
+
+    @media (max-width: 480px) {
+      main { margin:20px 12px; padding:16px; }
+      .summary { gap:10px 6px; padding:12px 8px; font-size:14px; }
+    }
   </style>
 
   <!-- GA4 -->
@@ -154,8 +162,8 @@
   <h1>What If You Had Invested in NIFTY 50?</h1>
 
   <p style="text-align:center; max-width:800px; margin:10px auto 25px; color:#555; font-size:16px;">
-    This NIFTY 50 calculator shows how much your money would be worth today if you had invested
-    equally in all NIFTY 50 companies on any past date.
+    Simulate buying the same number of shares in each company currently in the NIFTY 50.
+    This is an equal-share stock basket, not the weighted NIFTY 50 index or an index fund.
   </p>
 
   <!-- INPUT -->
@@ -332,12 +340,28 @@ async function runCalculation() {
     const incompleteSymbols = [];
     const currentSellDates = [];
 
-    for (const sym of symbols) {
-      try {
-        const history = await loadJSON(`/data/${sym}_history.json`);
-        const current = await loadJSON(`/data/${sym}_current.json`);
+    const batchSize = 10;
+    for (let index = 0; index < symbols.length; index += batchSize) {
+      const batch = await Promise.all(
+        symbols.slice(index, index + batchSize).map(async (sym) => {
+          try {
+            const [history, current] = await Promise.all([
+              loadJSON(`/data/${sym}_history.json`),
+              loadJSON(`/data/${sym}_current.json`)
+            ]);
+            return { sym, merged: mergePrices(history, current) };
+          } catch (error) {
+            return { sym, error };
+          }
+        })
+      );
 
-        const merged = mergePrices(history, current);
+      for (const { sym, merged, error } of batch) {
+        if (error) {
+          console.warn("Unable to load prices for", sym, error);
+          incompleteSymbols.push(sym);
+          continue;
+        }
 
         const buy = findPriceOnOrBefore(investDate, merged);
         if (!buy) {
@@ -382,10 +406,6 @@ async function runCalculation() {
         <td class="${pl >= 0 ? "positive" : "negative"}">${pl.toFixed(2)}</td>
       `;
         tbody.appendChild(tr);
-
-      } catch (error) {
-        console.warn("Unable to load prices for", sym, error);
-        incompleteSymbols.push(sym);
       }
     }
 
@@ -421,7 +441,7 @@ async function runCalculation() {
     document.getElementById("sumPL").innerText = totalPL.toFixed(2);
     document.getElementById("sumReturn").innerText = ret.toFixed(2);
 
-    summary.style.display = "flex";
+    summary.style.display = "grid";
     resultTable.style.display = "table";
   } catch (error) {
     console.error("NIFTY 50 calculation failed", error);
@@ -435,5 +455,6 @@ async function runCalculation() {
 }
 </script>
 
+<script src="/site-nav.js" defer></script>
 </body>
 </html>
