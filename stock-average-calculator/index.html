@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1645652921007768" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Stock Average Calculator in India | StockMath</title>
+  <meta name="description" content="Calculate your weighted average stock buy price in India. Add multiple purchases with different prices and quantities using StockMath's free stock average calculator.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/stock-average-calculator/">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; color: #222; }
+    header { background: #111; color: #fff; padding: 20px; text-align: center; }
+    header h2 { margin: 0; font-size: 26px; font-weight: bold; }
+    header p { margin-top: 5px; font-size: 14px; color: #ddd; }
+    main { max-width: 470px; margin: 40px auto; padding: 25px; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    h1 { margin: 0 0 10px; text-align: center; font-size: 22px; }
+    .seo-text { margin: 0 0 20px; color: #555; text-align: center; font-size: 14px; line-height: 1.5; }
+    .purchase-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .input-label { display: block; margin: 0 0 5px; color: #424b55; font-size: 14px; font-weight: 600; }
+    input { box-sizing: border-box; width: 100%; margin-bottom: 12px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+    button { width: 100%; margin-bottom: 12px; padding: 12px; border: 0; border-radius: 4px; background: #007bff; color: #fff; font-size: 16px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .add-purchase { padding: 9px 12px; border: 1px solid #007bff; background: #fff; color: #0056b3; }
+    .add-purchase:hover { background: #f1f7ff; color: #0056b3; }
+    .add-purchase:disabled { border-color: #aaa; color: #666; cursor: not-allowed; }
+    .result { margin-top: 4px; padding: 12px; border-radius: 4px; background: #f0f8ff; font-size: 15px; line-height: 1.6; }
+    .result[hidden] { display: none; }
+    .info { margin-top: 26px; color: #444; font-size: 14px; line-height: 1.55; }
+    .info h2 { margin-top: 18px; padding-left: 8px; border-left: 3px solid #007bff; font-size: 16px; }
+    .info ul { padding-left: 18px; }
+    .tools-section { margin-top: 26px; padding-top: 18px; border-top: 1px solid #eee; text-align: center; }
+    .tools-title { margin-bottom: 12px; color: #333; font-size: 15px; font-weight: 600; }
+    .tools-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    .tool-pill { padding: 8px 14px; border-radius: 20px; background: #f1f7ff; color: #007bff; font-size: 14px; text-decoration: none; }
+    .tool-pill:hover { background: #007bff; color: #fff; }
+    footer { padding: 20px; color: #666; text-align: center; font-size: 13px; }
+    footer a { margin: 0 6px; color: #666; text-decoration: none; }
+    @media (max-width: 520px) { main { margin: 20px 12px; padding: 20px; } }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Stock Average Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/stock-average-calculator/",
+    "description": "Free stock average calculator for Indian traders to calculate weighted average buy price across multiple purchases.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+<header>
+  <h2>StockMath</h2>
+  <p>Simple Trading Calculators</p>
+</header>
+<main>
+  <h1>Stock Average Calculator India</h1>
+  <p class="seo-text">Calculate your weighted average buy price when purchasing shares at different prices and quantities.</p>
+
+  <div id="purchaseRows">
+    <div class="purchase-row">
+      <div>
+        <label class="input-label" for="price1">Buy Price 1 (₹)</label>
+        <input class="buy-price" type="number" id="price1" min="0" step="any" inputmode="decimal">
+      </div>
+      <div>
+        <label class="input-label" for="qty1">Quantity 1</label>
+        <input class="buy-quantity" type="number" id="qty1" min="1" step="1" inputmode="numeric">
+      </div>
+    </div>
+    <div class="purchase-row">
+      <div>
+        <label class="input-label" for="price2">Buy Price 2 (₹)</label>
+        <input class="buy-price" type="number" id="price2" min="0" step="any" inputmode="decimal">
+      </div>
+      <div>
+        <label class="input-label" for="qty2">Quantity 2</label>
+        <input class="buy-quantity" type="number" id="qty2" min="1" step="1" inputmode="numeric">
+      </div>
+    </div>
+  </div>
+  <button class="add-purchase" type="button" id="addPurchase">Add purchase</button>
+  <button type="button" id="calculateAverage">Calculate average</button>
+  <div class="result" id="output" role="status" aria-live="polite" hidden></div>
+
+  <section class="info">
+    <h2>How the Stock Average Calculator Works</h2>
+    <p>When you buy the same stock at different prices, your average buy price changes. This calculator combines each purchase price and quantity to calculate the weighted average price of your total investment.</p>
+    <h2>Example</h2>
+    <p>If you buy 10 shares at ₹100 and 10 shares at ₹80, your total investment is ₹1,800 and your average price is ₹90 per share.</p>
+    <h2>Who should use this calculator?</h2>
+    <ul>
+      <li>Equity investors averaging stock purchases</li>
+      <li>Long-term investors tracking their cost basis</li>
+      <li>Swing traders adding to a position</li>
+    </ul>
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>Does this include brokerage and taxes?</strong><br>No. The result is the weighted average of your entered share prices and quantities; it does not include fees or taxes.</p>
+    <p><strong>Can I add more than two purchases?</strong><br>Yes. Add purchase rows for up to 10 separate purchases.</p>
+    <p style="margin-top:12px;font-size:13px;color:#666;">For educational purposes only; this calculator is not financial advice.</p>
+  </section>
+
+  <div class="tools-section">
+    <div class="tools-title">Related calculators</div>
+    <div class="tools-list">
+      <a href="/profit-loss-calculator/" class="tool-pill">Profit / Loss</a>
+      <a href="/break-even-calculator/" class="tool-pill">Break-Even &amp; Target Price</a>
+      <a href="/trading-charges-calculator/" class="tool-pill">Trading Charges</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <p><a href="/">All calculators</a> | <a href="/about">About</a> | <a href="/disclaimer">Disclaimer</a> | <a href="/privacy-policy">Privacy Policy</a></p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
+<script>
+const purchaseRows = document.getElementById('purchaseRows');
+const output = document.getElementById('output');
+const addPurchaseButton = document.getElementById('addPurchase');
+
+document.getElementById('calculateAverage').addEventListener('click', () => {
+  let totalQuantity = 0;
+  let totalCost = 0;
+  output.hidden = false;
+
+  for (const row of purchaseRows.querySelectorAll('.purchase-row')) {
+    const priceInput = row.querySelector('.buy-price');
+    const quantityInput = row.querySelector('.buy-quantity');
+    if (!priceInput.value && !quantityInput.value) continue;
+
+    const price = Number(priceInput.value);
+    const quantity = Number(quantityInput.value);
+    if (!Number.isFinite(price) || price <= 0 || !Number.isSafeInteger(quantity) || quantity < 1) {
+      output.textContent = 'Enter a valid price and whole-share quantity for each purchase.';
+      return;
+    }
+
+    totalCost += price * quantity;
+    totalQuantity += quantity;
+  }
+
+  if (totalQuantity === 0) {
+    output.textContent = 'Enter at least one purchase with a valid price and quantity.';
+    return;
+  }
+
+  output.innerHTML = `<strong>Total quantity:</strong> ${totalQuantity}<br><strong>Total investment:</strong> ₹${totalCost.toFixed(2)}<br><strong>Average price:</strong> ₹${(totalCost / totalQuantity).toFixed(2)}`;
+});
+
+addPurchaseButton.addEventListener('click', () => {
+  const rowCount = purchaseRows.querySelectorAll('.purchase-row').length;
+  if (rowCount >= 10) return;
+
+  const nextNumber = rowCount + 1;
+  const row = document.createElement('div');
+  row.className = 'purchase-row';
+  row.innerHTML = `<div><label class="input-label" for="price${nextNumber}">Buy Price ${nextNumber} (₹)</label><input class="buy-price" type="number" id="price${nextNumber}" min="0" step="any" inputmode="decimal"></div><div><label class="input-label" for="qty${nextNumber}">Quantity ${nextNumber}</label><input class="buy-quantity" type="number" id="qty${nextNumber}" min="1" step="1" inputmode="numeric"></div>`;
+  purchaseRows.appendChild(row);
+
+  if (nextNumber === 10) {
+    addPurchaseButton.disabled = true;
+    addPurchaseButton.textContent = 'Maximum 10 purchases';
+  }
+});
+</script>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>

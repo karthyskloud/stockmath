@@ -1,6 +1,6 @@
 (() => {
   const calculatorLinks = [
-    { href: "/", label: "Average" },
+    { href: "/stock-average-calculator/", label: "Average" },
     { href: "/profit-loss-calculator/", label: "Profit / Loss" },
     { href: "/break-even-calculator/", label: "Break-Even" },
     { href: "/position-size-calculator/", label: "Position Size" },
