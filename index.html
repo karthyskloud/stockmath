@@ -38,6 +38,16 @@
       font-weight: bold;
     }
 
+    header h2 a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header h2 a:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 4px;
+    }
+
     header p {
       margin-top: 5px;
       font-size: 14px;
@@ -273,7 +283,7 @@
 <body>
 
 <header>
-  <h2>StockMath</h2>
+  <h2><a href="/" aria-label="StockMath home">StockMath</a></h2>
   <p>Simple Trading Calculators</p>
 </header>
 
@@ -294,7 +304,7 @@
       <a class="calculator-tile" href="/stock-average-calculator/">
         <span class="tile-title">Stock Average</span>
         <span class="tile-description">Find your weighted average buy price.</span>
-        <span class="tile-action">Use calculator</span>
+        <span class="tile-action">Open calculator</span>
       </a>
       <a class="calculator-tile" href="/break-even-calculator/">
         <span class="tile-title">Break-Even &amp; Target Sell Price</span>

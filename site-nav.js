@@ -1,5 +1,6 @@
 (() => {
   const calculatorLinks = [
+    { href: "/", label: "Home" },
     { href: "/stock-average-calculator/", label: "Average" },
     { href: "/profit-loss-calculator/", label: "Profit / Loss" },
     { href: "/break-even-calculator/", label: "Break-Even" },
@@ -13,6 +14,16 @@
   const currentPath = normalizePath(window.location.pathname);
   const header = document.querySelector("header");
   if (!header) return;
+
+  const brand = header.querySelector("h2");
+  if (brand && !brand.querySelector("a")) {
+    const homeLink = document.createElement("a");
+    homeLink.className = "site-nav__brand";
+    homeLink.href = "/";
+    homeLink.setAttribute("aria-label", "StockMath home");
+    homeLink.textContent = brand.textContent;
+    brand.replaceChildren(homeLink);
+  }
 
   const nav = document.createElement("nav");
   nav.className = "site-nav";
@@ -37,6 +48,8 @@
 
   const style = document.createElement("style");
   style.textContent = `
+    .site-nav__brand { color:inherit; text-decoration:none; }
+    .site-nav__brand:focus-visible { outline:2px solid #fff; outline-offset:4px; }
     .site-nav { background:#111; border-top:1px solid #303030; }
     .site-nav__links { display:flex; justify-content:center; gap:4px; max-width:1100px; margin:0 auto; padding:0 16px; overflow-x:auto; scrollbar-width:thin; }
     .site-nav__link { flex:none; padding:12px 10px; border-bottom:2px solid transparent; color:#e5e7eb; font-size:14px; text-decoration:none; white-space:nowrap; }
