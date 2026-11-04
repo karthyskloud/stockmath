@@ -2,6 +2,7 @@
   const calculatorLinks = [
     { href: "/", label: "Average" },
     { href: "/profit-loss-calculator/", label: "Profit / Loss" },
+    { href: "/break-even-calculator/", label: "Break-Even" },
     { href: "/position-size-calculator/", label: "Position Size" },
     { href: "/stock-split-calculator/", label: "Stock Split" },
     { href: "/trading-charges-calculator/", label: "Trading Charges" },

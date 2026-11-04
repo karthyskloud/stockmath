@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1645652921007768" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Break-Even and Target Sell Price Calculator | StockMath</title>
+  <meta name="description" content="Find the minimum stock sell price needed to break even or reach a target profit after estimated Indian equity trading charges.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/break-even-calculator/">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; color: #222; }
+    header { background: #111; color: #fff; padding: 20px; text-align: center; }
+    header h2 { margin: 0; font-size: 26px; }
+    header p { margin: 5px 0 0; font-size: 14px; color: #ddd; }
+    main { max-width: 460px; margin: 40px auto; padding: 25px; background: #fff; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    h1 { margin: 0 0 10px; text-align: center; font-size: 22px; }
+    .intro { margin: 0 0 22px; color: #555; text-align: center; font-size: 14px; line-height: 1.5; }
+    .input-label { display: block; margin: 0 0 5px; color: #424b55; font-size: 14px; font-weight: 600; }
+    input { box-sizing: border-box; width: 100%; margin: 0 0 14px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+    input:focus { outline: 2px solid #007bff; outline-offset: 1px; }
+    button { width: 100%; padding: 12px; border: 0; border-radius: 4px; background: #007bff; color: #fff; font-size: 16px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .hint { margin: -7px 0 14px; color: #666; font-size: 12px; }
+    .result { margin-top: 16px; padding: 14px; border-radius: 4px; background: #f0f8ff; font-size: 14px; line-height: 1.8; }
+    .result:empty { display: none; }
+    .result-error { color: #a32121; background: #fff2f2; }
+    .info { margin-top: 28px; color: #444; font-size: 14px; line-height: 1.55; }
+    .info h2 { margin: 20px 0 8px; padding-left: 8px; border-left: 3px solid #007bff; font-size: 16px; }
+    .info ul { padding-left: 20px; }
+    .tools-section { margin-top: 28px; padding-top: 18px; border-top: 1px solid #eee; text-align: center; }
+    .tools-title { margin-bottom: 12px; color: #333; font-size: 15px; font-weight: 600; }
+    .tools-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    .tool-pill { padding: 8px 14px; border-radius: 20px; background: #f1f7ff; color: #007bff; font-size: 14px; text-decoration: none; }
+    .tool-pill:hover { background: #007bff; color: #fff; }
+    footer { padding: 20px; color: #666; text-align: center; font-size: 13px; }
+    footer a { margin: 0 6px; color: #666; text-decoration: none; }
+    @media (max-width: 520px) { main { margin: 20px 12px; padding: 20px; } }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Break-Even and Target Sell Price Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/break-even-calculator/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+<header>
+  <h2>StockMath</h2>
+  <p>Simple Trading Calculators</p>
+</header>
+<main>
+  <h1>Break-Even &amp; Target Sell Price Calculator</h1>
+  <p class="intro">Find the minimum price to sell your shares at break-even or to reach a target net profit after estimated trading charges.</p>
+
+  <label class="input-label" for="buyPrice">Buy price per share (₹)</label>
+  <input type="number" id="buyPrice" min="0.01" step="0.01" placeholder="e.g. 100">
+
+  <label class="input-label" for="quantity">Quantity (shares)</label>
+  <input type="number" id="quantity" min="1" step="1" placeholder="e.g. 100">
+
+  <label class="input-label" for="targetProfit">Target net profit (₹)</label>
+  <input type="number" id="targetProfit" min="0" step="0.01" value="0">
+  <p class="hint">Enter 0 to calculate your break-even sell price.</p>
+
+  <label class="input-label" for="brokerage">Total brokerage for buy and sell (₹)</label>
+  <input type="number" id="brokerage" min="0" step="0.01" value="0">
+  <p class="hint">Enter your estimated round-trip brokerage, or leave as 0.</p>
+
+  <button type="button" id="calculateButton">Calculate sell price</button>
+  <div class="result" id="output" role="status" aria-live="polite"></div>
+
+  <section class="info">
+    <h2>How it works</h2>
+    <p>The calculator estimates the sell price needed to cover your buy value, target profit, entered brokerage and estimated statutory charges. The displayed sell price is rounded up to the next paisa so it does not fall below the calculated target.</p>
+
+    <h2>Charges included</h2>
+    <ul>
+      <li>STT on buy and sell turnover</li>
+      <li>Stamp duty on buy turnover</li>
+      <li>Exchange transaction charges</li>
+      <li>SEBI turnover charges</li>
+      <li>GST on exchange and SEBI charges</li>
+    </ul>
+    <p>Statutory charge assumptions match StockMath’s Trading Charges Calculator. Actual charges can differ by trade type, exchange, broker and current regulations. Brokerage is based on the amount you enter.</p>
+
+    <h2>Example</h2>
+    <p>Enter your buy price and share quantity, then leave target net profit at ₹0 to estimate the break-even sell price. Enter a positive target to see the minimum estimated sell price for that profit after charges.</p>
+
+    <p style="font-size:13px;color:#666;">For educational purposes only; this estimate is not financial advice.</p>
+  </section>
+
+  <div class="tools-section">
+    <div class="tools-title">Related calculators</div>
+    <div class="tools-list">
+      <a href="/profit-loss-calculator/" class="tool-pill">Profit / Loss</a>
+      <a href="/trading-charges-calculator/" class="tool-pill">Trading Charges</a>
+      <a href="/position-size-calculator/" class="tool-pill">Position Size</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <p><a href="/">Stock Average Calculator</a> | <a href="/about">About</a> | <a href="/disclaimer">Disclaimer</a> | <a href="/privacy-policy">Privacy Policy</a></p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
+<script>
+function calculateRequiredSellPrice(buyPrice, quantity, targetProfit, brokerage) {
+  const buyTurnover = buyPrice * quantity;
+  const turnoverChargeRate = 0.001 + 0.0000325 + 0.000001 + 0.18 * (0.0000325 + 0.000001);
+  const stampDuty = 0.00015 * buyTurnover;
+  const requiredSellTurnover = (targetProfit + buyTurnover * (1 + turnoverChargeRate) + stampDuty + brokerage) / (1 - turnoverChargeRate);
+  const sellPrice = Math.ceil((requiredSellTurnover / quantity) * 100 - 1e-9) / 100;
+  const sellTurnover = sellPrice * quantity;
+  const stt = 0.001 * (buyTurnover + sellTurnover);
+  const exchangeCharges = 0.0000325 * (buyTurnover + sellTurnover);
+  const sebiCharges = 0.000001 * (buyTurnover + sellTurnover);
+  const gst = 0.18 * (exchangeCharges + sebiCharges);
+  const charges = stt + stampDuty + exchangeCharges + sebiCharges + gst;
+  const netProfit = sellTurnover - buyTurnover - charges - brokerage;
+
+  return { sellPrice, buyTurnover, sellTurnover, charges, brokerage, netProfit };
+}
+
+document.getElementById('calculateButton').addEventListener('click', () => {
+  const buyPrice = Number(document.getElementById('buyPrice').value);
+  const quantity = Number(document.getElementById('quantity').value);
+  const targetProfit = Number(document.getElementById('targetProfit').value);
+  const brokerage = Number(document.getElementById('brokerage').value);
+  const output = document.getElementById('output');
+
+  if (!Number.isFinite(buyPrice) || buyPrice <= 0 || !Number.isInteger(quantity) || quantity <= 0 || !Number.isFinite(targetProfit) || targetProfit < 0 || !Number.isFinite(brokerage) || brokerage < 0) {
+    output.classList.add('result-error');
+    output.textContent = 'Enter a buy price above 0, a whole-share quantity, and non-negative target profit and brokerage amounts.';
+    return;
+  }
+
+  const result = calculateRequiredSellPrice(buyPrice, quantity, targetProfit, brokerage);
+  output.classList.remove('result-error');
+  output.innerHTML = `
+    <strong>Minimum sell price:</strong> ₹${result.sellPrice.toFixed(2)} per share<br>
+    <strong>Estimated sell value:</strong> ₹${result.sellTurnover.toFixed(2)}<br>
+    <strong>Estimated statutory charges:</strong> ₹${result.charges.toFixed(2)}<br>
+    <strong>Brokerage entered:</strong> ₹${result.brokerage.toFixed(2)}<br>
+    <strong>Estimated net profit:</strong> ₹${result.netProfit.toFixed(2)}
+  `;
+});
+</script>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>
