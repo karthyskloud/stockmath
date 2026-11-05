@@ -8,7 +8,7 @@
 
   <!-- SEO -->
   <title>Stock Trading Calculators | StockMath India</title>
-  <meta name="description" content="Explore StockMath tools for profit and loss, stock averaging, break-even prices, position sizing, gap and circuit risk, trading charges, stock splits and NIFTY 50.">
+  <meta name="description" content="Explore StockMath tools for profit and loss, stock averaging, flat versus fixed deposit comparisons, break-even prices, position sizing, gap and circuit risk, trading charges, stock splits and NIFTY 50.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.stockmath.co.in/">
 
@@ -65,6 +65,7 @@
     .calculator-tile--charges { --tile-accent:#9a6416; --tile-tint:#f4ecd8; }
     .calculator-tile--split { --tile-accent:#9e4c64; --tile-tint:#f3e5e8; }
     .calculator-tile--nifty { --tile-accent:#17766e; --tile-tint:#dff0ed; }
+    .calculator-tile--property { --tile-accent:#286782; --tile-tint:#e1eef2; }
     .calculator-tile--featured { grid-column:span 2; min-height:245px; padding:23px; border:0; border-top:5px solid #c9ef5b; background:#183c36; color:#fff; }
     .calculator-tile--featured:hover { border-color:#c9ef5b; background:#214d44; }
     .tile-topline { display:flex; align-items:center; justify-content:space-between; }
@@ -146,8 +147,9 @@
         <button class="directory-filter" type="button" data-filter="planning" aria-pressed="false">Planning</button>
         <button class="directory-filter" type="button" data-filter="costs" aria-pressed="false">Costs</button>
         <button class="directory-filter" type="button" data-filter="market" aria-pressed="false">Market</button>
+        <button class="directory-filter" type="button" data-filter="property" aria-pressed="false">Property</button>
       </div>
-      <p class="directory-count" id="resultsCount" aria-live="polite">7 calculators</p>
+      <p class="directory-count" id="resultsCount" aria-live="polite">9 calculators</p>
     </div>
 
     <div class="calculator-grid">
@@ -198,6 +200,12 @@
         <span class="tile-title">Stock Split</span>
         <span class="tile-description">See how a split changes shares and price.</span>
         <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
+      </a>
+      <a class="calculator-tile calculator-tile--property" data-category="property" href="/flat-vs-fixed-deposit/">
+        <span class="tile-topline"><span class="tile-category">PROPERTY COMPARISON</span><span class="tile-symbol" aria-hidden="true">FD</span></span>
+        <span class="tile-title">Buy a Flat vs Fixed Deposit</span>
+        <span class="tile-description">Compare estimated property value, costs, and rent benefit with an FD.</span>
+        <span class="tile-action"><span>Compare scenarios</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
     </div>
     <p class="no-tools" id="noTools" hidden>No calculators match. Try a different search or choose All tools.</p>

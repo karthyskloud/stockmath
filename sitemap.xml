@@ -37,6 +37,11 @@
   </url>
 
   <url>
+    <loc>https://www.stockmath.co.in/flat-vs-fixed-deposit/</loc>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
     <loc>https://www.stockmath.co.in/trading-charges-calculator/</loc>
     <priority>0.90</priority>
   </url>
