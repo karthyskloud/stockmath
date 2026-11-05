@@ -40,10 +40,10 @@
     .field input:focus, .field select:focus { outline:2px solid var(--teal); outline-offset:1px; }
     .field-help { margin:0 0 13px; color:var(--muted); font-size:11px; line-height:1.4; }
     .field[hidden] { display:none; }
-    .horizon-control { display:grid; grid-template-columns:minmax(100px,1fr) auto; gap:8px; align-items:center; }
+    .horizon-control { display:grid; grid-template-columns:minmax(0,1fr); gap:7px; }
     .horizon-control input { margin:0; }
     .quick-years { display:flex; gap:4px; }
-    .quick-years button { min-width:36px; min-height:36px; padding:0 8px; border:1px solid var(--line); border-radius:4px; background:#fff; color:var(--ink); font-size:12px; cursor:pointer; }
+    .quick-years button { flex:1; min-width:36px; min-height:36px; padding:0 8px; border:1px solid var(--line); border-radius:4px; background:#fff; color:var(--ink); font-size:12px; cursor:pointer; }
     .quick-years button:hover { border-color:var(--teal); color:var(--teal); }
     .calculate { width:100%; min-height:44px; margin-top:4px; border:0; border-radius:4px; background:var(--teal); color:#fff; font-size:15px; font-weight:700; cursor:pointer; }
     .calculate:hover { background:#066660; }
@@ -51,8 +51,14 @@
     .winner { margin-bottom:14px; padding:16px 18px; border-left:4px solid #c9ef5b; border-radius:3px; background:#183c36; color:#fff; }
     .winner-label { display:block; margin-bottom:5px; color:#c9ef5b; font-size:11px; font-weight:700; }
     .winner-text { display:block; font-size:17px; font-weight:700; line-height:1.4; }
+    .starting-amounts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-bottom:12px; }
+    .starting-amount { min-width:0; padding:13px 15px; border:1px solid var(--line); border-radius:6px; background:#fff; }
+    .starting-label { display:block; color:var(--muted); font-size:12px; }
+    .starting-value { display:block; margin-top:5px; font-size:17px; font-weight:700; overflow-wrap:anywhere; }
+    .starting-detail { display:block; margin-top:4px; color:var(--muted); font-size:11px; line-height:1.4; }
     .results-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
     .result-block { min-width:0; padding:15px; border:1px solid var(--line); border-radius:6px; background:#fff; }
+    .results[hidden] { display:none; }
     .result-block h3 { margin:0 0 9px; font-size:13px; }
     .result-value { display:block; font-size:20px; font-weight:700; overflow-wrap:anywhere; }
     .result-caption { display:block; margin-top:5px; color:var(--muted); font-size:11px; line-height:1.4; }
@@ -197,21 +203,33 @@
       <p class="error" id="formError" role="alert" hidden></p>
     </form>
 
-    <section class="results" aria-labelledby="resultsTitle">
+    <section class="results" id="comparisonResults" aria-labelledby="resultsTitle" hidden>
       <div class="winner" id="winner" aria-live="polite">
         <span class="winner-label">SCENARIO SUMMARY</span>
         <span class="winner-text" id="winnerText">Enter your assumptions to compare.</span>
       </div>
+      <div class="starting-amounts" aria-label="Starting amounts">
+        <div class="starting-amount">
+          <span class="starting-label">FD initial deposit</span>
+          <strong class="starting-value" id="fdInitialAmount">—</strong>
+          <span class="starting-detail" id="fdInitialDetail">—</span>
+        </div>
+        <div class="starting-amount">
+          <span class="starting-label" id="flatInitialTitle">Flat total purchase cost</span>
+          <strong class="starting-value" id="flatInitialAmount">—</strong>
+          <span class="starting-detail" id="flatInitialDetail">—</span>
+        </div>
+      </div>
       <div class="results-grid">
         <div class="result-block">
-          <h2>FD after tax</h2>
+          <h2 id="fdFinalTitle">FD after 10 years</h2>
           <span class="result-value" id="fdFinal">—</span>
           <span class="result-caption" id="fdRateCaption">—</span>
         </div>
         <div class="result-block">
-          <h2 id="flatGrowthTitle">Flat property · 10% growth</h2>
+          <h2 id="flatGrowthTitle">Flat total after 10 years · 10% growth</h2>
           <span class="result-value" id="flatCustomFinal">—</span>
-          <span class="result-caption">Property only; rent and ownership cash flows appear in the comparison below</span>
+          <span class="result-caption" id="flatGrowthCaption">Includes property value and net housing cash flows</span>
         </div>
       </div>
       <div class="chart-panel">
@@ -227,7 +245,8 @@
         <div class="chart-legend" id="chartLegend" aria-label="Chart series"></div>
       </div>
       <div class="chart-panel">
-        <h2>End-of-period comparison</h2>
+        <h2 id="comparisonTableTitle">After 10 years: what could each option be worth?</h2>
+        <p class="comparison-note">Flat estimates include rent saved or received, minus ownership costs. A + means the flat estimate is higher than the FD.</p>
         <div id="comparisonTable"></div>
       </div>
     </section>
@@ -270,6 +289,7 @@ const modeHelp = document.getElementById('modeHelp');
 const yearsInput = document.getElementById('years');
 const comparisonForm = document.getElementById('comparisonForm');
 const formError = document.getElementById('formError');
+const comparisonResults = document.getElementById('comparisonResults');
 
 function selectedPropertyStatus() {
   return propertyStatusInputs.find(input => input.checked).value;
@@ -333,9 +353,9 @@ function chartMarkup(series, horizonYears) {
 function buildSeries(inputs) {
   const scenarios = [
     { key: 'fd', label: `Fixed deposit (${numberFormat.format(inputs.fdAfterTaxRate * 100)}% after tax)`, growth: null, color: colors.fd },
-    { key: 'zero', label: 'Flat total: 0% property growth', growth: 0, color: colors.zero },
-    { key: 'fdGrowth', label: 'Flat total: FD after-tax property growth', growth: inputs.fdAfterTaxRate, color: colors.fdGrowth },
-    { key: 'custom', label: `Flat total: ${numberFormat.format(inputs.customGrowth * 100)}% property growth`, growth: inputs.customGrowth, color: colors.custom }
+    { key: 'zero', label: 'Flat, 0% price growth', growth: 0, color: colors.zero },
+    { key: 'fdGrowth', label: `Flat, ${numberFormat.format(inputs.fdAfterTaxRate * 100)}% price growth (FD rate)`, growth: inputs.fdAfterTaxRate, color: colors.fdGrowth },
+    { key: 'custom', label: `Flat, ${numberFormat.format(inputs.customGrowth * 100)}% price growth`, growth: inputs.customGrowth, color: colors.custom }
   ];
   return scenarios.map(scenario => ({
     ...scenario,
@@ -362,9 +382,10 @@ function readInputs() {
   const annualCosts = number('ownerCosts');
   const baseFlatValue = area * pricePerSqFt;
   const fdAfterTaxRate = fdGrossRate * (1 - fdTax);
-  const startingCapital = isOwned ? baseFlatValue : baseFlatValue * (1 + purchaseCosts);
+  const purchaseCostAmount = baseFlatValue * purchaseCosts;
+  const startingCapital = isOwned ? baseFlatValue : baseFlatValue + purchaseCostAmount;
   return {
-    area, pricePerSqFt, purchaseCosts, fdGrossRate, fdTax, fdAfterTaxRate,
+    area, pricePerSqFt, purchaseCosts, purchaseCostAmount, fdGrossRate, fdTax, fdAfterTaxRate,
     customGrowth, years, monthlyRent, rentGrowth, annualCosts, startingCapital,
     fdStartCapital: startingCapital,
     monthlyFdRate: Math.pow(1 + fdAfterTaxRate, 1 / 12) - 1
@@ -379,6 +400,7 @@ function isInputValid(inputs) {
 }
 
 function renderComparison() {
+  comparisonResults.hidden = true;
   const inputs = readInputs();
   if (!isInputValid(inputs)) {
     formError.hidden = false;
@@ -386,6 +408,7 @@ function renderComparison() {
     return;
   }
   formError.hidden = true;
+  comparisonResults.hidden = false;
   const series = buildSeries(inputs);
   const fdSeries = series.find(item => item.key === 'fd');
   const finalFdValue = fdSeries.values[inputs.years];
@@ -394,9 +417,25 @@ function renderComparison() {
   const difference = winner.finalValue - finalFdValue;
   const horizonWord = inputs.years === 1 ? 'year' : 'years';
 
+  document.getElementById('fdInitialAmount').textContent = currency.format(inputs.startingCapital);
+  document.getElementById('fdInitialDetail').textContent = selectedPropertyStatus() === 'owned'
+    ? 'Same starting amount as today’s estimated flat value.'
+    : 'Same cash as the flat purchase outlay.';
+  document.getElementById('flatInitialTitle').textContent = selectedPropertyStatus() === 'owned' ? 'Current flat value' : 'Flat total purchase cost';
+  document.getElementById('flatInitialAmount').textContent = currency.format(inputs.startingCapital);
+  document.getElementById('flatInitialDetail').textContent = selectedPropertyStatus() === 'owned'
+    ? 'Today’s estimated value; past purchase costs are sunk.'
+    : `Property ${currency.format(inputs.area * inputs.pricePerSqFt)} + one-time costs ${currency.format(inputs.purchaseCostAmount)}.`;
+
   document.getElementById('fdFinal').textContent = currency.format(finalFdValue);
-  document.getElementById('flatCustomFinal').textContent = currency.format(inputs.area * inputs.pricePerSqFt * Math.pow(1 + inputs.customGrowth, inputs.years));
-  document.getElementById('flatGrowthTitle').textContent = `Flat property · ${numberFormat.format(inputs.customGrowth * 100)}% growth`;
+  document.getElementById('fdFinalTitle').textContent = `FD after ${inputs.years} ${horizonWord}`;
+  const customFlatTotal = finalRows.find(item => item.key === 'custom').finalValue;
+  const customPropertyValue = inputs.area * inputs.pricePerSqFt * Math.pow(1 + inputs.customGrowth, inputs.years);
+  const netHousingCashflows = customFlatTotal - customPropertyValue;
+  const cashflowSign = netHousingCashflows >= 0 ? '+' : '−';
+  document.getElementById('flatCustomFinal').textContent = currency.format(customFlatTotal);
+  document.getElementById('flatGrowthTitle').textContent = `Flat total after ${inputs.years} ${horizonWord} · ${numberFormat.format(inputs.customGrowth * 100)}% growth`;
+  document.getElementById('flatGrowthCaption').textContent = `Property value ${currency.format(customPropertyValue)} + net housing cash flows ${cashflowSign}${currency.format(Math.abs(netHousingCashflows))}`;
   document.getElementById('fdRateCaption').textContent = `${numberFormat.format(inputs.fdAfterTaxRate * 100)}% estimated after-tax annual rate`;
   document.getElementById('winnerText').textContent = Math.abs(difference) < 1
     ? `Estimated values are nearly tied after ${inputs.years} ${horizonWord}.`
@@ -405,16 +444,22 @@ function renderComparison() {
       : `${winner.label} leads FD by ${currency.format(difference)} after ${inputs.years} ${horizonWord}.`;
 
   document.getElementById('chartSubtitle').textContent = `Total outcome over ${inputs.years} ${horizonWord} · property value plus net housing cash flows`;
+  document.getElementById('comparisonTableTitle').textContent = `After ${inputs.years} ${horizonWord}: what could each option be worth?`;
   document.getElementById('comparisonChart').outerHTML = chartMarkup(series, inputs.years);
   document.getElementById('chartLegend').innerHTML = series.map(item => `<span class="legend-item"><span class="legend-swatch" style="--swatch:${item.color}"></span>${item.label}</span>`).join('');
-  document.getElementById('comparisonTable').innerHTML = `<table class="comparison-table"><thead><tr><th>Scenario</th><th>Total outcome</th><th>vs FD</th></tr></thead><tbody>${finalRows.map(item => `<tr><td>${item.label}</td><td>${currency.format(item.finalValue)}</td><td>${item.key === 'fd' ? '—' : `${item.finalValue >= finalFdValue ? '+' : '−'}${currency.format(Math.abs(item.finalValue - finalFdValue))}`}</td></tr>`).join('')}</tbody></table>`;
+  document.getElementById('comparisonTable').innerHTML = `<table class="comparison-table"><thead><tr><th>Option</th><th>Estimated value</th><th>Difference vs FD</th></tr></thead><tbody>${finalRows.map(item => `<tr><td>${item.label}</td><td>${currency.format(item.finalValue)}</td><td>${item.key === 'fd' ? '—' : `${item.finalValue >= finalFdValue ? '+' : '−'}${currency.format(Math.abs(item.finalValue - finalFdValue))}`}</td></tr>`).join('')}</tbody></table>`;
 }
 
 for (const input of propertyStatusInputs) input.addEventListener('change', updatePropertyMode);
+comparisonForm.addEventListener('input', () => {
+  comparisonResults.hidden = true;
+  formError.hidden = true;
+});
 for (const button of document.querySelectorAll('[data-years]')) {
   button.addEventListener('click', () => {
     yearsInput.value = button.dataset.years;
-    renderComparison();
+    comparisonResults.hidden = true;
+    formError.hidden = true;
   });
 }
 comparisonForm.addEventListener('submit', event => {
@@ -422,7 +467,6 @@ comparisonForm.addEventListener('submit', event => {
   renderComparison();
 });
 updatePropertyMode();
-renderComparison();
 </script>
 <script src="/site-nav.js" defer></script>
 </body>
