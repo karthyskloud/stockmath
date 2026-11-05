@@ -17,245 +17,87 @@
 
   <!-- Styles -->
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      margin: 0;
-      padding: 0;
-      color: #222;
+    :root { color-scheme: light; --ink:#17232c; --muted:#66727a; --line:#d8dfe2; --paper:#f5f6f3; --white:#fff; --teal:#087f78; --coral:#d66745; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:Arial,sans-serif; }
+    header { display:flex; align-items:center; justify-content:space-between; min-height:68px; padding:12px max(24px,calc((100vw - 1120px)/2)); background:#17232c; color:#fff; }
+    header h2 { margin:0; font-size:22px; }
+    header h2 a { color:inherit; text-decoration:none; }
+    header h2 a:focus-visible { outline:2px solid #fff; outline-offset:4px; }
+    header p { margin:0; color:#d5dddf; font-size:13px; }
+    .header-about { color:#fff; font-size:14px; text-decoration:none; }
+    .header-about:hover { text-decoration:underline; }
+    .header-about:focus-visible { outline:2px solid #fff; outline-offset:4px; }
+    main { max-width:1000px; margin:0 auto; padding:54px 24px 44px; }
+    .eyebrow { margin:0 0 12px; color:var(--teal); font-size:12px; font-weight:700; }
+    h1 { margin:0; font-size:34px; line-height:1.15; }
+    .directory-intro { max-width:580px; margin:11px 0 28px; color:var(--muted); font-size:16px; line-height:1.55; }
+    footer { padding:18px 24px; color:var(--muted); text-align:center; font-size:13px; }
+    footer a { margin:0 6px; color:inherit; text-decoration:none; }
+    footer a:hover { color:var(--teal); }
+    @media (max-width:760px) {
+      main { padding-top:38px; }
+    }
+    @media (max-width:560px) {
+      header { min-height:60px; padding:11px 16px; }
+      header p { display:none; }
+      main { padding:32px 16px 30px; }
+      h1 { font-size:29px; }
+      .directory-intro { margin-bottom:22px; font-size:15px; }
     }
 
-    header {
-      background: #111;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
+    .directory-toolbar { display:grid; grid-template-columns:minmax(220px,1fr) auto; gap:12px 18px; align-items:center; margin-bottom:18px; }
+    .directory-search { width:100%; min-height:44px; margin:0; padding:0 13px; border:1px solid #b9c5c0; border-radius:5px; background:#fff; color:var(--ink); font-size:15px; }
+    .directory-search:focus { outline:2px solid var(--teal); outline-offset:1px; }
+    .directory-filters { display:flex; flex-wrap:wrap; gap:4px; padding:3px; border:1px solid var(--line); border-radius:5px; background:#e9ede8; }
+    .directory-filter { min-height:34px; padding:0 10px; border:0; border-radius:3px; background:transparent; color:#42515a; font-size:13px; cursor:pointer; }
+    .directory-filter[aria-pressed="true"] { background:#fff; color:var(--ink); box-shadow:0 1px 3px #17232c20; font-weight:700; }
+    .directory-filter:focus-visible { outline:2px solid var(--teal); outline-offset:2px; }
+    .directory-count { grid-column:1/-1; margin:0; color:var(--muted); font-size:13px; }
+    .calculator-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .calculator-tile { --tile-accent:var(--teal); --tile-tint:#e4f0e9; position:relative; display:flex; min-height:205px; flex-direction:column; align-items:stretch; overflow:hidden; padding:19px; border:1px solid #dce3dd; border-radius:8px; background:var(--tile-tint); color:var(--ink); text-decoration:none; transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease; }
+    .calculator-tile:hover { transform:translateY(-3px); border-color:var(--tile-accent); box-shadow:0 9px 22px #17232c16; }
+    .calculator-tile:focus-visible { outline:3px solid var(--teal); outline-offset:2px; }
+    .calculator-tile--average { --tile-accent:#16786c; --tile-tint:#e1f1e9; }
+    .calculator-tile--break-even { --tile-accent:#b94f35; --tile-tint:#f8e7df; }
+    .calculator-tile--position { --tile-accent:#426ca2; --tile-tint:#e6edf6; }
+    .calculator-tile--charges { --tile-accent:#9a6416; --tile-tint:#f4ecd8; }
+    .calculator-tile--split { --tile-accent:#9e4c64; --tile-tint:#f3e5e8; }
+    .calculator-tile--nifty { --tile-accent:#17766e; --tile-tint:#dff0ed; }
+    .calculator-tile--featured { grid-column:span 2; min-height:245px; padding:23px; border:0; border-top:5px solid #c9ef5b; background:#183c36; color:#fff; }
+    .calculator-tile--featured:hover { border-color:#c9ef5b; background:#214d44; }
+    .tile-topline { display:flex; align-items:center; justify-content:space-between; }
+    .tile-category { color:var(--tile-accent); font-size:11px; font-weight:700; }
+    .tile-symbol { display:grid; width:40px; height:40px; place-items:center; border:1px solid color-mix(in srgb, var(--tile-accent) 28%, transparent); border-radius:5px; background:#ffffff85; color:var(--tile-accent); font-size:12px; font-weight:700; }
+    .calculator-tile--featured .tile-category { color:#c9ef5b; }
+    .calculator-tile--featured .tile-symbol { width:46px; height:46px; border-color:#ffffff30; background:#ffffff12; color:#fff; font-size:13px; }
+    .tile-title { display:block; margin-top:19px; font-size:18px; font-weight:700; line-height:1.25; }
+    .calculator-tile--featured .tile-title { max-width:380px; margin-top:22px; font-size:25px; }
+    .tile-description { display:block; max-width:320px; margin-top:7px; color:#53615e; font-size:14px; line-height:1.45; }
+    .calculator-tile--featured .tile-description { max-width:360px; color:#d5e5dd; }
+    .tile-action { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:20px; color:var(--tile-accent); font-size:13px; font-weight:700; }
+    .calculator-tile--featured .tile-action { color:#d5f17e; }
+    .tile-arrow { font-size:19px; line-height:1; transition:transform .16s ease; }
+    .calculator-tile:hover .tile-arrow { transform:translateX(4px); }
+    .calculator-tile[hidden] { display:none; }
+    .no-tools { margin:20px 0; color:var(--muted); font-size:14px; }
+    .no-tools[hidden] { display:none; }
+    @media (max-width:760px) {
+      .directory-toolbar { grid-template-columns:1fr; }
+      .directory-filters { justify-content:flex-start; }
+      .directory-count { grid-column:auto; }
+      .calculator-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .calculator-tile--featured { grid-column:span 2; }
     }
-
-    header h2 {
-      margin: 0;
-      font-size: 26px;
-      font-weight: bold;
-    }
-
-    header h2 a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    header h2 a:focus-visible {
-      outline: 2px solid #fff;
-      outline-offset: 4px;
-    }
-
-    header p {
-      margin-top: 5px;
-      font-size: 14px;
-      color: #ddd;
-    }
-
-    main {
-      max-width: 1120px;
-      margin: 28px auto 0;
-      padding: 0 24px 32px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .directory-heading {
-      margin-bottom: 20px;
-    }
-
-    .directory-heading p {
-      margin: 7px 0 0;
-      color: #59636e;
-      font-size: 15px;
-    }
-
-    .calculator-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .calculator-tile {
-      display: flex;
-      min-height: 132px;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 20px;
-      border: 1px solid #dce2e8;
-      border-radius: 8px;
-      background: #fff;
-      color: #222;
-      text-decoration: none;
-      transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-    }
-
-    .calculator-tile:hover {
-      transform: translateY(-2px);
-      border-color: #1683e8;
-      box-shadow: 0 5px 16px rgba(20, 66, 110, .1);
-    }
-
-    .calculator-tile:focus-visible {
-      outline: 3px solid #1683e8;
-      outline-offset: 2px;
-    }
-
-    .calculator-tile--featured {
-      border-color: #8dbff0;
-      box-shadow: inset 3px 0 #1683e8;
-    }
-
-    .tile-kicker {
-      margin-bottom: 8px;
-      color: #126fc1;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .tile-title {
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .tile-description {
-      margin-top: 7px;
-      color: #59636e;
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .tile-action {
-      margin-top: auto;
-      padding-top: 16px;
-      color: #126fc1;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .average-calculator {
-      max-width: 470px;
-      margin: 32px auto 0;
-      padding: 24px;
-      border-radius: 8px;
-      background: #fff;
-      box-shadow: 0 4px 12px rgba(0,0,0,.1);
-      scroll-margin-top: 24px;
-    }
-
-    .average-calculator h2 {
-      margin: 0 0 10px;
-      text-align: center;
-      font-size: 22px;
-    }
-
-    .seo-text {
-      margin: 0 0 20px;
-      color: #555;
-      text-align: center;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    .purchase-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .add-purchase {
-      margin-bottom: 12px;
-      padding: 9px 12px;
-      border: 1px solid #007bff;
-      background: #fff;
-      color: #0056b3;
-    }
-
-    .add-purchase:hover {
-      background: #f1f7ff;
-      color: #0056b3;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #007bff;
-      color: #fff;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    .result {
-      margin-top: 15px;
-      background: #f0f8ff;
-      padding: 12px;
-      border-radius: 4px;
-      font-size: 15px;
-    }
-
-    .info {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #444;
-    }
-
-    .info h2 {
-      font-size: 16px;
-      margin-top: 18px;
-      border-left: 3px solid #007bff;
-      padding-left: 8px;
-    }
-
-    .info ul {
-      padding-left: 18px;
-    }
-
-    @media (max-width: 800px) {
-      .calculator-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-
-    @media (max-width: 540px) {
-      main { margin-top: 22px; padding: 0 14px 24px; }
-      h1 { font-size: 24px; }
-      .calculator-grid { grid-template-columns: 1fr; gap: 12px; }
-      .calculator-tile { min-height: 0; padding: 17px; }
-      .tile-action { padding-top: 12px; }
-      .average-calculator { margin-top: 24px; padding: 20px; }
-    }
-
-    footer {
-      text-align: center;
-      font-size: 13px;
-      padding: 20px;
-      color: #666;
-    }
-
-    footer a {
-      color: #666;
-      text-decoration: none;
-      margin: 0 6px;
+    @media (max-width:520px) {
+      .directory-filters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .directory-filter { padding:0 5px; }
+      .calculator-grid { grid-template-columns:1fr; gap:10px; }
+      .calculator-tile, .calculator-tile--featured { grid-column:auto; min-height:172px; padding:17px; }
+      .calculator-tile--featured { min-height:205px; }
+      .tile-title { margin-top:13px; }
+      .calculator-tile--featured .tile-title { margin-top:17px; font-size:23px; }
+      .tile-action { padding-top:14px; }
     }
   </style>
 
@@ -284,54 +126,74 @@
 
 <header>
   <h2><a href="/" aria-label="StockMath home">StockMath</a></h2>
-  <p>Simple Trading Calculators</p>
+  <p>Trading tools for Indian markets</p>
+  <a class="header-about" href="/about">About</a>
 </header>
 
 <main>
-  <section class="calculator-directory" aria-labelledby="directory-title">
-    <div class="directory-heading">
-      <h1 id="directory-title">Stock trading calculators</h1>
-      <p>Choose a tool to plan a trade, check returns or estimate costs.</p>
+  <section aria-labelledby="directory-title">
+    <p class="eyebrow">THE STOCKMATH TOOLBOX · INDIA</p>
+    <h1 id="directory-title">Your next trade, by the numbers.</h1>
+    <p class="directory-intro">Quick calculators for returns, trade planning and market decisions.</p>
+
+    <div class="directory-toolbar">
+      <label class="search-label" for="calculatorSearch">Search calculators</label>
+      <input class="directory-search" id="calculatorSearch" type="search" placeholder="Search calculators" autocomplete="off">
+      <div class="directory-filters" role="group" aria-label="Filter calculators">
+        <button class="directory-filter" type="button" data-filter="all" aria-pressed="true">All tools</button>
+        <button class="directory-filter" type="button" data-filter="returns" aria-pressed="false">Returns</button>
+        <button class="directory-filter" type="button" data-filter="planning" aria-pressed="false">Planning</button>
+        <button class="directory-filter" type="button" data-filter="costs" aria-pressed="false">Costs</button>
+        <button class="directory-filter" type="button" data-filter="market" aria-pressed="false">Market</button>
+      </div>
+      <p class="directory-count" id="resultsCount" aria-live="polite">7 calculators</p>
     </div>
 
     <div class="calculator-grid">
-      <a class="calculator-tile calculator-tile--featured" href="/profit-loss-calculator/">
-        <span class="tile-kicker">POPULAR</span>
+      <a class="calculator-tile calculator-tile--featured" data-category="returns" href="/profit-loss-calculator/">
+        <span class="tile-topline"><span class="tile-category">MOST USED · RETURNS</span><span class="tile-symbol" aria-hidden="true">P/L</span></span>
         <span class="tile-title">Profit / Loss</span>
-        <span class="tile-description">Calculate profit, loss and percentage returns.</span>
-        <span class="tile-action">Open calculator</span>
+        <span class="tile-description">Check what your trade earns or loses, in rupees and percent.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
-      <a class="calculator-tile" href="/stock-average-calculator/">
+      <a class="calculator-tile calculator-tile--average" data-category="returns" href="/stock-average-calculator/">
+        <span class="tile-topline"><span class="tile-category">AVERAGE COST</span><span class="tile-symbol" aria-hidden="true">AVG</span></span>
         <span class="tile-title">Stock Average</span>
-        <span class="tile-description">Find your weighted average buy price.</span>
-        <span class="tile-action">Open calculator</span>
+        <span class="tile-description">Find your weighted buy price.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
-      <a class="calculator-tile" href="/break-even-calculator/">
-        <span class="tile-title">Break-Even &amp; Target Sell Price</span>
-        <span class="tile-description">Find the sell price needed to break even or reach a profit target.</span>
-        <span class="tile-action">Open calculator</span>
+      <a class="calculator-tile calculator-tile--break-even" data-category="planning" href="/break-even-calculator/">
+        <span class="tile-topline"><span class="tile-category">SELL TARGET</span><span class="tile-symbol" aria-hidden="true">B/E</span></span>
+        <span class="tile-title">Break-Even &amp; Target Price</span>
+        <span class="tile-description">Know the sell price for break-even or profit.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
-      <a class="calculator-tile" href="/position-size-calculator/">
+      <a class="calculator-tile calculator-tile--position" data-category="planning" href="/position-size-calculator/">
+        <span class="tile-topline"><span class="tile-category">RISK CONTROL</span><span class="tile-symbol" aria-hidden="true">SIZE</span></span>
         <span class="tile-title">Position Size</span>
-        <span class="tile-description">Estimate share quantity based on risk and stop-loss.</span>
-        <span class="tile-action">Open calculator</span>
+        <span class="tile-description">Set share quantity from risk and stop-loss.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
-      <a class="calculator-tile" href="/trading-charges-calculator/">
+      <a class="calculator-tile calculator-tile--charges" data-category="costs" href="/trading-charges-calculator/">
+        <span class="tile-topline"><span class="tile-category">TRADE COSTS</span><span class="tile-symbol" aria-hidden="true">₹</span></span>
         <span class="tile-title">Trading Charges</span>
-        <span class="tile-description">Estimate statutory charges on an equity trade.</span>
-        <span class="tile-action">Open calculator</span>
+        <span class="tile-description">Estimate statutory equity-trade costs.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
-      <a class="calculator-tile" href="/stock-split-calculator/">
+      <a class="calculator-tile calculator-tile--split" data-category="market" href="/stock-split-calculator/">
+        <span class="tile-topline"><span class="tile-category">CORPORATE ACTION</span><span class="tile-symbol" aria-hidden="true">1:2</span></span>
         <span class="tile-title">Stock Split</span>
-        <span class="tile-description">Calculate adjusted shares and price after a split.</span>
-        <span class="tile-action">Open calculator</span>
+        <span class="tile-description">See how a split changes shares and price.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
-      <a class="calculator-tile" href="/nifty50-calculator/">
+      <a class="calculator-tile calculator-tile--nifty" data-category="market" href="/nifty50-calculator/">
+        <span class="tile-topline"><span class="tile-category">HISTORICAL SCENARIO</span><span class="tile-symbol" aria-hidden="true">50</span></span>
         <span class="tile-title">What If NIFTY 50?</span>
-        <span class="tile-description">Explore how a past NIFTY 50 investment might have changed.</span>
-        <span class="tile-action">Open calculator</span>
+        <span class="tile-description">Explore how a past investment might have changed.</span>
+        <span class="tile-action"><span>Open calculator</span><span class="tile-arrow" aria-hidden="true">↗</span></span>
       </a>
     </div>
+    <p class="no-tools" id="noTools" hidden>No calculators match. Try a different search or choose All tools.</p>
   </section>
 
 </main>
@@ -346,6 +208,41 @@
 </footer>
 
 <script src="/site-nav.js" defer></script>
+<script>
+(() => {
+  const search = document.getElementById('calculatorSearch');
+  const filters = [...document.querySelectorAll('.directory-filter')];
+  const items = [...document.querySelectorAll('.calculator-tile')];
+  const count = document.getElementById('resultsCount');
+  const noTools = document.getElementById('noTools');
+  let activeFilter = 'all';
+
+  function updateTools() {
+    const query = search.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    for (const item of items) {
+      const matchesFilter = activeFilter === 'all' || item.dataset.category === activeFilter;
+      const matchesQuery = item.textContent.toLowerCase().includes(query);
+      const visible = matchesFilter && matchesQuery;
+      item.hidden = !visible;
+      if (visible) visibleCount += 1;
+    }
+
+    count.textContent = `${visibleCount} ${visibleCount === 1 ? 'calculator' : 'calculators'}`;
+    noTools.hidden = visibleCount > 0;
+  }
+
+  search.addEventListener('input', updateTools);
+  for (const filter of filters) {
+    filter.addEventListener('click', () => {
+      activeFilter = filter.dataset.filter;
+      for (const button of filters) button.setAttribute('aria-pressed', String(button === filter));
+      updateTools();
+    });
+  }
+})();
+</script>
 </body>
 </html>
 
