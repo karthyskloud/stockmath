@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1645652921007768" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gap &amp; Circuit Risk Calculator India | StockMath</title>
+  <meta name="description" content="Compare planned stop-loss risk with user-entered gap and lower-circuit exit scenarios for Indian stocks. Estimate losses and shares within a risk budget.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/gap-circuit-risk-calculator/">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; color: #222; }
+    header { background: #111; color: #fff; padding: 20px; text-align: center; }
+    header h2 { margin: 0; font-size: 26px; }
+    header p { margin: 5px 0 0; font-size: 14px; color: #ddd; }
+    main { max-width: 500px; margin: 36px auto; padding: 24px; border-radius: 8px; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+    h1 { margin: 0 0 10px; text-align: center; font-size: 22px; line-height: 1.3; }
+    .intro { margin: 0 0 22px; color: #555; text-align: center; font-size: 14px; line-height: 1.5; }
+    .input-label { display: block; margin: 0 0 5px; color: #424b55; font-size: 14px; font-weight: 600; }
+    input { box-sizing: border-box; width: 100%; margin: 0 0 14px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
+    input:focus { outline: 2px solid #087f78; outline-offset: 1px; }
+    .hint { margin: -8px 0 14px; color: #66727a; font-size: 12px; line-height: 1.45; }
+    button { width: 100%; padding: 12px; border: 0; border-radius: 4px; background: #087f78; color: #fff; font-size: 16px; cursor: pointer; }
+    button:hover { background: #066660; }
+    .result { margin-top: 16px; padding: 14px; border-radius: 4px; background: #edf5f2; font-size: 14px; line-height: 1.8; }
+    .result:empty { display: none; }
+    .result-error { background: #fff2f2; color: #a32121; }
+    .scenario { margin-top: 9px; padding-top: 9px; border-top: 1px solid #d5e0dc; }
+    .info { margin-top: 28px; color: #444; font-size: 14px; line-height: 1.55; }
+    .info h2 { margin: 20px 0 8px; padding-left: 8px; border-left: 3px solid #087f78; font-size: 16px; }
+    .info ul { padding-left: 20px; }
+    .related { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #eee; }
+    .related a { padding: 8px 12px; border-radius: 20px; background: #edf5f2; color: #087f78; font-size: 14px; text-decoration: none; }
+    .related a:hover { background: #087f78; color: #fff; }
+    footer { padding: 20px; color: #666; text-align: center; font-size: 13px; }
+    footer a { margin: 0 6px; color: #666; text-decoration: none; }
+    @media (max-width: 540px) { main { margin: 20px 12px; padding: 20px; } }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ZXJNJQN0L"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0ZXJNJQN0L');
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Gap and Circuit Risk Calculator",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.stockmath.co.in/gap-circuit-risk-calculator/",
+    "description": "Compare planned stop-loss risk with user-entered gap and circuit exit scenarios for an Indian equity position.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+  }
+  </script>
+</head>
+<body>
+<header>
+  <h2>StockMath</h2>
+  <p>Trading tools for Indian markets</p>
+</header>
+<main>
+  <h1>Gap &amp; Circuit Risk Calculator</h1>
+  <p class="intro">See how an assumed gap or circuit-level exit could change the risk on a long stock position. You provide the scenario prices; this tool does not predict them.</p>
+
+  <label class="input-label" for="entryPrice">Entry price per share (₹)</label>
+  <input id="entryPrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="e.g. 100">
+
+  <label class="input-label" for="quantity">Shares held</label>
+  <input id="quantity" type="number" min="1" step="1" inputmode="numeric" placeholder="e.g. 100">
+
+  <label class="input-label" for="stopPrice">Planned stop price (₹)</label>
+  <input id="stopPrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="e.g. 95">
+
+  <label class="input-label" for="gapExitPrice">Assumed gap-exit price (₹)</label>
+  <input id="gapExitPrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="e.g. 92">
+
+  <label class="input-label" for="circuitPrice">Lower-circuit scenario price (₹, optional)</label>
+  <input id="circuitPrice" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Enter a scenario price">
+  <p class="hint">Use a circuit price you supply; bands vary by security and can change. This tool does not fetch live circuit limits.</p>
+
+  <label class="input-label" for="riskBudget">Maximum loss budget (₹)</label>
+  <input id="riskBudget" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="e.g. 600">
+
+  <label class="input-label" for="estimatedCharges">Estimated round-trip charges for this position (₹)</label>
+  <input id="estimatedCharges" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+  <p class="hint">Optional. For the estimated share limits, charges are scaled proportionally from this position estimate.</p>
+
+  <button type="button" id="calculateRisk">Compare risk scenarios</button>
+  <div class="result" id="riskOutput" role="status" aria-live="polite"></div>
+
+  <section class="info">
+    <h2>How to read the scenarios</h2>
+    <p>The planned-stop result assumes an exit at your stop price. The gap result assumes an exit at your entered gap price. The optional circuit result assumes an exit at your entered circuit scenario price. All losses are estimates for a long equity position.</p>
+    <ul>
+      <li><strong>Planned loss:</strong> entry-to-stop loss for your current shares.</li>
+      <li><strong>Gap loss:</strong> estimated loss if the position exits below the planned stop at your assumed price.</li>
+      <li><strong>Circuit loss:</strong> a separate stress scenario at the price you enter.</li>
+      <li><strong>Shares within budget:</strong> estimated maximum shares for each scenario, before rounding to exchange/broker constraints.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>Does a stop-loss guarantee my exit price?</strong><br>No. A stop order may execute at a different price if the market gaps or liquidity is limited.</p>
+    <p><strong>Does this predict gaps or circuit moves?</strong><br>No. It only calculates scenarios from prices you enter.</p>
+    <p><strong>Can I use a circuit price from any stock?</strong><br>Yes, as a manual scenario. Verify the current price band with your exchange or broker; bands can vary and change.</p>
+    <p><strong>Are brokerage and taxes included?</strong><br>Only if you enter them in estimated round-trip charges. This is not a tax calculation, and actual charges may differ.</p>
+    <p><strong>Does this calculate short positions or options?</strong><br>No. This version models a long equity position only.</p>
+    <p style="margin-top:12px;font-size:13px;color:#666;">For educational purposes only. This scenario calculator is not financial advice and does not guarantee execution or limit losses.</p>
+  </section>
+
+  <div class="related" aria-label="Related calculators">
+    <a href="/position-size-calculator/">Position Size</a>
+    <a href="/break-even-calculator/">Break-Even &amp; Target Price</a>
+    <a href="/trading-charges-calculator/">Trading Charges</a>
+  </div>
+</main>
+<footer>
+  <p><a href="/">All calculators</a> | <a href="/about">About</a> | <a href="/disclaimer">Disclaimer</a> | <a href="/privacy-policy">Privacy Policy</a></p>
+  <p>© 2026 StockMath.co.in</p>
+</footer>
+<script>
+function calculateScenarioLoss(entryPrice, exitPrice, quantity, charges) {
+  const priceLoss = Math.max(0, entryPrice - exitPrice) * quantity;
+  return priceLoss + charges;
+}
+
+function calculateSharesWithinBudget(entryPrice, exitPrice, riskBudget, chargePerShare) {
+  const lossPerShare = Math.max(0, entryPrice - exitPrice) + chargePerShare;
+  if (lossPerShare <= 0) return null;
+  return Math.floor(riskBudget / lossPerShare);
+}
+
+document.getElementById('calculateRisk').addEventListener('click', () => {
+  const entryPrice = Number(document.getElementById('entryPrice').value);
+  const quantity = Number(document.getElementById('quantity').value);
+  const stopPrice = Number(document.getElementById('stopPrice').value);
+  const gapExitPrice = Number(document.getElementById('gapExitPrice').value);
+  const circuitValue = document.getElementById('circuitPrice').value.trim();
+  const circuitPrice = circuitValue === '' ? null : Number(circuitValue);
+  const riskBudget = Number(document.getElementById('riskBudget').value);
+  const estimatedCharges = Number(document.getElementById('estimatedCharges').value || 0);
+  const output = document.getElementById('riskOutput');
+
+  const validPositive = [entryPrice, quantity, stopPrice, gapExitPrice, riskBudget].every(Number.isFinite);
+  const validCircuit = circuitPrice === null || (Number.isFinite(circuitPrice) && circuitPrice > 0 && circuitPrice < entryPrice);
+  if (!validPositive || entryPrice <= 0 || !Number.isInteger(quantity) || quantity <= 0 || stopPrice <= 0 || stopPrice >= entryPrice || gapExitPrice <= 0 || gapExitPrice >= entryPrice || riskBudget <= 0 || !validCircuit || !Number.isFinite(estimatedCharges) || estimatedCharges < 0) {
+    output.classList.add('result-error');
+    output.textContent = 'Enter a positive entry, share count and risk budget; stop and scenario prices must be below entry, and charges cannot be negative.';
+    return;
+  }
+
+  const chargePerShare = estimatedCharges / quantity;
+  const plannedLoss = calculateScenarioLoss(entryPrice, stopPrice, quantity, estimatedCharges);
+  const gapLoss = calculateScenarioLoss(entryPrice, gapExitPrice, quantity, estimatedCharges);
+  const gapShares = calculateSharesWithinBudget(entryPrice, gapExitPrice, riskBudget, chargePerShare);
+  const circuitLoss = circuitPrice === null ? null : calculateScenarioLoss(entryPrice, circuitPrice, quantity, estimatedCharges);
+  const circuitShares = circuitPrice === null ? null : calculateSharesWithinBudget(entryPrice, circuitPrice, riskBudget, chargePerShare);
+  const budgetStatus = (loss) => loss > riskBudget ? `Exceeds budget by ₹${(loss - riskBudget).toFixed(2)}` : `Within budget by ₹${(riskBudget - loss).toFixed(2)}`;
+
+  output.classList.remove('result-error');
+  output.innerHTML = `
+    <strong>Planned stop scenario:</strong> ₹${plannedLoss.toFixed(2)} loss<br>
+    <span class="hint">${budgetStatus(plannedLoss)}</span>
+    <div class="scenario"><strong>Gap-exit scenario at ₹${gapExitPrice.toFixed(2)}:</strong> ₹${gapLoss.toFixed(2)} loss<br>
+    <strong>Estimated shares within budget:</strong> ${gapShares === null ? 'Not available' : gapShares}</div>
+    ${circuitPrice === null ? '' : `<div class="scenario"><strong>Circuit scenario at ₹${circuitPrice.toFixed(2)}:</strong> ₹${circuitLoss.toFixed(2)} loss<br><strong>Estimated shares within budget:</strong> ${circuitShares === null ? 'Not available' : circuitShares}</div>`}
+    <div class="scenario"><strong>Risk budget:</strong> ₹${riskBudget.toFixed(2)}<br><strong>Estimated charges included:</strong> ₹${estimatedCharges.toFixed(2)}</div>
+    <p class="hint">Share estimates scale the entered charge estimate per share and exclude lot-size constraints. Scenario exits are assumptions, not guaranteed fills.</p>
+  `;
+});
+</script>
+<script src="/site-nav.js" defer></script>
+</body>
+</html>
