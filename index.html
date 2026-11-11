@@ -28,6 +28,7 @@
     .header-about { color:#fff; font-size:14px; text-decoration:none; }
     .header-about:hover { text-decoration:underline; }
     .header-about:focus-visible { outline:2px solid #fff; outline-offset:4px; }
+    .header-links { display:flex; gap:18px; }
     main { max-width:1000px; margin:0 auto; padding:54px 24px 44px; }
     .eyebrow { margin:0 0 12px; color:var(--teal); font-size:12px; font-weight:700; }
     h1 { margin:0; font-size:34px; line-height:1.15; }
@@ -129,7 +130,10 @@
 <header>
   <h2><a href="/" aria-label="StockMath home">StockMath</a></h2>
   <p>Trading tools for Indian markets</p>
-  <a class="header-about" href="/about">About</a>
+  <nav class="header-links" aria-label="Primary navigation">
+    <a class="header-about" href="/blog/">Blog</a>
+    <a class="header-about" href="/about">About</a>
+  </nav>
 </header>
 
 <main>
@@ -215,6 +219,7 @@
 
 <footer>
   <p>
+    <a href="/blog/">Blog</a> |
     <a href="/about">About</a> |
     <a href="/disclaimer">Disclaimer</a> |
     <a href="/privacy-policy">Privacy Policy</a>

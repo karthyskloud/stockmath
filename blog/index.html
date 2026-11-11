@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockMath Market Lab | Practical investing explainers</title>
+  <meta name="description" content="Explore worked examples, interactive explainers, and market snapshots that make stock averages, break-even prices, and position sizing easier to understand.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/blog/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+  <header class="blog-header">
+    <a class="blog-brand" href="/" aria-label="StockMath home">StockMath</a>
+    <nav class="blog-header__links" aria-label="Primary navigation">
+      <a class="blog-header__link" href="/blog/" aria-current="page">Market Lab</a>
+      <a class="blog-header__link" href="/">Calculators</a>
+    </nav>
+  </header>
+
+  <main class="blog-main">
+    <section class="journal-hero" aria-labelledby="blog-title">
+      <div class="journal-copy">
+        <p class="eyebrow">STOCKMATH / MARKET LAB</p>
+        <h1 class="blog-title" id="blog-title">Make sense of the moves.</h1>
+        <p class="blog-intro">Friendly explainers for the numbers behind everyday investing decisions. Follow a worked example, change the inputs, and see what the result can and cannot tell you.</p>
+        <div class="hero-tags" aria-label="What you will find">
+          <span>Fictional case studies</span>
+          <span>Hands-on examples</span>
+          <span>Plain-English limits</span>
+        </div>
+        <a class="hero-link" href="#field-guide">Explore the field guide <span aria-hidden="true">↓</span></a>
+      </div>
+      <figure class="hero-art">
+        <img src="/blog/illustrations/market-mentor.svg" alt="Original anime-inspired illustration of a market student studying a colorful price chart">
+        <figcaption>Curiosity first. Numbers second.</figcaption>
+      </figure>
+    </section>
+
+    <section class="scenario-studio" aria-labelledby="scenario-title" data-average-scenario>
+      <div class="scenario-copy">
+        <p class="eyebrow">THE PRACTICE FLOOR / FICTIONAL EXAMPLE</p>
+        <h2 id="scenario-title">Meet Company ABC.</h2>
+        <p>Two pretend buys. Your inputs. One weighted average that changes as you experiment.</p>
+        <p class="scenario-disclaimer">ABC and every price below are fictional teaching examples, not current market data or trade recommendations.</p>
+      </div>
+      <div class="scenario-workbench">
+        <div class="scenario-chart" aria-label="Illustrative two-purchase price comparison">
+          <div class="scenario-bar scenario-bar--first"><span>Buy one</span><strong data-scenario-label-one>₹1,300</strong></div>
+          <div class="scenario-bar scenario-bar--second"><span>Buy two</span><strong data-scenario-label-two>₹1,308</strong></div>
+          <div class="scenario-chart__baseline"></div>
+        </div>
+        <div class="scenario-fields">
+          <label>First buy price<input type="number" min="0.01" step="0.01" value="1300" data-scenario-price-one inputmode="decimal"></label>
+          <label>Shares bought<input type="number" min="1" step="1" value="10" data-scenario-shares-one inputmode="numeric"></label>
+          <label>Second buy price<input type="number" min="0.01" step="0.01" value="1308" data-scenario-price-two inputmode="decimal"></label>
+          <label>Shares bought<input type="number" min="1" step="1" value="10" data-scenario-shares-two inputmode="numeric"></label>
+        </div>
+        <div class="scenario-results" aria-live="polite">
+          <div><span>Average cost</span><strong data-scenario-average>₹1,304.00</strong></div>
+          <div><span>Total shares</span><strong data-scenario-total-shares>20</strong></div>
+          <div><span>Total outlay</span><strong data-scenario-total-outlay>₹26,080.00</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefit-band" aria-labelledby="benefit-title">
+      <div class="section-heading">
+        <p class="eyebrow">LESS SCROLLING, MORE UNDERSTANDING</p>
+        <h2 id="benefit-title">Take one useful idea with you.</h2>
+      </div>
+      <div class="benefit-list">
+        <article><span class="benefit-number">01</span><h3>See the steps</h3><p>Follow the arithmetic from inputs to answer, with the assumptions kept in view.</p></article>
+        <article><span class="benefit-number">02</span><h3>Try a scenario</h3><p>Change sample values in small interactive examples and see how the result moves.</p></article>
+        <article><span class="benefit-number">03</span><h3>Know the edges</h3><p>Spot what fees, gaps, taxes, and missing context can leave out of a simple calculation.</p></article>
+      </div>
+    </section>
+
+    <section class="article-index" id="field-guide" aria-labelledby="field-guide-title">
+      <div class="section-heading section-heading--row">
+        <div><p class="eyebrow">THE FIELD GUIDE / 3 PRACTICAL READS</p><h2 id="field-guide-title">Pick a question.</h2></div>
+        <span class="guide-total">About 25 minutes total</span>
+      </div>
+      <div class="guide-list">
+        <a class="guide-row" href="/blog/stock-average/">
+          <span class="guide-number">01</span>
+          <img class="guide-illustration" src="/blog/illustrations/averaging.svg" alt="">
+          <span class="guide-copy"><span class="guide-topic">DCA &amp; COST BASIS · 7 MIN</span><strong>Stock averaging: what your average price really tells you</strong><span>Compare scheduled investing with buying every dip, then see how a lower average can still leave a loss.</span></span>
+          <span class="guide-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="guide-row" href="/blog/break-even-after-costs/">
+          <span class="guide-number">02</span>
+          <img class="guide-illustration" src="/blog/illustrations/break-even.svg" alt="">
+          <span class="guide-copy"><span class="guide-topic">GROSS VS NET · 9 MIN</span><strong>Break-even is more than your buy price</strong><span>Understand the fee hurdle, target net profit, and why your original cost should not become a price forecast.</span></span>
+          <span class="guide-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="guide-row" href="/blog/position-sizing-and-gap-risk/">
+          <span class="guide-number">03</span>
+          <img class="guide-illustration" src="/blog/illustrations/gap-risk.svg" alt="">
+          <span class="guide-copy"><span class="guide-topic">RISK &amp; EXPOSURE · 9 MIN</span><strong>Position size, stop distance, and overnight gaps</strong><span>Explore capital limits, stacked portfolio risk, stop logic, and gap scenarios beyond one calculator result.</span></span>
+          <span class="guide-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="blog-footer">
+    <p><a href="/">All calculators</a><a href="/about/">About</a><a href="/disclaimer/">Disclaimer</a><a href="/privacy-policy/">Privacy Policy</a></p>
+    <p>For education only, not financial advice. © 2026 StockMath.co.in</p>
+  </footer>
+  <script src="/blog/interactives.js" defer></script>
+</body>
+</html>

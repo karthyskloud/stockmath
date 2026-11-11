@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Break-Even Is More Than Your Buy Price | StockMath</title>
+  <meta name="description" content="Understand how entry and exit costs affect the price needed to break even on a stock trade.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/blog/break-even-after-costs/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+  <header class="blog-header">
+    <a class="blog-brand" href="/" aria-label="StockMath home">StockMath</a>
+    <a class="blog-header__link" href="/blog/">Field notes</a>
+  </header>
+
+  <main class="blog-main article-main">
+    <article>
+      <header class="article-masthead article-masthead--break-even">
+        <a class="article-crumb" href="/blog/">← Market Lab</a>
+        <p class="eyebrow">THE MATH / GROSS VS NET / 9 MIN</p>
+        <h1 class="article-title">Break-even is more than your buy price</h1>
+        <p class="article-deck">A trade can show a gross gain and still make a smaller net gain, or a loss, after charges. Follow a full example and test how costs change the sale price needed to get back to zero.</p>
+      </header>
+      <div class="article-body">
+        <div class="lesson-strip"><strong>THE QUICK TAKE</strong><p>Gross P/L looks only at buy and sell prices. Net P/L also subtracts the charges paid to enter and exit. Break-even is where that net result reaches zero.</p></div>
+        <h2>Gross profit is not take-home profit</h2>
+        <p class="article-lead">Imagine a fictional trade: 100 shares of Company ABC bought for ₹100 each. Assume ₹15 of entry costs and ₹25 of exit costs, held flat here only to keep the arithmetic easy.</p>
+        <figure class="example">
+          <figcaption>One fictional trade · flat costs used for illustration</figcaption>
+          <table>
+            <thead><tr><th scope="col">Sale price</th><th scope="col">Gross P/L</th><th scope="col">Total costs</th><th scope="col">Net P/L</th></tr></thead>
+            <tbody>
+              <tr><td>₹100.00</td><td>₹0</td><td>₹40</td><td>−₹40</td></tr>
+              <tr><td>₹100.40</td><td>₹40</td><td>₹40</td><td>₹0</td></tr>
+              <tr><td>₹105.00</td><td>₹500</td><td>₹40</td><td>₹460</td></tr>
+            </tbody>
+          </table>
+          <p>At ₹105, the price move creates ₹500 gross profit. After the assumed ₹40 in total costs, the estimated net profit is ₹460 before any other excluded items. At ₹100, the share price is unchanged, but the trade is down ₹40 because the round trip still had costs.</p>
+        </figure>
+
+        <h2>Calculate a simple break-even price</h2>
+        <p>For fixed total charges, add the assumed entry and exit costs to your purchase value, then divide by the number of shares. In this example: (₹10,000 + ₹40) ÷ 100 = ₹100.40 per share.</p>
+        <div class="formula">Estimated break-even = (purchase value + total entry and exit costs) ÷ shares</div>
+
+        <section class="mini-tool" data-break-even-tool aria-labelledby="break-even-tool-title">
+          <h2 id="break-even-tool-title">Try the numbers yourself</h2>
+          <p class="mini-tool__intro">This simplified scenario treats all charges as one fixed rupee amount. It is not a broker charge quote.</p>
+          <div class="mini-tool__fields">
+            <label>Buy price per share (₹)<input type="number" min="0.01" step="0.01" value="100" data-entry inputmode="decimal"></label>
+            <label>Number of shares<input type="number" min="1" step="1" value="100" data-quantity inputmode="numeric"></label>
+            <label>Total entry + exit costs (₹)<input type="number" min="0" step="0.01" value="40" data-costs inputmode="decimal"></label>
+            <label>Test sale price per share (₹)<input type="number" min="0.01" step="0.01" value="105" data-sale-price inputmode="decimal"></label>
+          </div>
+          <div class="mini-tool__outputs">
+            <div class="mini-tool__result"><span>Estimated break-even price</span><output data-break-even-output aria-live="polite">₹100.40</output></div>
+            <div class="mini-tool__result"><span>Estimated net P/L at test sale</span><output data-net-pl-output aria-live="polite">+₹460.00</output></div>
+          </div>
+          <p class="mini-tool__detail" data-break-even-detail>At ₹105, gross P/L is ₹500; after assumed costs of ₹40, estimated net P/L is ₹460.</p>
+        </section>
+
+        <h2>Break-even and target profit are different questions</h2>
+        <p>Break-even asks for the sale price where the estimated net result reaches zero. A target-profit calculation starts from the same ledger but adds the amount you want to keep after costs. With 100 shares bought at ₹100, ₹40 of assumed total charges, and a ₹1,000 net-profit target, the sale needs to raise ₹11,040 in total: ₹10,000 to recover the purchase, ₹40 for costs, and ₹1,000 for the target.</p>
+        <figure class="example">
+          <figcaption>Target-profit bridge · fixed charges for clarity</figcaption>
+          <table>
+            <thead><tr><th scope="col">Required sale proceeds</th><th scope="col">Amount</th><th scope="col">Per share</th></tr></thead>
+            <tbody>
+              <tr><td>Recover purchase value</td><td>₹10,000</td><td>₹100.00</td></tr>
+              <tr><td>Cover assumed costs</td><td>₹40</td><td>₹0.40</td></tr>
+              <tr><td>Reach target net profit</td><td>₹1,000</td><td>₹10.00</td></tr>
+              <tr><td>Required total</td><td>₹11,040</td><td>₹110.40</td></tr>
+            </tbody>
+          </table>
+          <p>At ₹110.00, gross profit would be ₹1,000 but net profit only ₹960 under these assumptions. The ₹110.40 estimate is the price that reaches the ₹1,000 target in this flat-cost example.</p>
+        </figure>
+
+        <h2>Why small costs can matter differently to different trades</h2>
+        <p>Costs should be read relative to the trade, not just as a rupee total. A fixed ₹40 charge is 0.4% of a ₹10,000 purchase value before considering how charges scale. The same charge is 0.04% of ₹1,00,000. For a low-price move or a short holding period, the cost hurdle can consume a larger share of the gross return. For a much larger move, it may be a smaller share, but it does not disappear.</p>
+        <p>Turnover-based charges also mean that doubling quantity can increase both potential profit and transaction costs. A larger position is not automatically more efficient: compare the estimated cost per share and the amount of capital exposed before drawing that conclusion.</p>
+
+        <h2>Do not let break-even become an anchor</h2>
+        <p>Your original purchase price is part of your record, but the market does not know what you paid. Waiting for the exact break-even price can become an emotional rule rather than a fresh assessment. The relevant decision is not only “Can the price return to my cost?” but also “Given what I know now, does holding this position still fit my plan better than the alternatives?”</p>
+        <p>This does not mean ignoring cost basis. It means using it for accounting and performance measurement without treating it as evidence that a future recovery is due. A break-even calculator cannot assess a company’s value, predict a price path, compare opportunity costs, or tell you what to do with a holding.</p>
+
+        <h2>What costs should you check?</h2>
+        <ul>
+          <li><strong>Brokerage:</strong> your broker’s fee for the orders, subject to the plan and product.</li>
+          <li><strong>Exchange and regulatory charges:</strong> charges that can depend on the venue, turnover, and current rules.</li>
+          <li><strong>Taxes and duties:</strong> applicable taxes can differ by product and transaction type.</li>
+          <li><strong>Other frictions:</strong> bid-ask spread, slippage, and price movement while an order is being filled.</li>
+        </ul>
+        <p>Some costs are percentage-based, capped, or rounded rather than fixed. If a charge changes with the sale value, the exact break-even may need an iterative calculation. Check current broker rates and applicable rules; do not copy the flat ₹40 example as a real estimate.</p>
+        <h2>A practical review before relying on the estimate</h2>
+        <ul>
+          <li>Confirm that the calculation includes both entry and exit, not only the buy-side fee.</li>
+          <li>Use the correct product, exchange, brokerage plan, and current charge schedule.</li>
+          <li>Check whether any input is a flat amount, percentage, cap, or rounded charge.</li>
+          <li>Keep taxes, spreads, slippage, and other excluded items visible rather than assuming they are zero.</li>
+          <li>Compare the estimated net outcome with the risk and alternatives; do not treat break-even as a forecast.</li>
+        </ul>
+        <p>The estimate is most useful as a transparent accounting scenario: it makes assumptions visible and lets you test how sensitive the answer is to quantity, fees, and target. For an actual trade, reconcile against your broker’s contract note and current rate schedule.</p>
+        <aside class="article-note">Company ABC, prices, and charges in this guide are fictional. Break-even is an accounting estimate, not a price forecast or a promise of profit.</aside>
+        <a class="article-tool" href="/break-even-calculator/">Compare with the full Break-Even Calculator</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="blog-footer">
+    <p><a href="/">All calculators</a><a href="/blog/">All articles</a><a href="/disclaimer/">Disclaimer</a></p>
+    <p>For education only, not financial advice. © 2026 StockMath.co.in</p>
+  </footer>
+  <script src="/blog/interactives.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 140" role="img" aria-labelledby="title">
+  <title id="title">A price gap moves below a planned stop level</title>
+  <rect width="220" height="140" rx="8" fill="#e6edf6"/>
+  <path d="M25 111h173M40 118V24" stroke="#17232c" stroke-width="3" stroke-linecap="round"/>
+  <path d="M48 51h143" stroke="#b94f35" stroke-width="3" stroke-dasharray="7 6"/>
+  <path d="M58 37h20v28H58zm35 16h20v31H93zm43 28h20v25h-20zm35 17h20v11h-20z" fill="#087f78" stroke="#17232c" stroke-width="2"/>
+  <path d="M68 31v43m37-33v58m43-29v45m35-31v36" stroke="#17232c" stroke-width="2"/>
+  <path d="m124 40 14 14-14 14m9-14H116" fill="none" stroke="#e46d5b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="125" cy="54" r="25" fill="none" stroke="#e46d5b" stroke-width="3" opacity=".75"/>
+</svg>

@@ -25,6 +25,15 @@
   link.href = "/";
   link.textContent = "← All calculators";
   nav.appendChild(link);
+
+  if (currentPath !== "/blog") {
+    const blogLink = document.createElement("a");
+    blogLink.className = "site-nav__link";
+    blogLink.href = "/blog/";
+    blogLink.textContent = "Blog";
+    nav.appendChild(blogLink);
+  }
+
   header.insertAdjacentElement("afterend", nav);
 
   const style = document.createElement("style");

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Averaging: What Your Average Price Tells You | StockMath</title>
+  <meta name="description" content="Learn how to calculate the weighted average cost of multiple stock purchases, with a worked example and important limitations.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/blog/stock-average/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+  <header class="blog-header">
+    <a class="blog-brand" href="/" aria-label="StockMath home">StockMath</a>
+    <a class="blog-header__link" href="/blog/">Field notes</a>
+  </header>
+
+  <main class="blog-main article-main">
+    <article>
+      <header class="article-masthead article-masthead--average">
+        <a class="article-crumb" href="/blog/">← Market Lab</a>
+        <p class="eyebrow">THE MATH / DCA &amp; COST BASIS / 7 MIN</p>
+        <h1 class="article-title">Stock averaging: what your average price really tells you</h1>
+        <p class="article-deck">What happens when a share falls after you buy it? Learn how dollar-cost averaging differs from buying every dip, then test how adding shares changes both your average and your risk.</p>
+      </header>
+      <div class="article-body">
+        <div class="lesson-strip"><strong>THE QUICK TAKE</strong><p>A lower average can reduce the price needed to break even, but it does not erase the loss already on your shares. Buying more also puts more money at risk.</p></div>
+        <h2>What is dollar-cost averaging?</h2>
+        <p>Dollar-cost averaging (DCA), also called rupee-cost averaging in India, means investing a fixed amount at regular intervals regardless of short-term price changes. When the price is lower, the same amount buys more units; when it is higher, it buys fewer. The plan follows a schedule rather than trying to guess the exact bottom.</p>
+        <figure class="example">
+          <figcaption>Fictional scheduled-investing example · ₹10,000 per instalment</figcaption>
+          <table>
+            <thead><tr><th scope="col">Scheduled buy</th><th scope="col">Price</th><th scope="col">Amount</th><th scope="col">Whole shares</th></tr></thead>
+            <tbody>
+              <tr><td>First instalment</td><td>₹1,000</td><td>₹10,000</td><td>10</td></tr>
+              <tr><td>Second instalment</td><td>₹500</td><td>₹10,000</td><td>20</td></tr>
+              <tr><td>Total</td><td>—</td><td>₹20,000</td><td>30</td></tr>
+            </tbody>
+          </table>
+          <p>Average cost is ₹20,000 ÷ 30 = <strong>₹666.67 per share</strong>, before costs. If the price is still ₹500, the shares are worth ₹15,000 and the paper loss is ₹5,000. Buying on a schedule changes the average; it does not prevent a loss.</p>
+        </figure>
+        <p>That is different from <strong>averaging down</strong>: choosing to buy more of a holding after its price falls. A fall may be an opportunity, but it may also reflect worsening prospects. A lower price by itself does not tell you which.</p>
+        <div class="lesson-strip"><strong>KEEP THEM SEPARATE</strong><p>Scheduled investing is a process. Buying a dip is a decision about a particular holding. Neither guarantees a profit or protects against a long decline.</p></div>
+
+        <h2>Why quantity changes the answer</h2>
+        <p class="article-lead">A quick average of order prices treats every order as equal. But 20 shares at one price and 10 at another are not equal-sized purchases.</p>
+        <div class="formula">Weighted average cost = (shares × price for each buy) ÷ total shares</div>
+
+        <figure class="example">
+          <figcaption>Worked example · excluding transaction costs</figcaption>
+          <table>
+            <thead><tr><th scope="col">Buy</th><th scope="col">Shares</th><th scope="col">Price</th><th scope="col">Amount</th></tr></thead>
+            <tbody>
+              <tr><td>First order</td><td>20</td><td>₹500</td><td>₹10,000</td></tr>
+              <tr><td>Second order</td><td>10</td><td>₹440</td><td>₹4,400</td></tr>
+              <tr><td>Total</td><td>30</td><td>—</td><td>₹14,400</td></tr>
+            </tbody>
+          </table>
+          <div class="calculation-flow" aria-label="Fourteen thousand four hundred rupees divided by thirty shares equals four hundred eighty rupees per share">
+            <span>₹14,400 total</span><b aria-hidden="true">÷</b><span>30 shares</span><b aria-hidden="true">=</b><strong>₹480 / share</strong>
+          </div>
+          <p>The plain average of ₹500 and ₹440 is ₹470. It is not the answer here because the first order bought twice as many shares.</p>
+        </figure>
+
+        <section class="market-case" aria-labelledby="market-case-title">
+          <div class="market-case__top"><strong id="market-case-title">PRACTICE CASE / COMPANY ABC</strong><span>Fictional prices · not live data</span></div>
+          <p>Imagine buying 10 shares at ₹1,300 and another 10 at ₹1,308. No real company or market quote is represented.</p>
+          <div class="example example--dark">
+            <table>
+              <thead><tr><th scope="col">Hypothetical buy</th><th scope="col">Price</th><th scope="col">Shares</th><th scope="col">Amount</th></tr></thead>
+              <tbody>
+                <tr><td>First buy</td><td>₹1,300</td><td>10</td><td>₹13,000</td></tr>
+                <tr><td>Second buy</td><td>₹1,308</td><td>10</td><td>₹13,080</td></tr>
+                <tr><td>Weighted result</td><td>₹1,304</td><td>20</td><td>₹26,080</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Calculation: (10 × ₹1,300 + 10 × ₹1,308) ÷ 20 = <strong>₹1,304 per share</strong>, before costs.</p>
+          <p class="market-case__source">Illustrative only. These numbers do not describe an actual company, transaction, or market close.</p>
+        </section>
+
+        <h2>Does buying the dip help? Test the downside</h2>
+        <p>Consider fictional Company ABC: 10 shares bought at ₹1,300, then another 10 at ₹1,100 after a 15.4% price fall. The weighted average drops from ₹1,300 to ₹1,200. But the first 10 shares are still down ₹2,000 at ₹1,100. The extra purchase adds ₹11,000 of exposure; it does not reverse that loss.</p>
+        <section class="mini-tool dip-tool" data-dip-tool aria-labelledby="dip-tool-title">
+          <h3 id="dip-tool-title">Try a dip scenario</h3>
+          <p class="mini-tool__intro">All values are fictional. Change the inputs to see how adding shares affects the position. Fees and taxes are excluded.</p>
+          <div class="mini-tool__fields">
+            <label>First buy price (₹)<input type="number" min="0.01" step="0.01" value="1300" data-first-price inputmode="decimal"></label>
+            <label>First shares<input type="number" min="1" step="1" value="10" data-first-shares inputmode="numeric"></label>
+            <label>Dip buy price (₹)<input type="number" min="0.01" step="0.01" value="1100" data-dip-price inputmode="decimal"></label>
+            <label>Extra shares<input type="number" min="1" step="1" value="10" data-extra-shares inputmode="numeric"></label>
+            <label>Current price (₹)<input type="number" min="0.01" step="0.01" value="1100" data-current-price inputmode="decimal"></label>
+          </div>
+          <div class="dip-results" aria-live="polite">
+            <div><span>Average after dip buy</span><strong data-dip-average>₹1,200.00</strong></div>
+            <div><span>Total cash invested</span><strong data-dip-invested>₹24,000.00</strong></div>
+            <div><span>Position value now</span><strong data-dip-value>₹22,000.00</strong></div>
+            <div><span>Total unrealized P/L</span><strong data-dip-pl>−₹2,000.00</strong></div>
+            <div><span>P/L on original shares only</span><strong data-original-pl>−₹2,000.00</strong></div>
+          </div>
+          <p class="mini-tool__detail" data-dip-detail>At ₹1,100, the total loss is still ₹2,000 before costs, but ₹11,000 more has been committed.</p>
+        </section>
+
+        <figure class="example">
+          <figcaption>Same fictional prices, different outcomes · before costs</figcaption>
+          <table>
+            <thead><tr><th scope="col">ABC price later</th><th scope="col">Keep 10 shares</th><th scope="col">Own 20 after dip buy</th></tr></thead>
+            <tbody>
+              <tr><td>₹1,000</td><td>₹3,000 loss</td><td>₹4,000 loss</td></tr>
+              <tr><td>₹1,100</td><td>₹2,000 loss</td><td>₹2,000 loss</td></tr>
+              <tr><td>₹1,200</td><td>₹1,000 loss</td><td>Break-even</td></tr>
+              <tr><td>₹1,300</td><td>Break-even</td><td>₹2,000 gain</td></tr>
+            </tbody>
+          </table>
+          <p>Adding at ₹1,100 lowers the combined break-even price, but if the price falls further, the larger position can lose more rupees. Outcomes exclude transaction costs and assume the prices shown.</p>
+        </figure>
+
+        <h2>Is buying every dip recommended?</h2>
+        <p><strong>No. A falling price alone is not a buy signal.</strong> Automatically adding on every decline can keep increasing exposure to a company whose business, balance sheet, or outlook is deteriorating. An average that looks better on paper cannot make a poor investment thesis sound.</p>
+        <p>Before making your own decision, consider questions such as:</p>
+        <ul>
+          <li><strong>Fundamentals:</strong> Has the reason you invested changed? Review business performance, cash flows, debt, valuation, competition, and governance using reliable, current sources.</li>
+          <li><strong>Technical context:</strong> If technical analysis is part of your process, define what price and volume behavior would support or invalidate your setup. A chart pattern is not a guarantee or a substitute for understanding the business.</li>
+          <li><strong>Risk and exposure:</strong> Work out the total amount at risk if the price falls further. Check position size, diversification, liquidity, time horizon, and whether you can afford the loss.</li>
+          <li><strong>Rules before emotion:</strong> Decide in advance whether you will add, how much, and what would make you stop. Avoid adding only to make a displayed average look smaller.</li>
+        </ul>
+        <div class="lesson-strip"><strong>A USEFUL DISTINCTION</strong><p>Buying more can lower the average cost per share while increasing total capital at risk. Those statements can both be true at the same time.</p></div>
+
+        <h2>What the average is useful for</h2>
+        <ul>
+          <li>Comparing your recorded cost with a current price.</li>
+          <li>Checking whether a new purchase changes the average as much as expected.</li>
+          <li>Keeping track of the amount committed across multiple entries.</li>
+        </ul>
+        <h2>What an average cannot tell you</h2>
+        <p>It cannot show whether a share is fairly valued, whether a downtrend will continue, how the business is performing, or whether the position suits your goals. It also excludes fees and taxes unless you add them. Review your own research and risk plan; consider a qualified financial professional if you need personal advice.</p>
+        <aside class="article-note">This educational example is not a recommendation to buy a dip, average down, hold, or sell any security.</aside>
+        <a class="article-tool" href="/stock-average-calculator/">Try your own numbers in the Stock Average Calculator</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="blog-footer">
+    <p><a href="/">All calculators</a><a href="/blog/">All articles</a><a href="/disclaimer/">Disclaimer</a></p>
+    <p>For education only, not financial advice. © 2026 StockMath.co.in</p>
+  </footer>
+  <script src="/blog/interactives.js" defer></script>
+</body>
+</html>

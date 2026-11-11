@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Position Size, Stop Distance, and Overnight Gaps | StockMath</title>
+  <meta name="description" content="See how a simple position-size estimate relates a risk budget to stop distance, and why gaps can change the realized result.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.stockmath.co.in/blog/position-sizing-and-gap-risk/">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/blog/blog.css">
+</head>
+<body>
+  <header class="blog-header">
+    <a class="blog-brand" href="/" aria-label="StockMath home">StockMath</a>
+    <a class="blog-header__link" href="/blog/">Field notes</a>
+  </header>
+
+  <main class="blog-main article-main">
+    <article>
+      <header class="article-masthead article-masthead--risk">
+        <a class="article-crumb" href="/blog/">← Market Lab</a>
+        <p class="eyebrow">THE MATH / RISK &amp; EXPOSURE / 9 MIN</p>
+        <h1 class="article-title">Position size, stop distance, and overnight gaps</h1>
+        <p class="article-deck">A share count is only one part of a trade plan. Learn how a risk budget sets an estimated quantity, how much capital that quantity uses, and why a gap can still push the loss past the estimate.</p>
+      </header>
+      <div class="article-body">
+        <div class="lesson-strip"><strong>THE QUICK TAKE</strong><p>Position size estimates how many shares fit a chosen loss amount if an exit happens at your planned stop. It is not the same as the cash needed to buy those shares, and it cannot guarantee a maximum loss.</p></div>
+        <h2>Start with the amount you can risk</h2>
+        <p>For a long position, the distance from entry to stop estimates the loss per share if the stop fills at its stated price. Divide a risk budget by that distance to estimate quantity, then check whether the resulting purchase value fits your capital and overall exposure.</p>
+        <div class="formula">Long quantity = risk budget ÷ (entry price − stop price)</div>
+        <figure class="example">
+          <figcaption>Fictional Company ABC example · before costs</figcaption>
+          <table>
+            <thead><tr><th scope="col">Input or result</th><th scope="col">Calculation</th><th scope="col">Value</th></tr></thead>
+            <tbody>
+              <tr><td>Risk budget</td><td>Chosen for this example</td><td>₹1,000</td></tr>
+              <tr><td>Entry / stop</td><td>₹250 − ₹240</td><td>₹10 per share</td></tr>
+              <tr><td>Estimated quantity</td><td>₹1,000 ÷ ₹10</td><td>100 shares</td></tr>
+              <tr><td>Purchase value</td><td>100 × ₹250</td><td>₹25,000</td></tr>
+            </tbody>
+          </table>
+          <p>A ₹1,000 risk budget does not mean only ₹1,000 is invested: the illustrative purchase value is ₹25,000. Available capital, leverage, concentration, and other open positions still matter.</p>
+        </figure>
+
+        <section class="mini-tool" data-position-tool aria-labelledby="position-tool-title">
+          <h2 id="position-tool-title">Stress-test your own assumptions</h2>
+          <p class="mini-tool__intro">Fictional long-position example. Change the inputs to see estimated quantity, purchase value, and P/L at a hypothetical gap exit.</p>
+          <div class="mini-tool__fields">
+            <label>Risk amount (₹)<input type="number" min="1" step="100" value="1000" data-risk inputmode="numeric"></label>
+            <label>Entry price (₹)<input type="number" min="0.01" step="0.01" value="250" data-entry inputmode="decimal"></label>
+            <label>Stop price (₹)<input type="number" min="0" step="0.01" value="240" data-stop inputmode="decimal"></label>
+            <label>Hypothetical gap exit (₹)<input type="number" min="0.01" step="0.01" value="220" data-gap-exit inputmode="decimal"></label>
+          </div>
+          <div class="mini-tool__outputs">
+            <div class="mini-tool__result"><span>Estimated quantity</span><output data-position-output aria-live="polite">100 shares</output></div>
+            <div class="mini-tool__result"><span>Purchase value at entry</span><output data-position-capital>₹25,000.00</output></div>
+            <div class="mini-tool__result"><span>Estimated P/L at gap exit</span><output data-position-gap-pl>−₹3,000.00</output></div>
+          </div>
+          <p class="mini-tool__detail" data-position-detail>At the ₹240 stop, estimated loss is ₹1,000. If the hypothetical exit is ₹220, estimated loss is ₹3,000 before costs and slippage.</p>
+        </section>
+
+        <h2>Why a closer stop can mean more shares</h2>
+        <p>If the risk budget stays at ₹1,000, a smaller entry-to-stop distance makes the formula return a larger share count. That does not automatically make the position safer: a tighter stop may be reached more easily, and more shares require more capital.</p>
+        <figure class="example">
+          <figcaption>Same ₹1,000 risk budget · hypothetical exit at ₹220</figcaption>
+          <table>
+            <thead><tr><th scope="col">Stop</th><th scope="col">Distance</th><th scope="col">Shares</th><th scope="col">Entry value</th><th scope="col">P/L at ₹220</th></tr></thead>
+            <tbody>
+              <tr><td>₹245</td><td>₹5</td><td>200</td><td>₹50,000</td><td>−₹6,000</td></tr>
+              <tr><td>₹240</td><td>₹10</td><td>100</td><td>₹25,000</td><td>−₹3,000</td></tr>
+              <tr><td>₹230</td><td>₹20</td><td>50</td><td>₹12,500</td><td>−₹1,500</td></tr>
+            </tbody>
+          </table>
+          <p>Each row estimates a ₹1,000 loss only if the stop fills at its stated price. The ₹220 column is a separate gap scenario, showing how the realized loss could exceed that estimate.</p>
+        </figure>
+
+        <h2>A risk budget is not the same as affordable capital</h2>
+        <p>The risk-budget formula limits the planned loss under one assumed exit. It does not check whether you can fund the position. In the ₹250 entry, ₹240 stop example, the formula produces 100 shares and ₹25,000 of purchase value. If your own capital or a separate concentration limit allowed only ₹15,000 of exposure, that limit would allow at most 60 shares at ₹250. The smaller limit would govern; leverage or margin does not make the underlying loss disappear.</p>
+        <div class="formula">Usable quantity = the smallest of risk-based, capital-based, and exposure-based limits</div>
+        <p>This is why “I only risk 1%” can be an incomplete description. It says nothing about total capital committed, other positions that could fall at the same time, or whether the chosen percentage suits your finances. The risk amount is a planning input, not a universal rule.</p>
+
+        <h2>Risk can stack across several positions</h2>
+        <p>Imagine three separate positions, each planned to lose up to ₹1,000 at its stop. Their combined planned stop risk is ₹3,000, not ₹1,000. If the positions are exposed to the same sector or market event, their prices may move together. In a gap or liquidity event, more than one can slip past its stop at once.</p>
+        <p>Portfolio review therefore looks beyond one calculator result. Add up the planned risk across open positions, notice overlapping themes, and consider how much cash remains available if several trades move against you. The calculator sees one trade at a time; it cannot measure correlation or your whole portfolio from a single row of inputs.</p>
+
+        <h2>The stop level is part of the trade thesis</h2>
+        <p>A stop is not a knob to tighten until the calculator displays an attractive share count. If a level is inside ordinary price noise, the position could exit before the idea has had room to play out. If the level is too far away for your risk budget, the honest result may be a smaller quantity or no trade under that plan, rather than moving the stop to fit a desired size.</p>
+        <p>Some traders use chart structure or volatility to choose an invalidation point; others use different rules. Whatever method is used, it should be decided independently of the quantity calculation. The calculator answers “How many shares under these assumptions?” It cannot decide whether the entry, stop, or trade thesis is sound.</p>
+
+        <h2>What the gap example is really showing</h2>
+        <p>With 100 shares bought at ₹250, a ₹240 stop implies a ₹1,000 price loss if all shares sell at ₹240. If the next executable price is ₹220, the loss is ₹3,000 before charges: ₹30 per share times 100. A stop trigger and the final fill are not always the same price, especially around overnight news, thin trading, or fast markets.</p>
+        <p>A gap scenario is not a prediction of how often gaps happen or how far this share might move. It is a stress test: choose a worse exit price and see whether the position still fits your ability to absorb a loss. The separate Gap &amp; Circuit Risk Calculator can help model another hypothetical exit, but it also cannot guarantee execution.</p>
+
+        <h2>What can make the real loss larger?</h2>
+        <ul>
+          <li><strong>Gaps:</strong> news or market closures can move the next available price past your stop.</li>
+          <li><strong>Slippage and liquidity:</strong> the order may fill away from the level you expected.</li>
+          <li><strong>Costs:</strong> brokerage, taxes, and other charges add to the trade’s loss.</li>
+          <li><strong>Wrong assumptions:</strong> the entry or stop can change, or the formula may not fit the instrument or strategy.</li>
+        </ul>
+        <h2>A repeatable review sequence</h2>
+        <ol>
+          <li>Write down the trade thesis and the condition that would invalidate it.</li>
+          <li>Choose an entry and stop using your own method, not to force a target quantity.</li>
+          <li>Set a risk amount that fits your financial situation; there is no universally correct percentage.</li>
+          <li>Calculate the quantity, then check required capital, liquidity, costs, and portfolio concentration.</li>
+          <li>Stress-test a worse fill and add the trade’s planned risk to the risk of existing positions.</li>
+          <li>Revisit the assumptions if the price, thesis, or available capital changes.</li>
+        </ol>
+        <p>If you use technical analysis to set a stop, remember that technical levels do not guarantee an execution price. A short position uses a different price direction and is not covered by this long-position example.</p>
+        <aside class="article-note">All prices and quantities here are fictional examples, not a suggested trade size or a maximum-loss guarantee.</aside>
+        <a class="article-tool" href="/position-size-calculator/">Open the Position Size Calculator</a>
+        <a class="article-tool article-tool--secondary" href="/gap-circuit-risk-calculator/">Explore gap and circuit risk</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="blog-footer">
+    <p><a href="/">All calculators</a><a href="/blog/">All articles</a><a href="/disclaimer/">Disclaimer</a></p>
+    <p>For education only, not financial advice. © 2026 StockMath.co.in</p>
+  </footer>
+  <script src="/blog/interactives.js" defer></script>
+</body>
+</html>

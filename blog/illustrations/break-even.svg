@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 140" role="img" aria-labelledby="title">
+  <title id="title">Costs lift a break-even line above the purchase price</title>
+  <rect width="220" height="140" rx="8" fill="#f8e7df"/>
+  <path d="M28 108h166M45 119V24" stroke="#17232c" stroke-width="3" stroke-linecap="round"/>
+  <path d="M52 94h112" stroke="#087f78" stroke-width="5" stroke-dasharray="7 6"/>
+  <path d="M52 55h112" stroke="#b94f35" stroke-width="6"/>
+  <path d="M163 94V55m-7 8 7-8 7 8" fill="none" stroke="#17232c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="63" cy="94" r="7" fill="#087f78" stroke="#17232c" stroke-width="2"/>
+  <circle cx="157" cy="55" r="7" fill="#b94f35" stroke="#17232c" stroke-width="2"/>
+  <path d="M79 37h45" stroke="#17232c" stroke-width="3" stroke-linecap="round"/><path d="m116 30 8 7-8 7" fill="none" stroke="#17232c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
