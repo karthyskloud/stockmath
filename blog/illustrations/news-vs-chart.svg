@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img" aria-labelledby="title desc">
+  <title id="title">Headline versus price reaction</title>
+  <desc id="desc">Two clearly labeled panels: a reporter announces good results while an analyst reacts to a falling price chart.</desc>
+  <rect x="8" y="8" width="744" height="404" rx="24" fill="#f0c64c" stroke="#202435" stroke-width="8"/>
+  <path d="M380 18v384" stroke="#202435" stroke-width="5" stroke-dasharray="12 10"/>
+  <rect x="29" y="28" width="325" height="355" rx="14" fill="#f8e7df"/>
+  <rect x="406" y="28" width="325" height="355" rx="14" fill="#e6edf6"/>
+  <path d="M52 56h250v111H52z" fill="#fffdf5" stroke="#202435" stroke-width="5" transform="rotate(-3 52 56)"/>
+  <text x="68" y="98" fill="#c64f47" font-family="Arial,sans-serif" font-size="19" font-weight="700">GOOD NEWS</text>
+  <path d="M68 121h214M68 143h186" stroke="#202435" stroke-width="7" stroke-linecap="round"/>
+  <path d="m61 205 28-29 28 29v-38h27v38l31-31 34 31v-22h30v22l33-35 30 35" fill="#f0c64c" stroke="#202435" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M145 243c0-42 21-63 55-63s55 21 55 63v31h-110z" fill="#202435"/>
+  <circle cx="200" cy="231" r="37" fill="#f2bd91" stroke="#202435" stroke-width="5"/>
+  <path d="M165 222q35-39 70 0l-7-31h-57z" fill="#087f78" stroke="#202435" stroke-width="5"/>
+  <circle cx="188" cy="231" r="4" fill="#202435"/><circle cx="211" cy="231" r="4" fill="#202435"/>
+  <ellipse cx="200" cy="246" rx="8" ry="10" fill="#c64f47"/>
+  <path d="M164 272h72v79h-72z" fill="#c64f47" stroke="#202435" stroke-width="5"/>
+  <path d="M170 287 135 315m91-25 34-28" stroke="#202435" stroke-width="12" stroke-linecap="round"/>
+  <path d="m265 259 47-20-8 22 17 10-53 10" fill="#f0c64c" stroke="#202435" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M482 135h205v158H482z" fill="#fffdf5" stroke="#202435" stroke-width="5"/>
+  <path d="M500 275V159m0 116h171" stroke="#202435" stroke-width="4"/>
+  <path d="m514 178 35 13 30-7 37 35 40 20" fill="none" stroke="#c64f47" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m644 227 12 12-17 2" fill="none" stroke="#c64f47" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M479 65q-21-19 0-38m19 39q-19-20 1-39" fill="none" stroke="#c64f47" stroke-width="7" stroke-linecap="round"/>
+  <path d="M533 306c0-42 20-62 54-62s55 20 55 62v44H533z" fill="#426ca2" stroke="#202435" stroke-width="5"/>
+  <circle cx="587" cy="292" r="36" fill="#f2bd91" stroke="#202435" stroke-width="5"/>
+  <path d="M551 281q36-44 72 0l-8-29h-57z" fill="#c64f47" stroke="#202435" stroke-width="5"/>
+  <circle cx="575" cy="291" r="4" fill="#202435"/><circle cx="597" cy="291" r="4" fill="#202435"/>
+  <path d="M577 308q10-12 20 0" fill="none" stroke="#202435" stroke-width="4" stroke-linecap="round"/>
+  <path d="m548 267-22-17m107 12 22-20" stroke="#202435" stroke-width="5" stroke-linecap="round"/>
+  <path d="M494 324q-18-20 0-40m18 39q-17-20 0-39" fill="none" stroke="#c64f47" stroke-width="6" stroke-linecap="round"/>
+  <path d="M433 347h288" stroke="#202435" stroke-width="6" stroke-linecap="round"/>
+  <rect x="43" y="344" width="296" height="31" rx="5" fill="#c64f47"/>
+  <text x="191" y="367" fill="#fffdf5" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle">HEADLINE</text>
+  <rect x="420" y="344" width="296" height="31" rx="5" fill="#426ca2"/>
+  <text x="568" y="367" fill="#fffdf5" font-family="Arial,sans-serif" font-size="19" font-weight="700" text-anchor="middle">PRICE REACTION</text>
+</svg>

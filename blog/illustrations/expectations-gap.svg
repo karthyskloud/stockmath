@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" role="img" aria-labelledby="title desc">
+  <title id="title">Expected results versus reported results</title>
+  <desc id="desc">A comic balance scale shows that high expectations can outweigh good reported results, while the price reaction falls.</desc>
+  <rect x="8" y="8" width="744" height="284" rx="22" fill="#d5ef73" stroke="#202435" stroke-width="8"/>
+  <path d="M382 60v170m-126 0h252m-126-170-155 42m155-42 155 42" fill="none" stroke="#202435" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="382" cy="61" r="17" fill="#c64f47" stroke="#202435" stroke-width="6"/>
+  <path d="M101 101h205l25 89H76z" fill="#f0c64c" stroke="#202435" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M454 101h205l25 89H429z" fill="#f8e7df" stroke="#202435" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="111" y="55" width="150" height="34" rx="5" fill="#fffdf5" stroke="#202435" stroke-width="4" transform="rotate(-4 111 55)"/>
+  <rect x="123" y="24" width="137" height="34" rx="5" fill="#fffdf5" stroke="#202435" stroke-width="4" transform="rotate(3 123 24)"/>
+  <path d="M146 42h87m-91 29h93" stroke="#426ca2" stroke-width="6" stroke-linecap="round"/>
+  <rect x="492" y="126" width="94" height="57" rx="8" fill="#087f78" stroke="#202435" stroke-width="5"/>
+  <path d="M506 145h65m-65 17h42" stroke="#fffdf5" stroke-width="6" stroke-linecap="round"/>
+  <path d="m632 185 20 12 18 10 24 20" fill="none" stroke="#c64f47" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m681 224 13 3-2-14" fill="none" stroke="#c64f47" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M319 234q-20-25 0-49m18 50q-18-25 1-48" fill="none" stroke="#c64f47" stroke-width="6" stroke-linecap="round"/>
+  <rect x="92" y="82" width="175" height="29" rx="4" fill="#fffdf5" stroke="#202435" stroke-width="3"/>
+  <text x="180" y="103" fill="#202435" font-family="Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle">EXPECTED</text>
+  <rect x="468" y="82" width="175" height="29" rx="4" fill="#fffdf5" stroke="#202435" stroke-width="3"/>
+  <text x="555" y="103" fill="#202435" font-family="Arial,sans-serif" font-size="17" font-weight="700" text-anchor="middle">REPORTED</text>
+  <rect x="511" y="238" width="185" height="34" rx="5" fill="#c64f47"/>
+  <text x="604" y="262" fill="#fffdf5" font-family="Arial,sans-serif" font-size="18" font-weight="700" text-anchor="middle">PRICE FALLS</text>
+</svg>
